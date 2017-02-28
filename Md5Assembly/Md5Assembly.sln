@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Md5Assembly", "Md5Assembly\Md5Assembly.vcxproj", "{315D0A70-F9F7-4957-B029-C0B07AEA90E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{315D0A70-F9F7-4957-B029-C0B07AEA90E3}.Debug|x64.ActiveCfg = Debug|x64
+		{315D0A70-F9F7-4957-B029-C0B07AEA90E3}.Debug|x64.Build.0 = Debug|x64
+		{315D0A70-F9F7-4957-B029-C0B07AEA90E3}.Release|x64.ActiveCfg = Release|x64
+		{315D0A70-F9F7-4957-B029-C0B07AEA90E3}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
