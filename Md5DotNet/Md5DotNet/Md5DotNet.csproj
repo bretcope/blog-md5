@@ -55,6 +55,7 @@
     <Compile Include="Md5_5_InlineRotate.cs" />
     <Compile Include="Md5_6_NoTempVar.cs" />
     <Compile Include="Md5_7_Methods.cs" />
+    <Compile Include="Md5_8_NoLea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

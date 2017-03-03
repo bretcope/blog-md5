@@ -26,7 +26,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Md5Assembly.cpp">
+    <ClCompile Include="Program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,6 +44,12 @@
       <Filter>Source Files</Filter>
     </MASM>
     <MASM Include="Md5Custom1.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Md5NoLea.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Md5NoMov.asm">
       <Filter>Source Files</Filter>
     </MASM>
   </ItemGroup>

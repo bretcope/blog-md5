@@ -140,7 +140,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Md5Assembly.cpp" />
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -152,6 +152,8 @@
     <MASM Include="Md5Custom1.asm" />
     <MASM Include="Md5DotNet.asm" />
     <MASM Include="Md5Macros.asm" />
+    <MASM Include="Md5NoLea.asm" />
+    <MASM Include="Md5NoMov.asm" />
     <MASM Include="Md5WithRol.asm" />
     <MASM Include="UnsafeMemoryCopy.asm" />
   </ItemGroup>

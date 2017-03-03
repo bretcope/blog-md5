@@ -3,9 +3,12 @@ extern UnsafeMemoryCopy: PROC
 Suffix macro rAd, rBd, sine, dataOffset, shift
 
     add     rAd,r10d                            ; a += f
-    add     rAd,dword ptr [rax+dataOffset]      ; m = blockPtr[index]
-    add     rAd,sine                            ; value = a + f + m + sine
-    rol     rAd,shift                           ; value = LeftRotate(value, shift)
+    add     rAd,sine                            ; a += sine
+    add     rAd,dword ptr [rax+dataOffset]      ; a += blockPtr[index]
+    mov     r10d,rAd                            ; tmp1 = a
+    shl     r10d,shift                          ; tmp1 = a << shift
+    shr     rAd,(32-shift)                      ; tmp2 = a >> (32 - shift)
+    or      rAd,r10d                            ; value = tmp1 | tmp2
     add     rAd,rBd                             ; a = value + b
 
 endm
@@ -55,7 +58,7 @@ endm
 
 .code
 
-Md5Custom1 PROC
+Md5NoMov PROC
 
     push    r15
     push    r14
@@ -267,6 +270,6 @@ Md5Custom1 PROC
     pop     r15
     ret
 
-Md5Custom1 ENDP
+Md5NoMov ENDP
 
 END

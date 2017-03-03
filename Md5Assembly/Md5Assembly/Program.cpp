@@ -20,6 +20,8 @@ extern "C"
 	void Md5WithRol(BYTE* input, int length, Md5Digest* digest);
 	void Md5Macros(BYTE* input, int length, Md5Digest* digest);
 	void Md5Custom1(BYTE* input, int length, Md5Digest* digest);
+	void Md5NoLea(BYTE* input, int length, Md5Digest* digest);
+	void Md5NoMov(BYTE* input, int length, Md5Digest* digest);
 }
 
 void Debug();
@@ -132,6 +134,30 @@ bool RunBenchmarks(int count, int length)
 	duration = double(endCount.QuadPart - startCount.QuadPart) / frequency.QuadPart  * 1000.0;
 	printf("    Custom1: %f\n", duration);
 
+	// ========== NoLea ====================================================================================
+
+	QueryPerformanceCounter(&startCount);
+	for (auto c = 0; c < count; c++)
+	{
+		auto ptr = testCases[c];
+		Md5NoLea(ptr, length, &digest);
+	}
+	QueryPerformanceCounter(&endCount);
+	duration = double(endCount.QuadPart - startCount.QuadPart) / frequency.QuadPart  * 1000.0;
+	printf("    NoLea:   %f\n", duration);
+
+	// ========== NoMov ====================================================================================
+
+	QueryPerformanceCounter(&startCount);
+	for (auto c = 0; c < count; c++)
+	{
+		auto ptr = testCases[c];
+		Md5NoMov(ptr, length, &digest);
+	}
+	QueryPerformanceCounter(&endCount);
+	duration = double(endCount.QuadPart - startCount.QuadPart) / frequency.QuadPart  * 1000.0;
+	printf("    NoMov:   %f\n", duration);
+
 	FreeTestCases(testCases, count);
 	return true;
 }
@@ -161,6 +187,16 @@ bool RunTests(BYTE* testCase, int length)
 	actual = Md5Digest();
 	Md5Custom1(testCase, length, &actual);
 	if (!AssertEqual(&expected, &actual, "Custom1"))
+		return false;
+
+	actual = Md5Digest();
+	Md5NoLea(testCase, length, &actual);
+	if (!AssertEqual(&expected, &actual, "NoLea"))
+		return false;
+
+	actual = Md5Digest();
+	Md5NoMov(testCase, length, &actual);
+	if (!AssertEqual(&expected, &actual, "NoMov"))
 		return false;
 
 	return true;

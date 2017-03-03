@@ -129,6 +129,18 @@ namespace Md5DotNet
             sw.Stop();
             $"    Methods:      {sw.Elapsed.TotalMilliseconds}".Dump();
 
+            // ========== 8 NoLea ==================================================================================
+
+            GC.Collect();
+            sw = Stopwatch.StartNew();
+            foreach (var test in testCases)
+            {
+                fixed (byte* ptr = test)
+                    Md5_8_NoLea.GetDigest(ptr, test.Length, &digest);
+            }
+            sw.Stop();
+            $"    NoLea:        {sw.Elapsed.TotalMilliseconds}".Dump();
+
             "".Dump();
         }
 
@@ -145,6 +157,7 @@ namespace Md5DotNet
                 Md5_5_InlineRotate.GetBytes(input),
                 Md5_6_NoTempVar.GetBytes(input),
                 Md5_7_Methods.GetBytes(input),
+                Md5_8_NoLea.GetBytes(input),
             };
 
             for (var i = 0; i < actuals.Length; i++)

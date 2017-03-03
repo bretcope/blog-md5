@@ -1,6 +1,6 @@
 extern UnsafeMemoryCopy: PROC
 
-RoundSuffix macro rAd, rBd, sine, dataOffset, shift
+Suffix macro rAd, rBd, sine, dataOffset, shift
 
     add     rAd,r10d                            ; a += f
     mov     r10d,dword ptr [rax+dataOffset]     ; m = blockPtr[index]
@@ -20,7 +20,7 @@ FF    macro rAd, rBd, rCd, rDd, sine, dataOffset, shift
     xor     r10d,rDd    ; f = (c ^ d)
     and     r10d,rBd    ; f = (c ^ d) & b
     xor     r10d,rDd    ; f = (c ^ d) & b & d
-    RoundSuffix rAd, rBd, sine, dataOffset, shift
+    Suffix rAd, rBd, sine, dataOffset, shift
 
 endm
 
@@ -31,7 +31,7 @@ GG    macro rAd, rBd, rCd, rDd, sine, dataOffset, shift
     xor     r10d,rCd    ; f = (b ^ c)
     and     r10d,rDd    ; f = (b ^ c) & d
     xor     r10d,rCd    ; f = (b ^ c) & d ^ c
-    RoundSuffix rAd, rBd, sine, dataOffset, shift
+    Suffix rAd, rBd, sine, dataOffset, shift
 
 endm
 
@@ -41,7 +41,7 @@ HH  macro rAd, rBd, rCd, rDd, sine, dataOffset, shift
     mov     r10d,rBd    ; f = b
     xor     r10d,rCd    ; f = b ^ c
     xor     r10d,rDd    ; f = b ^ c ^ d
-    RoundSuffix rAd, rBd, sine, dataOffset, shift
+    Suffix rAd, rBd, sine, dataOffset, shift
 
 endm
 
@@ -52,7 +52,7 @@ II   macro rAd, rBd, rCd, rDd, sine, dataOffset, shift
     not     r10d        ; f = ~d
     or      r10d,rBd    ; f = (b | ~d)
     xor     r10d,rCd    ; f = (b | ~d) ^ c
-    RoundSuffix rAd, rBd, sine, dataOffset, shift
+    Suffix rAd, rBd, sine, dataOffset, shift
 
 endm
 
