@@ -1,0 +1,3170 @@
+// Type: Md5DotNet.Md5_8_NoLea 
+// Assembly: Md5DotNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 92E8A231-9212-453A-AB87-DB38B4F5E3D4
+// Location: C:\code\blog\md5\Md5DotNet\Md5DotNet\bin\Release\Md5DotNet.exe
+// Sequence point data from C:\code\blog\md5\Md5DotNet\Md5DotNet\bin\Release\Md5DotNet.pdb
+
+.class private abstract sealed auto ansi beforefieldinit 
+  Md5DotNet.Md5_8_NoLea
+    extends [mscorlib]System.Object
+{
+
+  .method public hidebysig static unsigned int8[] 
+    GetBytes(
+      unsigned int8[] input
+    ) cil managed 
+  {
+    .maxstack 3
+    .locals init (
+      [0] valuetype Md5DotNet.Md5Digest digest,
+      [1] unsigned int8& pinned inputPtr,
+      [2] unsigned int8[] V_2
+    )
+
+    // [8 20 - 8 42]
+    IL_0000: ldarg.0      // input
+    IL_0001: dup          
+    IL_0002: stloc.2      // V_2
+    IL_0003: brfalse.s    IL_000a
+    IL_0005: ldloc.2      // V_2
+    IL_0006: ldlen        
+    IL_0007: conv.i4      
+    IL_0008: brtrue.s     IL_000f
+    IL_000a: ldc.i4.0     
+    IL_000b: conv.u       
+    IL_000c: stloc.1      // inputPtr
+    IL_000d: br.s         IL_0017
+    IL_000f: ldloc.2      // V_2
+    IL_0010: ldc.i4.0     
+    IL_0011: ldelema      [mscorlib]System.Byte
+    IL_0016: stloc.1      // inputPtr
+
+    // [10 17 - 10 60]
+    IL_0017: ldloc.1      // inputPtr
+    IL_0018: conv.i       
+    IL_0019: ldarg.0      // input
+    IL_001a: ldlen        
+    IL_001b: conv.i4      
+    IL_001c: ldloca.s     digest
+    IL_001e: conv.u       
+    IL_001f: call         void Md5DotNet.Md5_8_NoLea::GetDigest(unsigned int8*, int32, valuetype Md5DotNet.Md5Digest*)
+
+    IL_0024: ldc.i4.0     
+    IL_0025: conv.u       
+    IL_0026: stloc.1      // inputPtr
+
+    // [13 13 - 13 38]
+    IL_0027: ldloca.s     digest
+    IL_0029: call         instance unsigned int8[] Md5DotNet.Md5Digest::GetBytes()
+    IL_002e: ret          
+
+  } // end of method Md5_8_NoLea::GetBytes
+
+  .method public hidebysig static void 
+    GetDigest(
+      unsigned int8* input, 
+      int32 length, 
+      valuetype Md5DotNet.Md5Digest* digest
+    ) cil managed 
+  {
+    .maxstack 4
+    .locals init (
+      [0] int32 blocksCount,
+      [1] valuetype Md5DotNet.Block paddingBlockData,
+      [2] int32 blockIndex,
+      [3] int32 offset,
+      [4] int32 blockEnd,
+      [5] unsigned int32* blockPtr,
+      [6] unsigned int32 a,
+      [7] unsigned int32 b,
+      [8] unsigned int32 c,
+      [9] unsigned int32 d,
+      [10] unsigned int32 f,
+      [11] int32 bytesRemaining,
+      [12] unsigned int8* paddingPtr
+    )
+
+    // [19 13 - 19 64]
+    IL_0000: ldarg.1      // length
+    IL_0001: ldc.i4.8     
+    IL_0002: add          
+    IL_0003: ldc.i4.s     64 // 0x40
+    IL_0005: div          
+    IL_0006: ldc.i4.1     
+    IL_0007: add          
+    IL_0008: stloc.0      // blocksCount
+
+    // [21 13 - 21 36]
+    IL_0009: ldarg.2      // digest
+    IL_000a: ldc.i4       1732584193 // 0x67452301
+    IL_000f: stfld        unsigned int32 Md5DotNet.Md5Digest::A
+
+    // [22 13 - 22 36]
+    IL_0014: ldarg.2      // digest
+    IL_0015: ldc.i4       -271733879 // 0xefcdab89
+    IL_001a: stfld        unsigned int32 Md5DotNet.Md5Digest::B
+
+    // [23 13 - 23 36]
+    IL_001f: ldarg.2      // digest
+    IL_0020: ldc.i4       -1732584194 // 0x98badcfe
+    IL_0025: stfld        unsigned int32 Md5DotNet.Md5Digest::C
+
+    // [24 13 - 24 36]
+    IL_002a: ldarg.2      // digest
+    IL_002b: ldc.i4       271733878 // 0x10325476
+    IL_0030: stfld        unsigned int32 Md5DotNet.Md5Digest::D
+
+    // [26 13 - 26 51]
+    IL_0035: ldloca.s     paddingBlockData
+    IL_0037: initobj      Md5DotNet.Block
+
+    // [28 18 - 28 36]
+    IL_003d: ldc.i4.0     
+    IL_003e: stloc.2      // blockIndex
+
+    IL_003f: br           IL_0f6e
+    // start of loop, entry point: IL_0f6e
+
+      // [30 17 - 30 57]
+      IL_0044: ldloc.2      // blockIndex
+      IL_0045: ldc.i4.s     64 // 0x40
+      IL_0047: mul          
+      IL_0048: stloc.3      // offset
+
+      // [31 17 - 31 55]
+      IL_0049: ldloc.3      // offset
+      IL_004a: ldc.i4.s     64 // 0x40
+      IL_004c: add          
+      IL_004d: stloc.s      blockEnd
+
+      // [35 17 - 35 39]
+      IL_004f: ldloc.s      blockEnd
+      IL_0051: ldarg.1      // length
+      IL_0052: ble.s        IL_00b8
+
+      // [37 21 - 37 42]
+      IL_0054: ldloc.3      // offset
+      IL_0055: ldarg.1      // length
+      IL_0056: blt.s        IL_0079
+
+      // [39 25 - 39 46]
+      IL_0058: ldloc.3      // offset
+      IL_0059: ldarg.1      // length
+      IL_005a: bne.un.s     IL_0067
+
+      // [42 29 - 42 62]
+      IL_005c: ldloca.s     paddingBlockData
+      IL_005e: conv.u       
+      IL_005f: ldc.i4       128 // 0x00000080
+      IL_0064: stind.i1     
+
+      // [43 25 - 43 26]
+      IL_0065: br.s         IL_006f
+
+      // [47 29 - 47 63]
+      IL_0067: ldloca.s     paddingBlockData
+      IL_0069: initobj      Md5DotNet.Block
+
+      // [50 25 - 50 68]
+      IL_006f: ldloca.s     paddingBlockData
+      IL_0071: ldarg.1      // length
+      IL_0072: call         instance void Md5DotNet.Block::SetOriginalLength(int32)
+
+      // [51 21 - 51 22]
+      IL_0077: br.s         IL_00b1
+
+      // [54 25 - 54 82]
+      IL_0079: ldc.i4.s     64 // 0x40
+      IL_007b: ldloc.s      blockEnd
+      IL_007d: ldarg.1      // length
+      IL_007e: sub          
+      IL_007f: sub          
+      IL_0080: stloc.s      bytesRemaining
+
+      // [55 25 - 55 67]
+      IL_0082: ldloca.s     paddingBlockData
+      IL_0084: conv.u       
+      IL_0085: stloc.s      paddingPtr
+
+      // [56 25 - 56 93]
+      IL_0087: ldarg.0      // input
+      IL_0088: ldloc.3      // offset
+      IL_0089: add          
+      IL_008a: conv.u       
+      IL_008b: ldloc.s      paddingPtr
+      IL_008d: ldloc.s      bytesRemaining
+      IL_008f: call         void Md5DotNet.Common::UnsafeMemoryCopy(unsigned int8*, unsigned int8*, int32)
+
+      // [59 25 - 59 59]
+      IL_0094: ldloc.s      paddingPtr
+      IL_0096: ldloc.s      bytesRemaining
+      IL_0098: add          
+      IL_0099: ldc.i4       128 // 0x00000080
+      IL_009e: stind.i1     
+
+      // [62 25 - 62 71]
+      IL_009f: ldc.i4.s     64 // 0x40
+      IL_00a1: ldloc.s      bytesRemaining
+      IL_00a3: ldc.i4.1     
+      IL_00a4: add          
+      IL_00a5: sub          
+      IL_00a6: ldc.i4.8     
+      IL_00a7: blt.s        IL_00b1
+
+      // [63 29 - 63 72]
+      IL_00a9: ldloca.s     paddingBlockData
+      IL_00ab: ldarg.1      // length
+      IL_00ac: call         instance void Md5DotNet.Block::SetOriginalLength(int32)
+
+      // [67 21 - 67 57]
+      IL_00b1: ldloca.s     paddingBlockData
+      IL_00b3: conv.u       
+      IL_00b4: stloc.s      blockPtr
+
+      // [68 17 - 68 18]
+      IL_00b6: br.s         IL_00be
+
+      // [71 21 - 71 54]
+      IL_00b8: ldarg.0      // input
+      IL_00b9: ldloc.3      // offset
+      IL_00ba: add          
+      IL_00bb: conv.u       
+      IL_00bc: stloc.s      blockPtr
+
+      // [74 17 - 74 35]
+      IL_00be: ldarg.2      // digest
+      IL_00bf: ldfld        unsigned int32 Md5DotNet.Md5Digest::A
+      IL_00c4: stloc.s      a
+
+      // [75 17 - 75 35]
+      IL_00c6: ldarg.2      // digest
+      IL_00c7: ldfld        unsigned int32 Md5DotNet.Md5Digest::B
+      IL_00cc: stloc.s      b
+
+      // [76 17 - 76 35]
+      IL_00ce: ldarg.2      // digest
+      IL_00cf: ldfld        unsigned int32 Md5DotNet.Md5Digest::C
+      IL_00d4: stloc.s      c
+
+      // [77 17 - 77 35]
+      IL_00d6: ldarg.2      // digest
+      IL_00d7: ldfld        unsigned int32 Md5DotNet.Md5Digest::D
+      IL_00dc: stloc.s      d
+
+      // [82 17 - 82 37]
+      IL_00de: ldloc.s      c
+      IL_00e0: ldloc.s      d
+      IL_00e2: xor          
+      IL_00e3: ldloc.s      b
+      IL_00e5: and          
+      IL_00e6: ldloc.s      d
+      IL_00e8: xor          
+      IL_00e9: stloc.s      f
+
+      // [83 17 - 83 24]
+      IL_00eb: ldloc.s      a
+      IL_00ed: ldloc.s      f
+      IL_00ef: add          
+      IL_00f0: stloc.s      a
+
+      // [84 17 - 84 33]
+      IL_00f2: ldloc.s      a
+      IL_00f4: ldc.i4       -680876936 // 0xd76aa478
+      IL_00f9: add          
+      IL_00fa: stloc.s      a
+
+      // [85 17 - 85 34]
+      IL_00fc: ldloc.s      a
+      IL_00fe: ldloc.s      blockPtr
+      IL_0100: ldind.u4     
+      IL_0101: add          
+      IL_0102: stloc.s      a
+
+      // [86 17 - 86 54]
+      IL_0104: ldloc.s      b
+      IL_0106: ldloc.s      a
+      IL_0108: ldc.i4.7     
+      IL_0109: shl          
+      IL_010a: ldloc.s      a
+      IL_010c: ldc.i4.s     25 // 0x19
+      IL_010e: shr.un       
+      IL_010f: or           
+      IL_0110: add          
+      IL_0111: stloc.s      a
+
+      // [89 17 - 89 37]
+      IL_0113: ldloc.s      b
+      IL_0115: ldloc.s      c
+      IL_0117: xor          
+      IL_0118: ldloc.s      a
+      IL_011a: and          
+      IL_011b: ldloc.s      c
+      IL_011d: xor          
+      IL_011e: stloc.s      f
+
+      // [90 17 - 90 24]
+      IL_0120: ldloc.s      d
+      IL_0122: ldloc.s      f
+      IL_0124: add          
+      IL_0125: stloc.s      d
+
+      // [91 17 - 91 33]
+      IL_0127: ldloc.s      d
+      IL_0129: ldc.i4       -389564586 // 0xe8c7b756
+      IL_012e: add          
+      IL_012f: stloc.s      d
+
+      // [92 17 - 92 34]
+      IL_0131: ldloc.s      d
+      IL_0133: ldloc.s      blockPtr
+      IL_0135: ldc.i4.4     
+      IL_0136: add          
+      IL_0137: ldind.u4     
+      IL_0138: add          
+      IL_0139: stloc.s      d
+
+      // [93 17 - 93 56]
+      IL_013b: ldloc.s      a
+      IL_013d: ldloc.s      d
+      IL_013f: ldc.i4.s     12 // 0x0c
+      IL_0141: shl          
+      IL_0142: ldloc.s      d
+      IL_0144: ldc.i4.s     20 // 0x14
+      IL_0146: shr.un       
+      IL_0147: or           
+      IL_0148: add          
+      IL_0149: stloc.s      d
+
+      // [96 17 - 96 37]
+      IL_014b: ldloc.s      a
+      IL_014d: ldloc.s      b
+      IL_014f: xor          
+      IL_0150: ldloc.s      d
+      IL_0152: and          
+      IL_0153: ldloc.s      b
+      IL_0155: xor          
+      IL_0156: stloc.s      f
+
+      // [97 17 - 97 24]
+      IL_0158: ldloc.s      c
+      IL_015a: ldloc.s      f
+      IL_015c: add          
+      IL_015d: stloc.s      c
+
+      // [98 17 - 98 33]
+      IL_015f: ldloc.s      c
+      IL_0161: ldc.i4       606105819 // 0x242070db
+      IL_0166: add          
+      IL_0167: stloc.s      c
+
+      // [99 17 - 99 34]
+      IL_0169: ldloc.s      c
+      IL_016b: ldloc.s      blockPtr
+      IL_016d: ldc.i4.2     
+      IL_016e: conv.i       
+      IL_016f: ldc.i4.4     
+      IL_0170: mul          
+      IL_0171: add          
+      IL_0172: ldind.u4     
+      IL_0173: add          
+      IL_0174: stloc.s      c
+
+      // [100 17 - 100 56]
+      IL_0176: ldloc.s      d
+      IL_0178: ldloc.s      c
+      IL_017a: ldc.i4.s     17 // 0x11
+      IL_017c: shl          
+      IL_017d: ldloc.s      c
+      IL_017f: ldc.i4.s     15 // 0x0f
+      IL_0181: shr.un       
+      IL_0182: or           
+      IL_0183: add          
+      IL_0184: stloc.s      c
+
+      // [103 17 - 103 37]
+      IL_0186: ldloc.s      d
+      IL_0188: ldloc.s      a
+      IL_018a: xor          
+      IL_018b: ldloc.s      c
+      IL_018d: and          
+      IL_018e: ldloc.s      a
+      IL_0190: xor          
+      IL_0191: stloc.s      f
+
+      // [104 17 - 104 24]
+      IL_0193: ldloc.s      b
+      IL_0195: ldloc.s      f
+      IL_0197: add          
+      IL_0198: stloc.s      b
+
+      // [105 17 - 105 33]
+      IL_019a: ldloc.s      b
+      IL_019c: ldc.i4       -1044525330 // 0xc1bdceee
+      IL_01a1: add          
+      IL_01a2: stloc.s      b
+
+      // [106 17 - 106 34]
+      IL_01a4: ldloc.s      b
+      IL_01a6: ldloc.s      blockPtr
+      IL_01a8: ldc.i4.3     
+      IL_01a9: conv.i       
+      IL_01aa: ldc.i4.4     
+      IL_01ab: mul          
+      IL_01ac: add          
+      IL_01ad: ldind.u4     
+      IL_01ae: add          
+      IL_01af: stloc.s      b
+
+      // [107 17 - 107 56]
+      IL_01b1: ldloc.s      c
+      IL_01b3: ldloc.s      b
+      IL_01b5: ldc.i4.s     22 // 0x16
+      IL_01b7: shl          
+      IL_01b8: ldloc.s      b
+      IL_01ba: ldc.i4.s     10 // 0x0a
+      IL_01bc: shr.un       
+      IL_01bd: or           
+      IL_01be: add          
+      IL_01bf: stloc.s      b
+
+      // [110 17 - 110 37]
+      IL_01c1: ldloc.s      c
+      IL_01c3: ldloc.s      d
+      IL_01c5: xor          
+      IL_01c6: ldloc.s      b
+      IL_01c8: and          
+      IL_01c9: ldloc.s      d
+      IL_01cb: xor          
+      IL_01cc: stloc.s      f
+
+      // [111 17 - 111 24]
+      IL_01ce: ldloc.s      a
+      IL_01d0: ldloc.s      f
+      IL_01d2: add          
+      IL_01d3: stloc.s      a
+
+      // [112 17 - 112 33]
+      IL_01d5: ldloc.s      a
+      IL_01d7: ldc.i4       -176418897 // 0xf57c0faf
+      IL_01dc: add          
+      IL_01dd: stloc.s      a
+
+      // [113 17 - 113 34]
+      IL_01df: ldloc.s      a
+      IL_01e1: ldloc.s      blockPtr
+      IL_01e3: ldc.i4.4     
+      IL_01e4: conv.i       
+      IL_01e5: ldc.i4.4     
+      IL_01e6: mul          
+      IL_01e7: add          
+      IL_01e8: ldind.u4     
+      IL_01e9: add          
+      IL_01ea: stloc.s      a
+
+      // [114 17 - 114 54]
+      IL_01ec: ldloc.s      b
+      IL_01ee: ldloc.s      a
+      IL_01f0: ldc.i4.7     
+      IL_01f1: shl          
+      IL_01f2: ldloc.s      a
+      IL_01f4: ldc.i4.s     25 // 0x19
+      IL_01f6: shr.un       
+      IL_01f7: or           
+      IL_01f8: add          
+      IL_01f9: stloc.s      a
+
+      // [117 17 - 117 37]
+      IL_01fb: ldloc.s      b
+      IL_01fd: ldloc.s      c
+      IL_01ff: xor          
+      IL_0200: ldloc.s      a
+      IL_0202: and          
+      IL_0203: ldloc.s      c
+      IL_0205: xor          
+      IL_0206: stloc.s      f
+
+      // [118 17 - 118 24]
+      IL_0208: ldloc.s      d
+      IL_020a: ldloc.s      f
+      IL_020c: add          
+      IL_020d: stloc.s      d
+
+      // [119 17 - 119 33]
+      IL_020f: ldloc.s      d
+      IL_0211: ldc.i4       1200080426 // 0x4787c62a
+      IL_0216: add          
+      IL_0217: stloc.s      d
+
+      // [120 17 - 120 34]
+      IL_0219: ldloc.s      d
+      IL_021b: ldloc.s      blockPtr
+      IL_021d: ldc.i4.5     
+      IL_021e: conv.i       
+      IL_021f: ldc.i4.4     
+      IL_0220: mul          
+      IL_0221: add          
+      IL_0222: ldind.u4     
+      IL_0223: add          
+      IL_0224: stloc.s      d
+
+      // [121 17 - 121 56]
+      IL_0226: ldloc.s      a
+      IL_0228: ldloc.s      d
+      IL_022a: ldc.i4.s     12 // 0x0c
+      IL_022c: shl          
+      IL_022d: ldloc.s      d
+      IL_022f: ldc.i4.s     20 // 0x14
+      IL_0231: shr.un       
+      IL_0232: or           
+      IL_0233: add          
+      IL_0234: stloc.s      d
+
+      // [124 17 - 124 37]
+      IL_0236: ldloc.s      a
+      IL_0238: ldloc.s      b
+      IL_023a: xor          
+      IL_023b: ldloc.s      d
+      IL_023d: and          
+      IL_023e: ldloc.s      b
+      IL_0240: xor          
+      IL_0241: stloc.s      f
+
+      // [125 17 - 125 24]
+      IL_0243: ldloc.s      c
+      IL_0245: ldloc.s      f
+      IL_0247: add          
+      IL_0248: stloc.s      c
+
+      // [126 17 - 126 33]
+      IL_024a: ldloc.s      c
+      IL_024c: ldc.i4       -1473231341 // 0xa8304613
+      IL_0251: add          
+      IL_0252: stloc.s      c
+
+      // [127 17 - 127 34]
+      IL_0254: ldloc.s      c
+      IL_0256: ldloc.s      blockPtr
+      IL_0258: ldc.i4.6     
+      IL_0259: conv.i       
+      IL_025a: ldc.i4.4     
+      IL_025b: mul          
+      IL_025c: add          
+      IL_025d: ldind.u4     
+      IL_025e: add          
+      IL_025f: stloc.s      c
+
+      // [128 17 - 128 56]
+      IL_0261: ldloc.s      d
+      IL_0263: ldloc.s      c
+      IL_0265: ldc.i4.s     17 // 0x11
+      IL_0267: shl          
+      IL_0268: ldloc.s      c
+      IL_026a: ldc.i4.s     15 // 0x0f
+      IL_026c: shr.un       
+      IL_026d: or           
+      IL_026e: add          
+      IL_026f: stloc.s      c
+
+      // [131 17 - 131 37]
+      IL_0271: ldloc.s      d
+      IL_0273: ldloc.s      a
+      IL_0275: xor          
+      IL_0276: ldloc.s      c
+      IL_0278: and          
+      IL_0279: ldloc.s      a
+      IL_027b: xor          
+      IL_027c: stloc.s      f
+
+      // [132 17 - 132 24]
+      IL_027e: ldloc.s      b
+      IL_0280: ldloc.s      f
+      IL_0282: add          
+      IL_0283: stloc.s      b
+
+      // [133 17 - 133 33]
+      IL_0285: ldloc.s      b
+      IL_0287: ldc.i4       -45705983 // 0xfd469501
+      IL_028c: add          
+      IL_028d: stloc.s      b
+
+      // [134 17 - 134 34]
+      IL_028f: ldloc.s      b
+      IL_0291: ldloc.s      blockPtr
+      IL_0293: ldc.i4.7     
+      IL_0294: conv.i       
+      IL_0295: ldc.i4.4     
+      IL_0296: mul          
+      IL_0297: add          
+      IL_0298: ldind.u4     
+      IL_0299: add          
+      IL_029a: stloc.s      b
+
+      // [135 17 - 135 56]
+      IL_029c: ldloc.s      c
+      IL_029e: ldloc.s      b
+      IL_02a0: ldc.i4.s     22 // 0x16
+      IL_02a2: shl          
+      IL_02a3: ldloc.s      b
+      IL_02a5: ldc.i4.s     10 // 0x0a
+      IL_02a7: shr.un       
+      IL_02a8: or           
+      IL_02a9: add          
+      IL_02aa: stloc.s      b
+
+      // [138 17 - 138 37]
+      IL_02ac: ldloc.s      c
+      IL_02ae: ldloc.s      d
+      IL_02b0: xor          
+      IL_02b1: ldloc.s      b
+      IL_02b3: and          
+      IL_02b4: ldloc.s      d
+      IL_02b6: xor          
+      IL_02b7: stloc.s      f
+
+      // [139 17 - 139 24]
+      IL_02b9: ldloc.s      a
+      IL_02bb: ldloc.s      f
+      IL_02bd: add          
+      IL_02be: stloc.s      a
+
+      // [140 17 - 140 33]
+      IL_02c0: ldloc.s      a
+      IL_02c2: ldc.i4       1770035416 // 0x698098d8
+      IL_02c7: add          
+      IL_02c8: stloc.s      a
+
+      // [141 17 - 141 34]
+      IL_02ca: ldloc.s      a
+      IL_02cc: ldloc.s      blockPtr
+      IL_02ce: ldc.i4.8     
+      IL_02cf: conv.i       
+      IL_02d0: ldc.i4.4     
+      IL_02d1: mul          
+      IL_02d2: add          
+      IL_02d3: ldind.u4     
+      IL_02d4: add          
+      IL_02d5: stloc.s      a
+
+      // [142 17 - 142 54]
+      IL_02d7: ldloc.s      b
+      IL_02d9: ldloc.s      a
+      IL_02db: ldc.i4.7     
+      IL_02dc: shl          
+      IL_02dd: ldloc.s      a
+      IL_02df: ldc.i4.s     25 // 0x19
+      IL_02e1: shr.un       
+      IL_02e2: or           
+      IL_02e3: add          
+      IL_02e4: stloc.s      a
+
+      // [145 17 - 145 37]
+      IL_02e6: ldloc.s      b
+      IL_02e8: ldloc.s      c
+      IL_02ea: xor          
+      IL_02eb: ldloc.s      a
+      IL_02ed: and          
+      IL_02ee: ldloc.s      c
+      IL_02f0: xor          
+      IL_02f1: stloc.s      f
+
+      // [146 17 - 146 24]
+      IL_02f3: ldloc.s      d
+      IL_02f5: ldloc.s      f
+      IL_02f7: add          
+      IL_02f8: stloc.s      d
+
+      // [147 17 - 147 33]
+      IL_02fa: ldloc.s      d
+      IL_02fc: ldc.i4       -1958414417 // 0x8b44f7af
+      IL_0301: add          
+      IL_0302: stloc.s      d
+
+      // [148 17 - 148 34]
+      IL_0304: ldloc.s      d
+      IL_0306: ldloc.s      blockPtr
+      IL_0308: ldc.i4.s     9 // 0x09
+      IL_030a: conv.i       
+      IL_030b: ldc.i4.4     
+      IL_030c: mul          
+      IL_030d: add          
+      IL_030e: ldind.u4     
+      IL_030f: add          
+      IL_0310: stloc.s      d
+
+      // [149 17 - 149 56]
+      IL_0312: ldloc.s      a
+      IL_0314: ldloc.s      d
+      IL_0316: ldc.i4.s     12 // 0x0c
+      IL_0318: shl          
+      IL_0319: ldloc.s      d
+      IL_031b: ldc.i4.s     20 // 0x14
+      IL_031d: shr.un       
+      IL_031e: or           
+      IL_031f: add          
+      IL_0320: stloc.s      d
+
+      // [152 17 - 152 37]
+      IL_0322: ldloc.s      a
+      IL_0324: ldloc.s      b
+      IL_0326: xor          
+      IL_0327: ldloc.s      d
+      IL_0329: and          
+      IL_032a: ldloc.s      b
+      IL_032c: xor          
+      IL_032d: stloc.s      f
+
+      // [153 17 - 153 24]
+      IL_032f: ldloc.s      c
+      IL_0331: ldloc.s      f
+      IL_0333: add          
+      IL_0334: stloc.s      c
+
+      // [154 17 - 154 33]
+      IL_0336: ldloc.s      c
+      IL_0338: ldc.i4       -42063 // 0xffff5bb1
+      IL_033d: add          
+      IL_033e: stloc.s      c
+
+      // [155 17 - 155 35]
+      IL_0340: ldloc.s      c
+      IL_0342: ldloc.s      blockPtr
+      IL_0344: ldc.i4.s     10 // 0x0a
+      IL_0346: conv.i       
+      IL_0347: ldc.i4.4     
+      IL_0348: mul          
+      IL_0349: add          
+      IL_034a: ldind.u4     
+      IL_034b: add          
+      IL_034c: stloc.s      c
+
+      // [156 17 - 156 56]
+      IL_034e: ldloc.s      d
+      IL_0350: ldloc.s      c
+      IL_0352: ldc.i4.s     17 // 0x11
+      IL_0354: shl          
+      IL_0355: ldloc.s      c
+      IL_0357: ldc.i4.s     15 // 0x0f
+      IL_0359: shr.un       
+      IL_035a: or           
+      IL_035b: add          
+      IL_035c: stloc.s      c
+
+      // [159 17 - 159 37]
+      IL_035e: ldloc.s      d
+      IL_0360: ldloc.s      a
+      IL_0362: xor          
+      IL_0363: ldloc.s      c
+      IL_0365: and          
+      IL_0366: ldloc.s      a
+      IL_0368: xor          
+      IL_0369: stloc.s      f
+
+      // [160 17 - 160 24]
+      IL_036b: ldloc.s      b
+      IL_036d: ldloc.s      f
+      IL_036f: add          
+      IL_0370: stloc.s      b
+
+      // [161 17 - 161 33]
+      IL_0372: ldloc.s      b
+      IL_0374: ldc.i4       -1990404162 // 0x895cd7be
+      IL_0379: add          
+      IL_037a: stloc.s      b
+
+      // [162 17 - 162 35]
+      IL_037c: ldloc.s      b
+      IL_037e: ldloc.s      blockPtr
+      IL_0380: ldc.i4.s     11 // 0x0b
+      IL_0382: conv.i       
+      IL_0383: ldc.i4.4     
+      IL_0384: mul          
+      IL_0385: add          
+      IL_0386: ldind.u4     
+      IL_0387: add          
+      IL_0388: stloc.s      b
+
+      // [163 17 - 163 56]
+      IL_038a: ldloc.s      c
+      IL_038c: ldloc.s      b
+      IL_038e: ldc.i4.s     22 // 0x16
+      IL_0390: shl          
+      IL_0391: ldloc.s      b
+      IL_0393: ldc.i4.s     10 // 0x0a
+      IL_0395: shr.un       
+      IL_0396: or           
+      IL_0397: add          
+      IL_0398: stloc.s      b
+
+      // [166 17 - 166 37]
+      IL_039a: ldloc.s      c
+      IL_039c: ldloc.s      d
+      IL_039e: xor          
+      IL_039f: ldloc.s      b
+      IL_03a1: and          
+      IL_03a2: ldloc.s      d
+      IL_03a4: xor          
+      IL_03a5: stloc.s      f
+
+      // [167 17 - 167 24]
+      IL_03a7: ldloc.s      a
+      IL_03a9: ldloc.s      f
+      IL_03ab: add          
+      IL_03ac: stloc.s      a
+
+      // [168 17 - 168 33]
+      IL_03ae: ldloc.s      a
+      IL_03b0: ldc.i4       1804603682 // 0x6b901122
+      IL_03b5: add          
+      IL_03b6: stloc.s      a
+
+      // [169 17 - 169 35]
+      IL_03b8: ldloc.s      a
+      IL_03ba: ldloc.s      blockPtr
+      IL_03bc: ldc.i4.s     12 // 0x0c
+      IL_03be: conv.i       
+      IL_03bf: ldc.i4.4     
+      IL_03c0: mul          
+      IL_03c1: add          
+      IL_03c2: ldind.u4     
+      IL_03c3: add          
+      IL_03c4: stloc.s      a
+
+      // [170 17 - 170 54]
+      IL_03c6: ldloc.s      b
+      IL_03c8: ldloc.s      a
+      IL_03ca: ldc.i4.7     
+      IL_03cb: shl          
+      IL_03cc: ldloc.s      a
+      IL_03ce: ldc.i4.s     25 // 0x19
+      IL_03d0: shr.un       
+      IL_03d1: or           
+      IL_03d2: add          
+      IL_03d3: stloc.s      a
+
+      // [173 17 - 173 37]
+      IL_03d5: ldloc.s      b
+      IL_03d7: ldloc.s      c
+      IL_03d9: xor          
+      IL_03da: ldloc.s      a
+      IL_03dc: and          
+      IL_03dd: ldloc.s      c
+      IL_03df: xor          
+      IL_03e0: stloc.s      f
+
+      // [174 17 - 174 24]
+      IL_03e2: ldloc.s      d
+      IL_03e4: ldloc.s      f
+      IL_03e6: add          
+      IL_03e7: stloc.s      d
+
+      // [175 17 - 175 33]
+      IL_03e9: ldloc.s      d
+      IL_03eb: ldc.i4       -40341101 // 0xfd987193
+      IL_03f0: add          
+      IL_03f1: stloc.s      d
+
+      // [176 17 - 176 35]
+      IL_03f3: ldloc.s      d
+      IL_03f5: ldloc.s      blockPtr
+      IL_03f7: ldc.i4.s     13 // 0x0d
+      IL_03f9: conv.i       
+      IL_03fa: ldc.i4.4     
+      IL_03fb: mul          
+      IL_03fc: add          
+      IL_03fd: ldind.u4     
+      IL_03fe: add          
+      IL_03ff: stloc.s      d
+
+      // [177 17 - 177 56]
+      IL_0401: ldloc.s      a
+      IL_0403: ldloc.s      d
+      IL_0405: ldc.i4.s     12 // 0x0c
+      IL_0407: shl          
+      IL_0408: ldloc.s      d
+      IL_040a: ldc.i4.s     20 // 0x14
+      IL_040c: shr.un       
+      IL_040d: or           
+      IL_040e: add          
+      IL_040f: stloc.s      d
+
+      // [180 17 - 180 37]
+      IL_0411: ldloc.s      a
+      IL_0413: ldloc.s      b
+      IL_0415: xor          
+      IL_0416: ldloc.s      d
+      IL_0418: and          
+      IL_0419: ldloc.s      b
+      IL_041b: xor          
+      IL_041c: stloc.s      f
+
+      // [181 17 - 181 24]
+      IL_041e: ldloc.s      c
+      IL_0420: ldloc.s      f
+      IL_0422: add          
+      IL_0423: stloc.s      c
+
+      // [182 17 - 182 33]
+      IL_0425: ldloc.s      c
+      IL_0427: ldc.i4       -1502002290 // 0xa679438e
+      IL_042c: add          
+      IL_042d: stloc.s      c
+
+      // [183 17 - 183 35]
+      IL_042f: ldloc.s      c
+      IL_0431: ldloc.s      blockPtr
+      IL_0433: ldc.i4.s     14 // 0x0e
+      IL_0435: conv.i       
+      IL_0436: ldc.i4.4     
+      IL_0437: mul          
+      IL_0438: add          
+      IL_0439: ldind.u4     
+      IL_043a: add          
+      IL_043b: stloc.s      c
+
+      // [184 17 - 184 56]
+      IL_043d: ldloc.s      d
+      IL_043f: ldloc.s      c
+      IL_0441: ldc.i4.s     17 // 0x11
+      IL_0443: shl          
+      IL_0444: ldloc.s      c
+      IL_0446: ldc.i4.s     15 // 0x0f
+      IL_0448: shr.un       
+      IL_0449: or           
+      IL_044a: add          
+      IL_044b: stloc.s      c
+
+      // [187 17 - 187 37]
+      IL_044d: ldloc.s      d
+      IL_044f: ldloc.s      a
+      IL_0451: xor          
+      IL_0452: ldloc.s      c
+      IL_0454: and          
+      IL_0455: ldloc.s      a
+      IL_0457: xor          
+      IL_0458: stloc.s      f
+
+      // [188 17 - 188 24]
+      IL_045a: ldloc.s      b
+      IL_045c: ldloc.s      f
+      IL_045e: add          
+      IL_045f: stloc.s      b
+
+      // [189 17 - 189 33]
+      IL_0461: ldloc.s      b
+      IL_0463: ldc.i4       1236535329 // 0x49b40821
+      IL_0468: add          
+      IL_0469: stloc.s      b
+
+      // [190 17 - 190 35]
+      IL_046b: ldloc.s      b
+      IL_046d: ldloc.s      blockPtr
+      IL_046f: ldc.i4.s     15 // 0x0f
+      IL_0471: conv.i       
+      IL_0472: ldc.i4.4     
+      IL_0473: mul          
+      IL_0474: add          
+      IL_0475: ldind.u4     
+      IL_0476: add          
+      IL_0477: stloc.s      b
+
+      // [191 17 - 191 56]
+      IL_0479: ldloc.s      c
+      IL_047b: ldloc.s      b
+      IL_047d: ldc.i4.s     22 // 0x16
+      IL_047f: shl          
+      IL_0480: ldloc.s      b
+      IL_0482: ldc.i4.s     10 // 0x0a
+      IL_0484: shr.un       
+      IL_0485: or           
+      IL_0486: add          
+      IL_0487: stloc.s      b
+
+      // [194 17 - 194 37]
+      IL_0489: ldloc.s      b
+      IL_048b: ldloc.s      c
+      IL_048d: xor          
+      IL_048e: ldloc.s      d
+      IL_0490: and          
+      IL_0491: ldloc.s      c
+      IL_0493: xor          
+      IL_0494: stloc.s      f
+
+      // [195 17 - 195 24]
+      IL_0496: ldloc.s      a
+      IL_0498: ldloc.s      f
+      IL_049a: add          
+      IL_049b: stloc.s      a
+
+      // [196 17 - 196 33]
+      IL_049d: ldloc.s      a
+      IL_049f: ldc.i4       -165796510 // 0xf61e2562
+      IL_04a4: add          
+      IL_04a5: stloc.s      a
+
+      // [197 17 - 197 51]
+      IL_04a7: ldloc.s      a
+      IL_04a9: ldloc.s      blockPtr
+      IL_04ab: ldc.i4.4     
+      IL_04ac: add          
+      IL_04ad: ldind.u4     
+      IL_04ae: add          
+      IL_04af: stloc.s      a
+
+      // [198 17 - 198 54]
+      IL_04b1: ldloc.s      b
+      IL_04b3: ldloc.s      a
+      IL_04b5: ldc.i4.5     
+      IL_04b6: shl          
+      IL_04b7: ldloc.s      a
+      IL_04b9: ldc.i4.s     27 // 0x1b
+      IL_04bb: shr.un       
+      IL_04bc: or           
+      IL_04bd: add          
+      IL_04be: stloc.s      a
+
+      // [201 17 - 201 37]
+      IL_04c0: ldloc.s      a
+      IL_04c2: ldloc.s      b
+      IL_04c4: xor          
+      IL_04c5: ldloc.s      c
+      IL_04c7: and          
+      IL_04c8: ldloc.s      b
+      IL_04ca: xor          
+      IL_04cb: stloc.s      f
+
+      // [202 17 - 202 24]
+      IL_04cd: ldloc.s      d
+      IL_04cf: ldloc.s      f
+      IL_04d1: add          
+      IL_04d2: stloc.s      d
+
+      // [203 17 - 203 33]
+      IL_04d4: ldloc.s      d
+      IL_04d6: ldc.i4       -1069501632 // 0xc040b340
+      IL_04db: add          
+      IL_04dc: stloc.s      d
+
+      // [204 17 - 204 51]
+      IL_04de: ldloc.s      d
+      IL_04e0: ldloc.s      blockPtr
+      IL_04e2: ldc.i4.6     
+      IL_04e3: conv.i       
+      IL_04e4: ldc.i4.4     
+      IL_04e5: mul          
+      IL_04e6: add          
+      IL_04e7: ldind.u4     
+      IL_04e8: add          
+      IL_04e9: stloc.s      d
+
+      // [205 17 - 205 54]
+      IL_04eb: ldloc.s      a
+      IL_04ed: ldloc.s      d
+      IL_04ef: ldc.i4.s     9 // 0x09
+      IL_04f1: shl          
+      IL_04f2: ldloc.s      d
+      IL_04f4: ldc.i4.s     23 // 0x17
+      IL_04f6: shr.un       
+      IL_04f7: or           
+      IL_04f8: add          
+      IL_04f9: stloc.s      d
+
+      // [208 17 - 208 37]
+      IL_04fb: ldloc.s      d
+      IL_04fd: ldloc.s      a
+      IL_04ff: xor          
+      IL_0500: ldloc.s      b
+      IL_0502: and          
+      IL_0503: ldloc.s      a
+      IL_0505: xor          
+      IL_0506: stloc.s      f
+
+      // [209 17 - 209 24]
+      IL_0508: ldloc.s      c
+      IL_050a: ldloc.s      f
+      IL_050c: add          
+      IL_050d: stloc.s      c
+
+      // [210 17 - 210 33]
+      IL_050f: ldloc.s      c
+      IL_0511: ldc.i4       643717713 // 0x265e5a51
+      IL_0516: add          
+      IL_0517: stloc.s      c
+
+      // [211 17 - 211 51]
+      IL_0519: ldloc.s      c
+      IL_051b: ldloc.s      blockPtr
+      IL_051d: ldc.i4.s     11 // 0x0b
+      IL_051f: conv.i       
+      IL_0520: ldc.i4.4     
+      IL_0521: mul          
+      IL_0522: add          
+      IL_0523: ldind.u4     
+      IL_0524: add          
+      IL_0525: stloc.s      c
+
+      // [212 17 - 212 56]
+      IL_0527: ldloc.s      d
+      IL_0529: ldloc.s      c
+      IL_052b: ldc.i4.s     14 // 0x0e
+      IL_052d: shl          
+      IL_052e: ldloc.s      c
+      IL_0530: ldc.i4.s     18 // 0x12
+      IL_0532: shr.un       
+      IL_0533: or           
+      IL_0534: add          
+      IL_0535: stloc.s      c
+
+      // [215 17 - 215 37]
+      IL_0537: ldloc.s      c
+      IL_0539: ldloc.s      d
+      IL_053b: xor          
+      IL_053c: ldloc.s      a
+      IL_053e: and          
+      IL_053f: ldloc.s      d
+      IL_0541: xor          
+      IL_0542: stloc.s      f
+
+      // [216 17 - 216 24]
+      IL_0544: ldloc.s      b
+      IL_0546: ldloc.s      f
+      IL_0548: add          
+      IL_0549: stloc.s      b
+
+      // [217 17 - 217 33]
+      IL_054b: ldloc.s      b
+      IL_054d: ldc.i4       -373897302 // 0xe9b6c7aa
+      IL_0552: add          
+      IL_0553: stloc.s      b
+
+      // [218 17 - 218 51]
+      IL_0555: ldloc.s      b
+      IL_0557: ldloc.s      blockPtr
+      IL_0559: ldind.u4     
+      IL_055a: add          
+      IL_055b: stloc.s      b
+
+      // [219 17 - 219 56]
+      IL_055d: ldloc.s      c
+      IL_055f: ldloc.s      b
+      IL_0561: ldc.i4.s     20 // 0x14
+      IL_0563: shl          
+      IL_0564: ldloc.s      b
+      IL_0566: ldc.i4.s     12 // 0x0c
+      IL_0568: shr.un       
+      IL_0569: or           
+      IL_056a: add          
+      IL_056b: stloc.s      b
+
+      // [222 17 - 222 37]
+      IL_056d: ldloc.s      b
+      IL_056f: ldloc.s      c
+      IL_0571: xor          
+      IL_0572: ldloc.s      d
+      IL_0574: and          
+      IL_0575: ldloc.s      c
+      IL_0577: xor          
+      IL_0578: stloc.s      f
+
+      // [223 17 - 223 24]
+      IL_057a: ldloc.s      a
+      IL_057c: ldloc.s      f
+      IL_057e: add          
+      IL_057f: stloc.s      a
+
+      // [224 17 - 224 33]
+      IL_0581: ldloc.s      a
+      IL_0583: ldc.i4       -701558691 // 0xd62f105d
+      IL_0588: add          
+      IL_0589: stloc.s      a
+
+      // [225 17 - 225 51]
+      IL_058b: ldloc.s      a
+      IL_058d: ldloc.s      blockPtr
+      IL_058f: ldc.i4.5     
+      IL_0590: conv.i       
+      IL_0591: ldc.i4.4     
+      IL_0592: mul          
+      IL_0593: add          
+      IL_0594: ldind.u4     
+      IL_0595: add          
+      IL_0596: stloc.s      a
+
+      // [226 17 - 226 54]
+      IL_0598: ldloc.s      b
+      IL_059a: ldloc.s      a
+      IL_059c: ldc.i4.5     
+      IL_059d: shl          
+      IL_059e: ldloc.s      a
+      IL_05a0: ldc.i4.s     27 // 0x1b
+      IL_05a2: shr.un       
+      IL_05a3: or           
+      IL_05a4: add          
+      IL_05a5: stloc.s      a
+
+      // [229 17 - 229 37]
+      IL_05a7: ldloc.s      a
+      IL_05a9: ldloc.s      b
+      IL_05ab: xor          
+      IL_05ac: ldloc.s      c
+      IL_05ae: and          
+      IL_05af: ldloc.s      b
+      IL_05b1: xor          
+      IL_05b2: stloc.s      f
+
+      // [230 17 - 230 24]
+      IL_05b4: ldloc.s      d
+      IL_05b6: ldloc.s      f
+      IL_05b8: add          
+      IL_05b9: stloc.s      d
+
+      // [231 17 - 231 32]
+      IL_05bb: ldloc.s      d
+      IL_05bd: ldc.i4       38016083 // 0x02441453
+      IL_05c2: add          
+      IL_05c3: stloc.s      d
+
+      // [232 17 - 232 51]
+      IL_05c5: ldloc.s      d
+      IL_05c7: ldloc.s      blockPtr
+      IL_05c9: ldc.i4.s     10 // 0x0a
+      IL_05cb: conv.i       
+      IL_05cc: ldc.i4.4     
+      IL_05cd: mul          
+      IL_05ce: add          
+      IL_05cf: ldind.u4     
+      IL_05d0: add          
+      IL_05d1: stloc.s      d
+
+      // [233 17 - 233 54]
+      IL_05d3: ldloc.s      a
+      IL_05d5: ldloc.s      d
+      IL_05d7: ldc.i4.s     9 // 0x09
+      IL_05d9: shl          
+      IL_05da: ldloc.s      d
+      IL_05dc: ldc.i4.s     23 // 0x17
+      IL_05de: shr.un       
+      IL_05df: or           
+      IL_05e0: add          
+      IL_05e1: stloc.s      d
+
+      // [236 17 - 236 37]
+      IL_05e3: ldloc.s      d
+      IL_05e5: ldloc.s      a
+      IL_05e7: xor          
+      IL_05e8: ldloc.s      b
+      IL_05ea: and          
+      IL_05eb: ldloc.s      a
+      IL_05ed: xor          
+      IL_05ee: stloc.s      f
+
+      // [237 17 - 237 24]
+      IL_05f0: ldloc.s      c
+      IL_05f2: ldloc.s      f
+      IL_05f4: add          
+      IL_05f5: stloc.s      c
+
+      // [238 17 - 238 33]
+      IL_05f7: ldloc.s      c
+      IL_05f9: ldc.i4       -660478335 // 0xd8a1e681
+      IL_05fe: add          
+      IL_05ff: stloc.s      c
+
+      // [239 17 - 239 51]
+      IL_0601: ldloc.s      c
+      IL_0603: ldloc.s      blockPtr
+      IL_0605: ldc.i4.s     15 // 0x0f
+      IL_0607: conv.i       
+      IL_0608: ldc.i4.4     
+      IL_0609: mul          
+      IL_060a: add          
+      IL_060b: ldind.u4     
+      IL_060c: add          
+      IL_060d: stloc.s      c
+
+      // [240 17 - 240 56]
+      IL_060f: ldloc.s      d
+      IL_0611: ldloc.s      c
+      IL_0613: ldc.i4.s     14 // 0x0e
+      IL_0615: shl          
+      IL_0616: ldloc.s      c
+      IL_0618: ldc.i4.s     18 // 0x12
+      IL_061a: shr.un       
+      IL_061b: or           
+      IL_061c: add          
+      IL_061d: stloc.s      c
+
+      // [243 17 - 243 37]
+      IL_061f: ldloc.s      c
+      IL_0621: ldloc.s      d
+      IL_0623: xor          
+      IL_0624: ldloc.s      a
+      IL_0626: and          
+      IL_0627: ldloc.s      d
+      IL_0629: xor          
+      IL_062a: stloc.s      f
+
+      // [244 17 - 244 24]
+      IL_062c: ldloc.s      b
+      IL_062e: ldloc.s      f
+      IL_0630: add          
+      IL_0631: stloc.s      b
+
+      // [245 17 - 245 33]
+      IL_0633: ldloc.s      b
+      IL_0635: ldc.i4       -405537848 // 0xe7d3fbc8
+      IL_063a: add          
+      IL_063b: stloc.s      b
+
+      // [246 17 - 246 51]
+      IL_063d: ldloc.s      b
+      IL_063f: ldloc.s      blockPtr
+      IL_0641: ldc.i4.4     
+      IL_0642: conv.i       
+      IL_0643: ldc.i4.4     
+      IL_0644: mul          
+      IL_0645: add          
+      IL_0646: ldind.u4     
+      IL_0647: add          
+      IL_0648: stloc.s      b
+
+      // [247 17 - 247 56]
+      IL_064a: ldloc.s      c
+      IL_064c: ldloc.s      b
+      IL_064e: ldc.i4.s     20 // 0x14
+      IL_0650: shl          
+      IL_0651: ldloc.s      b
+      IL_0653: ldc.i4.s     12 // 0x0c
+      IL_0655: shr.un       
+      IL_0656: or           
+      IL_0657: add          
+      IL_0658: stloc.s      b
+
+      // [250 17 - 250 37]
+      IL_065a: ldloc.s      b
+      IL_065c: ldloc.s      c
+      IL_065e: xor          
+      IL_065f: ldloc.s      d
+      IL_0661: and          
+      IL_0662: ldloc.s      c
+      IL_0664: xor          
+      IL_0665: stloc.s      f
+
+      // [251 17 - 251 24]
+      IL_0667: ldloc.s      a
+      IL_0669: ldloc.s      f
+      IL_066b: add          
+      IL_066c: stloc.s      a
+
+      // [252 17 - 252 33]
+      IL_066e: ldloc.s      a
+      IL_0670: ldc.i4       568446438 // 0x21e1cde6
+      IL_0675: add          
+      IL_0676: stloc.s      a
+
+      // [253 17 - 253 51]
+      IL_0678: ldloc.s      a
+      IL_067a: ldloc.s      blockPtr
+      IL_067c: ldc.i4.s     9 // 0x09
+      IL_067e: conv.i       
+      IL_067f: ldc.i4.4     
+      IL_0680: mul          
+      IL_0681: add          
+      IL_0682: ldind.u4     
+      IL_0683: add          
+      IL_0684: stloc.s      a
+
+      // [254 17 - 254 54]
+      IL_0686: ldloc.s      b
+      IL_0688: ldloc.s      a
+      IL_068a: ldc.i4.5     
+      IL_068b: shl          
+      IL_068c: ldloc.s      a
+      IL_068e: ldc.i4.s     27 // 0x1b
+      IL_0690: shr.un       
+      IL_0691: or           
+      IL_0692: add          
+      IL_0693: stloc.s      a
+
+      // [257 17 - 257 37]
+      IL_0695: ldloc.s      a
+      IL_0697: ldloc.s      b
+      IL_0699: xor          
+      IL_069a: ldloc.s      c
+      IL_069c: and          
+      IL_069d: ldloc.s      b
+      IL_069f: xor          
+      IL_06a0: stloc.s      f
+
+      // [258 17 - 258 24]
+      IL_06a2: ldloc.s      d
+      IL_06a4: ldloc.s      f
+      IL_06a6: add          
+      IL_06a7: stloc.s      d
+
+      // [259 17 - 259 33]
+      IL_06a9: ldloc.s      d
+      IL_06ab: ldc.i4       -1019803690 // 0xc33707d6
+      IL_06b0: add          
+      IL_06b1: stloc.s      d
+
+      // [260 17 - 260 51]
+      IL_06b3: ldloc.s      d
+      IL_06b5: ldloc.s      blockPtr
+      IL_06b7: ldc.i4.s     14 // 0x0e
+      IL_06b9: conv.i       
+      IL_06ba: ldc.i4.4     
+      IL_06bb: mul          
+      IL_06bc: add          
+      IL_06bd: ldind.u4     
+      IL_06be: add          
+      IL_06bf: stloc.s      d
+
+      // [261 17 - 261 54]
+      IL_06c1: ldloc.s      a
+      IL_06c3: ldloc.s      d
+      IL_06c5: ldc.i4.s     9 // 0x09
+      IL_06c7: shl          
+      IL_06c8: ldloc.s      d
+      IL_06ca: ldc.i4.s     23 // 0x17
+      IL_06cc: shr.un       
+      IL_06cd: or           
+      IL_06ce: add          
+      IL_06cf: stloc.s      d
+
+      // [264 17 - 264 37]
+      IL_06d1: ldloc.s      d
+      IL_06d3: ldloc.s      a
+      IL_06d5: xor          
+      IL_06d6: ldloc.s      b
+      IL_06d8: and          
+      IL_06d9: ldloc.s      a
+      IL_06db: xor          
+      IL_06dc: stloc.s      f
+
+      // [265 17 - 265 24]
+      IL_06de: ldloc.s      c
+      IL_06e0: ldloc.s      f
+      IL_06e2: add          
+      IL_06e3: stloc.s      c
+
+      // [266 17 - 266 33]
+      IL_06e5: ldloc.s      c
+      IL_06e7: ldc.i4       -187363961 // 0xf4d50d87
+      IL_06ec: add          
+      IL_06ed: stloc.s      c
+
+      // [267 17 - 267 51]
+      IL_06ef: ldloc.s      c
+      IL_06f1: ldloc.s      blockPtr
+      IL_06f3: ldc.i4.3     
+      IL_06f4: conv.i       
+      IL_06f5: ldc.i4.4     
+      IL_06f6: mul          
+      IL_06f7: add          
+      IL_06f8: ldind.u4     
+      IL_06f9: add          
+      IL_06fa: stloc.s      c
+
+      // [268 17 - 268 56]
+      IL_06fc: ldloc.s      d
+      IL_06fe: ldloc.s      c
+      IL_0700: ldc.i4.s     14 // 0x0e
+      IL_0702: shl          
+      IL_0703: ldloc.s      c
+      IL_0705: ldc.i4.s     18 // 0x12
+      IL_0707: shr.un       
+      IL_0708: or           
+      IL_0709: add          
+      IL_070a: stloc.s      c
+
+      // [271 17 - 271 37]
+      IL_070c: ldloc.s      c
+      IL_070e: ldloc.s      d
+      IL_0710: xor          
+      IL_0711: ldloc.s      a
+      IL_0713: and          
+      IL_0714: ldloc.s      d
+      IL_0716: xor          
+      IL_0717: stloc.s      f
+
+      // [272 17 - 272 24]
+      IL_0719: ldloc.s      b
+      IL_071b: ldloc.s      f
+      IL_071d: add          
+      IL_071e: stloc.s      b
+
+      // [273 17 - 273 33]
+      IL_0720: ldloc.s      b
+      IL_0722: ldc.i4       1163531501 // 0x455a14ed
+      IL_0727: add          
+      IL_0728: stloc.s      b
+
+      // [274 17 - 274 51]
+      IL_072a: ldloc.s      b
+      IL_072c: ldloc.s      blockPtr
+      IL_072e: ldc.i4.8     
+      IL_072f: conv.i       
+      IL_0730: ldc.i4.4     
+      IL_0731: mul          
+      IL_0732: add          
+      IL_0733: ldind.u4     
+      IL_0734: add          
+      IL_0735: stloc.s      b
+
+      // [275 17 - 275 56]
+      IL_0737: ldloc.s      c
+      IL_0739: ldloc.s      b
+      IL_073b: ldc.i4.s     20 // 0x14
+      IL_073d: shl          
+      IL_073e: ldloc.s      b
+      IL_0740: ldc.i4.s     12 // 0x0c
+      IL_0742: shr.un       
+      IL_0743: or           
+      IL_0744: add          
+      IL_0745: stloc.s      b
+
+      // [278 17 - 278 37]
+      IL_0747: ldloc.s      b
+      IL_0749: ldloc.s      c
+      IL_074b: xor          
+      IL_074c: ldloc.s      d
+      IL_074e: and          
+      IL_074f: ldloc.s      c
+      IL_0751: xor          
+      IL_0752: stloc.s      f
+
+      // [279 17 - 279 24]
+      IL_0754: ldloc.s      a
+      IL_0756: ldloc.s      f
+      IL_0758: add          
+      IL_0759: stloc.s      a
+
+      // [280 17 - 280 33]
+      IL_075b: ldloc.s      a
+      IL_075d: ldc.i4       -1444681467 // 0xa9e3e905
+      IL_0762: add          
+      IL_0763: stloc.s      a
+
+      // [281 17 - 281 51]
+      IL_0765: ldloc.s      a
+      IL_0767: ldloc.s      blockPtr
+      IL_0769: ldc.i4.s     13 // 0x0d
+      IL_076b: conv.i       
+      IL_076c: ldc.i4.4     
+      IL_076d: mul          
+      IL_076e: add          
+      IL_076f: ldind.u4     
+      IL_0770: add          
+      IL_0771: stloc.s      a
+
+      // [282 17 - 282 54]
+      IL_0773: ldloc.s      b
+      IL_0775: ldloc.s      a
+      IL_0777: ldc.i4.5     
+      IL_0778: shl          
+      IL_0779: ldloc.s      a
+      IL_077b: ldc.i4.s     27 // 0x1b
+      IL_077d: shr.un       
+      IL_077e: or           
+      IL_077f: add          
+      IL_0780: stloc.s      a
+
+      // [285 17 - 285 37]
+      IL_0782: ldloc.s      a
+      IL_0784: ldloc.s      b
+      IL_0786: xor          
+      IL_0787: ldloc.s      c
+      IL_0789: and          
+      IL_078a: ldloc.s      b
+      IL_078c: xor          
+      IL_078d: stloc.s      f
+
+      // [286 17 - 286 24]
+      IL_078f: ldloc.s      d
+      IL_0791: ldloc.s      f
+      IL_0793: add          
+      IL_0794: stloc.s      d
+
+      // [287 17 - 287 33]
+      IL_0796: ldloc.s      d
+      IL_0798: ldc.i4       -51403784 // 0xfcefa3f8
+      IL_079d: add          
+      IL_079e: stloc.s      d
+
+      // [288 17 - 288 51]
+      IL_07a0: ldloc.s      d
+      IL_07a2: ldloc.s      blockPtr
+      IL_07a4: ldc.i4.2     
+      IL_07a5: conv.i       
+      IL_07a6: ldc.i4.4     
+      IL_07a7: mul          
+      IL_07a8: add          
+      IL_07a9: ldind.u4     
+      IL_07aa: add          
+      IL_07ab: stloc.s      d
+
+      // [289 17 - 289 54]
+      IL_07ad: ldloc.s      a
+      IL_07af: ldloc.s      d
+      IL_07b1: ldc.i4.s     9 // 0x09
+      IL_07b3: shl          
+      IL_07b4: ldloc.s      d
+      IL_07b6: ldc.i4.s     23 // 0x17
+      IL_07b8: shr.un       
+      IL_07b9: or           
+      IL_07ba: add          
+      IL_07bb: stloc.s      d
+
+      // [292 17 - 292 37]
+      IL_07bd: ldloc.s      d
+      IL_07bf: ldloc.s      a
+      IL_07c1: xor          
+      IL_07c2: ldloc.s      b
+      IL_07c4: and          
+      IL_07c5: ldloc.s      a
+      IL_07c7: xor          
+      IL_07c8: stloc.s      f
+
+      // [293 17 - 293 24]
+      IL_07ca: ldloc.s      c
+      IL_07cc: ldloc.s      f
+      IL_07ce: add          
+      IL_07cf: stloc.s      c
+
+      // [294 17 - 294 33]
+      IL_07d1: ldloc.s      c
+      IL_07d3: ldc.i4       1735328473 // 0x676f02d9
+      IL_07d8: add          
+      IL_07d9: stloc.s      c
+
+      // [295 17 - 295 51]
+      IL_07db: ldloc.s      c
+      IL_07dd: ldloc.s      blockPtr
+      IL_07df: ldc.i4.7     
+      IL_07e0: conv.i       
+      IL_07e1: ldc.i4.4     
+      IL_07e2: mul          
+      IL_07e3: add          
+      IL_07e4: ldind.u4     
+      IL_07e5: add          
+      IL_07e6: stloc.s      c
+
+      // [296 17 - 296 56]
+      IL_07e8: ldloc.s      d
+      IL_07ea: ldloc.s      c
+      IL_07ec: ldc.i4.s     14 // 0x0e
+      IL_07ee: shl          
+      IL_07ef: ldloc.s      c
+      IL_07f1: ldc.i4.s     18 // 0x12
+      IL_07f3: shr.un       
+      IL_07f4: or           
+      IL_07f5: add          
+      IL_07f6: stloc.s      c
+
+      // [299 17 - 299 37]
+      IL_07f8: ldloc.s      c
+      IL_07fa: ldloc.s      d
+      IL_07fc: xor          
+      IL_07fd: ldloc.s      a
+      IL_07ff: and          
+      IL_0800: ldloc.s      d
+      IL_0802: xor          
+      IL_0803: stloc.s      f
+
+      // [300 17 - 300 24]
+      IL_0805: ldloc.s      b
+      IL_0807: ldloc.s      f
+      IL_0809: add          
+      IL_080a: stloc.s      b
+
+      // [301 17 - 301 33]
+      IL_080c: ldloc.s      b
+      IL_080e: ldc.i4       -1926607734 // 0x8d2a4c8a
+      IL_0813: add          
+      IL_0814: stloc.s      b
+
+      // [302 17 - 302 51]
+      IL_0816: ldloc.s      b
+      IL_0818: ldloc.s      blockPtr
+      IL_081a: ldc.i4.s     12 // 0x0c
+      IL_081c: conv.i       
+      IL_081d: ldc.i4.4     
+      IL_081e: mul          
+      IL_081f: add          
+      IL_0820: ldind.u4     
+      IL_0821: add          
+      IL_0822: stloc.s      b
+
+      // [303 17 - 303 56]
+      IL_0824: ldloc.s      c
+      IL_0826: ldloc.s      b
+      IL_0828: ldc.i4.s     20 // 0x14
+      IL_082a: shl          
+      IL_082b: ldloc.s      b
+      IL_082d: ldc.i4.s     12 // 0x0c
+      IL_082f: shr.un       
+      IL_0830: or           
+      IL_0831: add          
+      IL_0832: stloc.s      b
+
+      // [306 17 - 306 31]
+      IL_0834: ldloc.s      b
+      IL_0836: ldloc.s      c
+      IL_0838: xor          
+      IL_0839: ldloc.s      d
+      IL_083b: xor          
+      IL_083c: stloc.s      f
+
+      // [307 17 - 307 24]
+      IL_083e: ldloc.s      a
+      IL_0840: ldloc.s      f
+      IL_0842: add          
+      IL_0843: stloc.s      a
+
+      // [308 17 - 308 33]
+      IL_0845: ldloc.s      a
+      IL_0847: ldc.i4       -378558 // 0xfffa3942
+      IL_084c: add          
+      IL_084d: stloc.s      a
+
+      // [309 17 - 309 51]
+      IL_084f: ldloc.s      a
+      IL_0851: ldloc.s      blockPtr
+      IL_0853: ldc.i4.5     
+      IL_0854: conv.i       
+      IL_0855: ldc.i4.4     
+      IL_0856: mul          
+      IL_0857: add          
+      IL_0858: ldind.u4     
+      IL_0859: add          
+      IL_085a: stloc.s      a
+
+      // [310 17 - 310 54]
+      IL_085c: ldloc.s      b
+      IL_085e: ldloc.s      a
+      IL_0860: ldc.i4.4     
+      IL_0861: shl          
+      IL_0862: ldloc.s      a
+      IL_0864: ldc.i4.s     28 // 0x1c
+      IL_0866: shr.un       
+      IL_0867: or           
+      IL_0868: add          
+      IL_0869: stloc.s      a
+
+      // [313 17 - 313 31]
+      IL_086b: ldloc.s      a
+      IL_086d: ldloc.s      b
+      IL_086f: xor          
+      IL_0870: ldloc.s      c
+      IL_0872: xor          
+      IL_0873: stloc.s      f
+
+      // [314 17 - 314 24]
+      IL_0875: ldloc.s      d
+      IL_0877: ldloc.s      f
+      IL_0879: add          
+      IL_087a: stloc.s      d
+
+      // [315 17 - 315 33]
+      IL_087c: ldloc.s      d
+      IL_087e: ldc.i4       -2022574463 // 0x8771f681
+      IL_0883: add          
+      IL_0884: stloc.s      d
+
+      // [316 17 - 316 51]
+      IL_0886: ldloc.s      d
+      IL_0888: ldloc.s      blockPtr
+      IL_088a: ldc.i4.8     
+      IL_088b: conv.i       
+      IL_088c: ldc.i4.4     
+      IL_088d: mul          
+      IL_088e: add          
+      IL_088f: ldind.u4     
+      IL_0890: add          
+      IL_0891: stloc.s      d
+
+      // [317 17 - 317 56]
+      IL_0893: ldloc.s      a
+      IL_0895: ldloc.s      d
+      IL_0897: ldc.i4.s     11 // 0x0b
+      IL_0899: shl          
+      IL_089a: ldloc.s      d
+      IL_089c: ldc.i4.s     21 // 0x15
+      IL_089e: shr.un       
+      IL_089f: or           
+      IL_08a0: add          
+      IL_08a1: stloc.s      d
+
+      // [320 17 - 320 31]
+      IL_08a3: ldloc.s      d
+      IL_08a5: ldloc.s      a
+      IL_08a7: xor          
+      IL_08a8: ldloc.s      b
+      IL_08aa: xor          
+      IL_08ab: stloc.s      f
+
+      // [321 17 - 321 24]
+      IL_08ad: ldloc.s      c
+      IL_08af: ldloc.s      f
+      IL_08b1: add          
+      IL_08b2: stloc.s      c
+
+      // [322 17 - 322 33]
+      IL_08b4: ldloc.s      c
+      IL_08b6: ldc.i4       1839030562 // 0x6d9d6122
+      IL_08bb: add          
+      IL_08bc: stloc.s      c
+
+      // [323 17 - 323 51]
+      IL_08be: ldloc.s      c
+      IL_08c0: ldloc.s      blockPtr
+      IL_08c2: ldc.i4.s     11 // 0x0b
+      IL_08c4: conv.i       
+      IL_08c5: ldc.i4.4     
+      IL_08c6: mul          
+      IL_08c7: add          
+      IL_08c8: ldind.u4     
+      IL_08c9: add          
+      IL_08ca: stloc.s      c
+
+      // [324 17 - 324 56]
+      IL_08cc: ldloc.s      d
+      IL_08ce: ldloc.s      c
+      IL_08d0: ldc.i4.s     16 // 0x10
+      IL_08d2: shl          
+      IL_08d3: ldloc.s      c
+      IL_08d5: ldc.i4.s     16 // 0x10
+      IL_08d7: shr.un       
+      IL_08d8: or           
+      IL_08d9: add          
+      IL_08da: stloc.s      c
+
+      // [327 17 - 327 31]
+      IL_08dc: ldloc.s      c
+      IL_08de: ldloc.s      d
+      IL_08e0: xor          
+      IL_08e1: ldloc.s      a
+      IL_08e3: xor          
+      IL_08e4: stloc.s      f
+
+      // [328 17 - 328 24]
+      IL_08e6: ldloc.s      b
+      IL_08e8: ldloc.s      f
+      IL_08ea: add          
+      IL_08eb: stloc.s      b
+
+      // [329 17 - 329 33]
+      IL_08ed: ldloc.s      b
+      IL_08ef: ldc.i4       -35309556 // 0xfde5380c
+      IL_08f4: add          
+      IL_08f5: stloc.s      b
+
+      // [330 17 - 330 51]
+      IL_08f7: ldloc.s      b
+      IL_08f9: ldloc.s      blockPtr
+      IL_08fb: ldc.i4.s     14 // 0x0e
+      IL_08fd: conv.i       
+      IL_08fe: ldc.i4.4     
+      IL_08ff: mul          
+      IL_0900: add          
+      IL_0901: ldind.u4     
+      IL_0902: add          
+      IL_0903: stloc.s      b
+
+      // [331 17 - 331 56]
+      IL_0905: ldloc.s      c
+      IL_0907: ldloc.s      b
+      IL_0909: ldc.i4.s     23 // 0x17
+      IL_090b: shl          
+      IL_090c: ldloc.s      b
+      IL_090e: ldc.i4.s     9 // 0x09
+      IL_0910: shr.un       
+      IL_0911: or           
+      IL_0912: add          
+      IL_0913: stloc.s      b
+
+      // [334 17 - 334 31]
+      IL_0915: ldloc.s      b
+      IL_0917: ldloc.s      c
+      IL_0919: xor          
+      IL_091a: ldloc.s      d
+      IL_091c: xor          
+      IL_091d: stloc.s      f
+
+      // [335 17 - 335 24]
+      IL_091f: ldloc.s      a
+      IL_0921: ldloc.s      f
+      IL_0923: add          
+      IL_0924: stloc.s      a
+
+      // [336 17 - 336 33]
+      IL_0926: ldloc.s      a
+      IL_0928: ldc.i4       -1530992060 // 0xa4beea44
+      IL_092d: add          
+      IL_092e: stloc.s      a
+
+      // [337 17 - 337 51]
+      IL_0930: ldloc.s      a
+      IL_0932: ldloc.s      blockPtr
+      IL_0934: ldc.i4.4     
+      IL_0935: add          
+      IL_0936: ldind.u4     
+      IL_0937: add          
+      IL_0938: stloc.s      a
+
+      // [338 17 - 338 54]
+      IL_093a: ldloc.s      b
+      IL_093c: ldloc.s      a
+      IL_093e: ldc.i4.4     
+      IL_093f: shl          
+      IL_0940: ldloc.s      a
+      IL_0942: ldc.i4.s     28 // 0x1c
+      IL_0944: shr.un       
+      IL_0945: or           
+      IL_0946: add          
+      IL_0947: stloc.s      a
+
+      // [341 17 - 341 31]
+      IL_0949: ldloc.s      a
+      IL_094b: ldloc.s      b
+      IL_094d: xor          
+      IL_094e: ldloc.s      c
+      IL_0950: xor          
+      IL_0951: stloc.s      f
+
+      // [342 17 - 342 24]
+      IL_0953: ldloc.s      d
+      IL_0955: ldloc.s      f
+      IL_0957: add          
+      IL_0958: stloc.s      d
+
+      // [343 17 - 343 33]
+      IL_095a: ldloc.s      d
+      IL_095c: ldc.i4       1272893353 // 0x4bdecfa9
+      IL_0961: add          
+      IL_0962: stloc.s      d
+
+      // [344 17 - 344 51]
+      IL_0964: ldloc.s      d
+      IL_0966: ldloc.s      blockPtr
+      IL_0968: ldc.i4.4     
+      IL_0969: conv.i       
+      IL_096a: ldc.i4.4     
+      IL_096b: mul          
+      IL_096c: add          
+      IL_096d: ldind.u4     
+      IL_096e: add          
+      IL_096f: stloc.s      d
+
+      // [345 17 - 345 56]
+      IL_0971: ldloc.s      a
+      IL_0973: ldloc.s      d
+      IL_0975: ldc.i4.s     11 // 0x0b
+      IL_0977: shl          
+      IL_0978: ldloc.s      d
+      IL_097a: ldc.i4.s     21 // 0x15
+      IL_097c: shr.un       
+      IL_097d: or           
+      IL_097e: add          
+      IL_097f: stloc.s      d
+
+      // [348 17 - 348 31]
+      IL_0981: ldloc.s      d
+      IL_0983: ldloc.s      a
+      IL_0985: xor          
+      IL_0986: ldloc.s      b
+      IL_0988: xor          
+      IL_0989: stloc.s      f
+
+      // [349 17 - 349 24]
+      IL_098b: ldloc.s      c
+      IL_098d: ldloc.s      f
+      IL_098f: add          
+      IL_0990: stloc.s      c
+
+      // [350 17 - 350 33]
+      IL_0992: ldloc.s      c
+      IL_0994: ldc.i4       -155497632 // 0xf6bb4b60
+      IL_0999: add          
+      IL_099a: stloc.s      c
+
+      // [351 17 - 351 51]
+      IL_099c: ldloc.s      c
+      IL_099e: ldloc.s      blockPtr
+      IL_09a0: ldc.i4.7     
+      IL_09a1: conv.i       
+      IL_09a2: ldc.i4.4     
+      IL_09a3: mul          
+      IL_09a4: add          
+      IL_09a5: ldind.u4     
+      IL_09a6: add          
+      IL_09a7: stloc.s      c
+
+      // [352 17 - 352 56]
+      IL_09a9: ldloc.s      d
+      IL_09ab: ldloc.s      c
+      IL_09ad: ldc.i4.s     16 // 0x10
+      IL_09af: shl          
+      IL_09b0: ldloc.s      c
+      IL_09b2: ldc.i4.s     16 // 0x10
+      IL_09b4: shr.un       
+      IL_09b5: or           
+      IL_09b6: add          
+      IL_09b7: stloc.s      c
+
+      // [355 17 - 355 31]
+      IL_09b9: ldloc.s      c
+      IL_09bb: ldloc.s      d
+      IL_09bd: xor          
+      IL_09be: ldloc.s      a
+      IL_09c0: xor          
+      IL_09c1: stloc.s      f
+
+      // [356 17 - 356 24]
+      IL_09c3: ldloc.s      b
+      IL_09c5: ldloc.s      f
+      IL_09c7: add          
+      IL_09c8: stloc.s      b
+
+      // [357 17 - 357 33]
+      IL_09ca: ldloc.s      b
+      IL_09cc: ldc.i4       -1094730640 // 0xbebfbc70
+      IL_09d1: add          
+      IL_09d2: stloc.s      b
+
+      // [358 17 - 358 51]
+      IL_09d4: ldloc.s      b
+      IL_09d6: ldloc.s      blockPtr
+      IL_09d8: ldc.i4.s     10 // 0x0a
+      IL_09da: conv.i       
+      IL_09db: ldc.i4.4     
+      IL_09dc: mul          
+      IL_09dd: add          
+      IL_09de: ldind.u4     
+      IL_09df: add          
+      IL_09e0: stloc.s      b
+
+      // [359 17 - 359 56]
+      IL_09e2: ldloc.s      c
+      IL_09e4: ldloc.s      b
+      IL_09e6: ldc.i4.s     23 // 0x17
+      IL_09e8: shl          
+      IL_09e9: ldloc.s      b
+      IL_09eb: ldc.i4.s     9 // 0x09
+      IL_09ed: shr.un       
+      IL_09ee: or           
+      IL_09ef: add          
+      IL_09f0: stloc.s      b
+
+      // [362 17 - 362 31]
+      IL_09f2: ldloc.s      b
+      IL_09f4: ldloc.s      c
+      IL_09f6: xor          
+      IL_09f7: ldloc.s      d
+      IL_09f9: xor          
+      IL_09fa: stloc.s      f
+
+      // [363 17 - 363 24]
+      IL_09fc: ldloc.s      a
+      IL_09fe: ldloc.s      f
+      IL_0a00: add          
+      IL_0a01: stloc.s      a
+
+      // [364 17 - 364 33]
+      IL_0a03: ldloc.s      a
+      IL_0a05: ldc.i4       681279174 // 0x289b7ec6
+      IL_0a0a: add          
+      IL_0a0b: stloc.s      a
+
+      // [365 17 - 365 51]
+      IL_0a0d: ldloc.s      a
+      IL_0a0f: ldloc.s      blockPtr
+      IL_0a11: ldc.i4.s     13 // 0x0d
+      IL_0a13: conv.i       
+      IL_0a14: ldc.i4.4     
+      IL_0a15: mul          
+      IL_0a16: add          
+      IL_0a17: ldind.u4     
+      IL_0a18: add          
+      IL_0a19: stloc.s      a
+
+      // [366 17 - 366 54]
+      IL_0a1b: ldloc.s      b
+      IL_0a1d: ldloc.s      a
+      IL_0a1f: ldc.i4.4     
+      IL_0a20: shl          
+      IL_0a21: ldloc.s      a
+      IL_0a23: ldc.i4.s     28 // 0x1c
+      IL_0a25: shr.un       
+      IL_0a26: or           
+      IL_0a27: add          
+      IL_0a28: stloc.s      a
+
+      // [369 17 - 369 31]
+      IL_0a2a: ldloc.s      a
+      IL_0a2c: ldloc.s      b
+      IL_0a2e: xor          
+      IL_0a2f: ldloc.s      c
+      IL_0a31: xor          
+      IL_0a32: stloc.s      f
+
+      // [370 17 - 370 24]
+      IL_0a34: ldloc.s      d
+      IL_0a36: ldloc.s      f
+      IL_0a38: add          
+      IL_0a39: stloc.s      d
+
+      // [371 17 - 371 33]
+      IL_0a3b: ldloc.s      d
+      IL_0a3d: ldc.i4       -358537222 // 0xeaa127fa
+      IL_0a42: add          
+      IL_0a43: stloc.s      d
+
+      // [372 17 - 372 51]
+      IL_0a45: ldloc.s      d
+      IL_0a47: ldloc.s      blockPtr
+      IL_0a49: ldind.u4     
+      IL_0a4a: add          
+      IL_0a4b: stloc.s      d
+
+      // [373 17 - 373 56]
+      IL_0a4d: ldloc.s      a
+      IL_0a4f: ldloc.s      d
+      IL_0a51: ldc.i4.s     11 // 0x0b
+      IL_0a53: shl          
+      IL_0a54: ldloc.s      d
+      IL_0a56: ldc.i4.s     21 // 0x15
+      IL_0a58: shr.un       
+      IL_0a59: or           
+      IL_0a5a: add          
+      IL_0a5b: stloc.s      d
+
+      // [376 17 - 376 31]
+      IL_0a5d: ldloc.s      d
+      IL_0a5f: ldloc.s      a
+      IL_0a61: xor          
+      IL_0a62: ldloc.s      b
+      IL_0a64: xor          
+      IL_0a65: stloc.s      f
+
+      // [377 17 - 377 24]
+      IL_0a67: ldloc.s      c
+      IL_0a69: ldloc.s      f
+      IL_0a6b: add          
+      IL_0a6c: stloc.s      c
+
+      // [378 17 - 378 33]
+      IL_0a6e: ldloc.s      c
+      IL_0a70: ldc.i4       -722521979 // 0xd4ef3085
+      IL_0a75: add          
+      IL_0a76: stloc.s      c
+
+      // [379 17 - 379 51]
+      IL_0a78: ldloc.s      c
+      IL_0a7a: ldloc.s      blockPtr
+      IL_0a7c: ldc.i4.3     
+      IL_0a7d: conv.i       
+      IL_0a7e: ldc.i4.4     
+      IL_0a7f: mul          
+      IL_0a80: add          
+      IL_0a81: ldind.u4     
+      IL_0a82: add          
+      IL_0a83: stloc.s      c
+
+      // [380 17 - 380 56]
+      IL_0a85: ldloc.s      d
+      IL_0a87: ldloc.s      c
+      IL_0a89: ldc.i4.s     16 // 0x10
+      IL_0a8b: shl          
+      IL_0a8c: ldloc.s      c
+      IL_0a8e: ldc.i4.s     16 // 0x10
+      IL_0a90: shr.un       
+      IL_0a91: or           
+      IL_0a92: add          
+      IL_0a93: stloc.s      c
+
+      // [383 17 - 383 31]
+      IL_0a95: ldloc.s      c
+      IL_0a97: ldloc.s      d
+      IL_0a99: xor          
+      IL_0a9a: ldloc.s      a
+      IL_0a9c: xor          
+      IL_0a9d: stloc.s      f
+
+      // [384 17 - 384 24]
+      IL_0a9f: ldloc.s      b
+      IL_0aa1: ldloc.s      f
+      IL_0aa3: add          
+      IL_0aa4: stloc.s      b
+
+      // [385 17 - 385 32]
+      IL_0aa6: ldloc.s      b
+      IL_0aa8: ldc.i4       76029189 // 0x04881d05
+      IL_0aad: add          
+      IL_0aae: stloc.s      b
+
+      // [386 17 - 386 51]
+      IL_0ab0: ldloc.s      b
+      IL_0ab2: ldloc.s      blockPtr
+      IL_0ab4: ldc.i4.6     
+      IL_0ab5: conv.i       
+      IL_0ab6: ldc.i4.4     
+      IL_0ab7: mul          
+      IL_0ab8: add          
+      IL_0ab9: ldind.u4     
+      IL_0aba: add          
+      IL_0abb: stloc.s      b
+
+      // [387 17 - 387 56]
+      IL_0abd: ldloc.s      c
+      IL_0abf: ldloc.s      b
+      IL_0ac1: ldc.i4.s     23 // 0x17
+      IL_0ac3: shl          
+      IL_0ac4: ldloc.s      b
+      IL_0ac6: ldc.i4.s     9 // 0x09
+      IL_0ac8: shr.un       
+      IL_0ac9: or           
+      IL_0aca: add          
+      IL_0acb: stloc.s      b
+
+      // [390 17 - 390 31]
+      IL_0acd: ldloc.s      b
+      IL_0acf: ldloc.s      c
+      IL_0ad1: xor          
+      IL_0ad2: ldloc.s      d
+      IL_0ad4: xor          
+      IL_0ad5: stloc.s      f
+
+      // [391 17 - 391 24]
+      IL_0ad7: ldloc.s      a
+      IL_0ad9: ldloc.s      f
+      IL_0adb: add          
+      IL_0adc: stloc.s      a
+
+      // [392 17 - 392 33]
+      IL_0ade: ldloc.s      a
+      IL_0ae0: ldc.i4       -640364487 // 0xd9d4d039
+      IL_0ae5: add          
+      IL_0ae6: stloc.s      a
+
+      // [393 17 - 393 51]
+      IL_0ae8: ldloc.s      a
+      IL_0aea: ldloc.s      blockPtr
+      IL_0aec: ldc.i4.s     9 // 0x09
+      IL_0aee: conv.i       
+      IL_0aef: ldc.i4.4     
+      IL_0af0: mul          
+      IL_0af1: add          
+      IL_0af2: ldind.u4     
+      IL_0af3: add          
+      IL_0af4: stloc.s      a
+
+      // [394 17 - 394 54]
+      IL_0af6: ldloc.s      b
+      IL_0af8: ldloc.s      a
+      IL_0afa: ldc.i4.4     
+      IL_0afb: shl          
+      IL_0afc: ldloc.s      a
+      IL_0afe: ldc.i4.s     28 // 0x1c
+      IL_0b00: shr.un       
+      IL_0b01: or           
+      IL_0b02: add          
+      IL_0b03: stloc.s      a
+
+      // [397 17 - 397 31]
+      IL_0b05: ldloc.s      a
+      IL_0b07: ldloc.s      b
+      IL_0b09: xor          
+      IL_0b0a: ldloc.s      c
+      IL_0b0c: xor          
+      IL_0b0d: stloc.s      f
+
+      // [398 17 - 398 24]
+      IL_0b0f: ldloc.s      d
+      IL_0b11: ldloc.s      f
+      IL_0b13: add          
+      IL_0b14: stloc.s      d
+
+      // [399 17 - 399 33]
+      IL_0b16: ldloc.s      d
+      IL_0b18: ldc.i4       -421815835 // 0xe6db99e5
+      IL_0b1d: add          
+      IL_0b1e: stloc.s      d
+
+      // [400 17 - 400 51]
+      IL_0b20: ldloc.s      d
+      IL_0b22: ldloc.s      blockPtr
+      IL_0b24: ldc.i4.s     12 // 0x0c
+      IL_0b26: conv.i       
+      IL_0b27: ldc.i4.4     
+      IL_0b28: mul          
+      IL_0b29: add          
+      IL_0b2a: ldind.u4     
+      IL_0b2b: add          
+      IL_0b2c: stloc.s      d
+
+      // [401 17 - 401 56]
+      IL_0b2e: ldloc.s      a
+      IL_0b30: ldloc.s      d
+      IL_0b32: ldc.i4.s     11 // 0x0b
+      IL_0b34: shl          
+      IL_0b35: ldloc.s      d
+      IL_0b37: ldc.i4.s     21 // 0x15
+      IL_0b39: shr.un       
+      IL_0b3a: or           
+      IL_0b3b: add          
+      IL_0b3c: stloc.s      d
+
+      // [404 17 - 404 31]
+      IL_0b3e: ldloc.s      d
+      IL_0b40: ldloc.s      a
+      IL_0b42: xor          
+      IL_0b43: ldloc.s      b
+      IL_0b45: xor          
+      IL_0b46: stloc.s      f
+
+      // [405 17 - 405 24]
+      IL_0b48: ldloc.s      c
+      IL_0b4a: ldloc.s      f
+      IL_0b4c: add          
+      IL_0b4d: stloc.s      c
+
+      // [406 17 - 406 33]
+      IL_0b4f: ldloc.s      c
+      IL_0b51: ldc.i4       530742520 // 0x1fa27cf8
+      IL_0b56: add          
+      IL_0b57: stloc.s      c
+
+      // [407 17 - 407 51]
+      IL_0b59: ldloc.s      c
+      IL_0b5b: ldloc.s      blockPtr
+      IL_0b5d: ldc.i4.s     15 // 0x0f
+      IL_0b5f: conv.i       
+      IL_0b60: ldc.i4.4     
+      IL_0b61: mul          
+      IL_0b62: add          
+      IL_0b63: ldind.u4     
+      IL_0b64: add          
+      IL_0b65: stloc.s      c
+
+      // [408 17 - 408 56]
+      IL_0b67: ldloc.s      d
+      IL_0b69: ldloc.s      c
+      IL_0b6b: ldc.i4.s     16 // 0x10
+      IL_0b6d: shl          
+      IL_0b6e: ldloc.s      c
+      IL_0b70: ldc.i4.s     16 // 0x10
+      IL_0b72: shr.un       
+      IL_0b73: or           
+      IL_0b74: add          
+      IL_0b75: stloc.s      c
+
+      // [411 17 - 411 31]
+      IL_0b77: ldloc.s      c
+      IL_0b79: ldloc.s      d
+      IL_0b7b: xor          
+      IL_0b7c: ldloc.s      a
+      IL_0b7e: xor          
+      IL_0b7f: stloc.s      f
+
+      // [412 17 - 412 24]
+      IL_0b81: ldloc.s      b
+      IL_0b83: ldloc.s      f
+      IL_0b85: add          
+      IL_0b86: stloc.s      b
+
+      // [413 17 - 413 33]
+      IL_0b88: ldloc.s      b
+      IL_0b8a: ldc.i4       -995338651 // 0xc4ac5665
+      IL_0b8f: add          
+      IL_0b90: stloc.s      b
+
+      // [414 17 - 414 51]
+      IL_0b92: ldloc.s      b
+      IL_0b94: ldloc.s      blockPtr
+      IL_0b96: ldc.i4.2     
+      IL_0b97: conv.i       
+      IL_0b98: ldc.i4.4     
+      IL_0b99: mul          
+      IL_0b9a: add          
+      IL_0b9b: ldind.u4     
+      IL_0b9c: add          
+      IL_0b9d: stloc.s      b
+
+      // [415 17 - 415 56]
+      IL_0b9f: ldloc.s      c
+      IL_0ba1: ldloc.s      b
+      IL_0ba3: ldc.i4.s     23 // 0x17
+      IL_0ba5: shl          
+      IL_0ba6: ldloc.s      b
+      IL_0ba8: ldc.i4.s     9 // 0x09
+      IL_0baa: shr.un       
+      IL_0bab: or           
+      IL_0bac: add          
+      IL_0bad: stloc.s      b
+
+      // [418 17 - 418 34]
+      IL_0baf: ldloc.s      c
+      IL_0bb1: ldloc.s      b
+      IL_0bb3: ldloc.s      d
+      IL_0bb5: not          
+      IL_0bb6: or           
+      IL_0bb7: xor          
+      IL_0bb8: stloc.s      f
+
+      // [419 17 - 419 24]
+      IL_0bba: ldloc.s      a
+      IL_0bbc: ldloc.s      f
+      IL_0bbe: add          
+      IL_0bbf: stloc.s      a
+
+      // [420 17 - 420 33]
+      IL_0bc1: ldloc.s      a
+      IL_0bc3: ldc.i4       -198630844 // 0xf4292244
+      IL_0bc8: add          
+      IL_0bc9: stloc.s      a
+
+      // [421 17 - 421 47]
+      IL_0bcb: ldloc.s      a
+      IL_0bcd: ldloc.s      blockPtr
+      IL_0bcf: ldind.u4     
+      IL_0bd0: add          
+      IL_0bd1: stloc.s      a
+
+      // [422 17 - 422 54]
+      IL_0bd3: ldloc.s      b
+      IL_0bd5: ldloc.s      a
+      IL_0bd7: ldc.i4.6     
+      IL_0bd8: shl          
+      IL_0bd9: ldloc.s      a
+      IL_0bdb: ldc.i4.s     26 // 0x1a
+      IL_0bdd: shr.un       
+      IL_0bde: or           
+      IL_0bdf: add          
+      IL_0be0: stloc.s      a
+
+      // [425 17 - 425 34]
+      IL_0be2: ldloc.s      b
+      IL_0be4: ldloc.s      a
+      IL_0be6: ldloc.s      c
+      IL_0be8: not          
+      IL_0be9: or           
+      IL_0bea: xor          
+      IL_0beb: stloc.s      f
+
+      // [426 17 - 426 24]
+      IL_0bed: ldloc.s      d
+      IL_0bef: ldloc.s      f
+      IL_0bf1: add          
+      IL_0bf2: stloc.s      d
+
+      // [427 17 - 427 33]
+      IL_0bf4: ldloc.s      d
+      IL_0bf6: ldc.i4       1126891415 // 0x432aff97
+      IL_0bfb: add          
+      IL_0bfc: stloc.s      d
+
+      // [428 17 - 428 47]
+      IL_0bfe: ldloc.s      d
+      IL_0c00: ldloc.s      blockPtr
+      IL_0c02: ldc.i4.7     
+      IL_0c03: conv.i       
+      IL_0c04: ldc.i4.4     
+      IL_0c05: mul          
+      IL_0c06: add          
+      IL_0c07: ldind.u4     
+      IL_0c08: add          
+      IL_0c09: stloc.s      d
+
+      // [429 17 - 429 56]
+      IL_0c0b: ldloc.s      a
+      IL_0c0d: ldloc.s      d
+      IL_0c0f: ldc.i4.s     10 // 0x0a
+      IL_0c11: shl          
+      IL_0c12: ldloc.s      d
+      IL_0c14: ldc.i4.s     22 // 0x16
+      IL_0c16: shr.un       
+      IL_0c17: or           
+      IL_0c18: add          
+      IL_0c19: stloc.s      d
+
+      // [432 17 - 432 34]
+      IL_0c1b: ldloc.s      a
+      IL_0c1d: ldloc.s      d
+      IL_0c1f: ldloc.s      b
+      IL_0c21: not          
+      IL_0c22: or           
+      IL_0c23: xor          
+      IL_0c24: stloc.s      f
+
+      // [433 17 - 433 24]
+      IL_0c26: ldloc.s      c
+      IL_0c28: ldloc.s      f
+      IL_0c2a: add          
+      IL_0c2b: stloc.s      c
+
+      // [434 17 - 434 33]
+      IL_0c2d: ldloc.s      c
+      IL_0c2f: ldc.i4       -1416354905 // 0xab9423a7
+      IL_0c34: add          
+      IL_0c35: stloc.s      c
+
+      // [435 17 - 435 47]
+      IL_0c37: ldloc.s      c
+      IL_0c39: ldloc.s      blockPtr
+      IL_0c3b: ldc.i4.s     14 // 0x0e
+      IL_0c3d: conv.i       
+      IL_0c3e: ldc.i4.4     
+      IL_0c3f: mul          
+      IL_0c40: add          
+      IL_0c41: ldind.u4     
+      IL_0c42: add          
+      IL_0c43: stloc.s      c
+
+      // [436 17 - 436 56]
+      IL_0c45: ldloc.s      d
+      IL_0c47: ldloc.s      c
+      IL_0c49: ldc.i4.s     15 // 0x0f
+      IL_0c4b: shl          
+      IL_0c4c: ldloc.s      c
+      IL_0c4e: ldc.i4.s     17 // 0x11
+      IL_0c50: shr.un       
+      IL_0c51: or           
+      IL_0c52: add          
+      IL_0c53: stloc.s      c
+
+      // [439 17 - 439 34]
+      IL_0c55: ldloc.s      d
+      IL_0c57: ldloc.s      c
+      IL_0c59: ldloc.s      a
+      IL_0c5b: not          
+      IL_0c5c: or           
+      IL_0c5d: xor          
+      IL_0c5e: stloc.s      f
+
+      // [440 17 - 440 24]
+      IL_0c60: ldloc.s      b
+      IL_0c62: ldloc.s      f
+      IL_0c64: add          
+      IL_0c65: stloc.s      b
+
+      // [441 17 - 441 33]
+      IL_0c67: ldloc.s      b
+      IL_0c69: ldc.i4       -57434055 // 0xfc93a039
+      IL_0c6e: add          
+      IL_0c6f: stloc.s      b
+
+      // [442 17 - 442 47]
+      IL_0c71: ldloc.s      b
+      IL_0c73: ldloc.s      blockPtr
+      IL_0c75: ldc.i4.5     
+      IL_0c76: conv.i       
+      IL_0c77: ldc.i4.4     
+      IL_0c78: mul          
+      IL_0c79: add          
+      IL_0c7a: ldind.u4     
+      IL_0c7b: add          
+      IL_0c7c: stloc.s      b
+
+      // [443 17 - 443 56]
+      IL_0c7e: ldloc.s      c
+      IL_0c80: ldloc.s      b
+      IL_0c82: ldc.i4.s     21 // 0x15
+      IL_0c84: shl          
+      IL_0c85: ldloc.s      b
+      IL_0c87: ldc.i4.s     11 // 0x0b
+      IL_0c89: shr.un       
+      IL_0c8a: or           
+      IL_0c8b: add          
+      IL_0c8c: stloc.s      b
+
+      // [446 17 - 446 34]
+      IL_0c8e: ldloc.s      c
+      IL_0c90: ldloc.s      b
+      IL_0c92: ldloc.s      d
+      IL_0c94: not          
+      IL_0c95: or           
+      IL_0c96: xor          
+      IL_0c97: stloc.s      f
+
+      // [447 17 - 447 24]
+      IL_0c99: ldloc.s      a
+      IL_0c9b: ldloc.s      f
+      IL_0c9d: add          
+      IL_0c9e: stloc.s      a
+
+      // [448 17 - 448 33]
+      IL_0ca0: ldloc.s      a
+      IL_0ca2: ldc.i4       1700485571 // 0x655b59c3
+      IL_0ca7: add          
+      IL_0ca8: stloc.s      a
+
+      // [449 17 - 449 47]
+      IL_0caa: ldloc.s      a
+      IL_0cac: ldloc.s      blockPtr
+      IL_0cae: ldc.i4.s     12 // 0x0c
+      IL_0cb0: conv.i       
+      IL_0cb1: ldc.i4.4     
+      IL_0cb2: mul          
+      IL_0cb3: add          
+      IL_0cb4: ldind.u4     
+      IL_0cb5: add          
+      IL_0cb6: stloc.s      a
+
+      // [450 17 - 450 54]
+      IL_0cb8: ldloc.s      b
+      IL_0cba: ldloc.s      a
+      IL_0cbc: ldc.i4.6     
+      IL_0cbd: shl          
+      IL_0cbe: ldloc.s      a
+      IL_0cc0: ldc.i4.s     26 // 0x1a
+      IL_0cc2: shr.un       
+      IL_0cc3: or           
+      IL_0cc4: add          
+      IL_0cc5: stloc.s      a
+
+      // [453 17 - 453 34]
+      IL_0cc7: ldloc.s      b
+      IL_0cc9: ldloc.s      a
+      IL_0ccb: ldloc.s      c
+      IL_0ccd: not          
+      IL_0cce: or           
+      IL_0ccf: xor          
+      IL_0cd0: stloc.s      f
+
+      // [454 17 - 454 24]
+      IL_0cd2: ldloc.s      d
+      IL_0cd4: ldloc.s      f
+      IL_0cd6: add          
+      IL_0cd7: stloc.s      d
+
+      // [455 17 - 455 33]
+      IL_0cd9: ldloc.s      d
+      IL_0cdb: ldc.i4       -1894986606 // 0x8f0ccc92
+      IL_0ce0: add          
+      IL_0ce1: stloc.s      d
+
+      // [456 17 - 456 47]
+      IL_0ce3: ldloc.s      d
+      IL_0ce5: ldloc.s      blockPtr
+      IL_0ce7: ldc.i4.3     
+      IL_0ce8: conv.i       
+      IL_0ce9: ldc.i4.4     
+      IL_0cea: mul          
+      IL_0ceb: add          
+      IL_0cec: ldind.u4     
+      IL_0ced: add          
+      IL_0cee: stloc.s      d
+
+      // [457 17 - 457 56]
+      IL_0cf0: ldloc.s      a
+      IL_0cf2: ldloc.s      d
+      IL_0cf4: ldc.i4.s     10 // 0x0a
+      IL_0cf6: shl          
+      IL_0cf7: ldloc.s      d
+      IL_0cf9: ldc.i4.s     22 // 0x16
+      IL_0cfb: shr.un       
+      IL_0cfc: or           
+      IL_0cfd: add          
+      IL_0cfe: stloc.s      d
+
+      // [460 17 - 460 34]
+      IL_0d00: ldloc.s      a
+      IL_0d02: ldloc.s      d
+      IL_0d04: ldloc.s      b
+      IL_0d06: not          
+      IL_0d07: or           
+      IL_0d08: xor          
+      IL_0d09: stloc.s      f
+
+      // [461 17 - 461 24]
+      IL_0d0b: ldloc.s      c
+      IL_0d0d: ldloc.s      f
+      IL_0d0f: add          
+      IL_0d10: stloc.s      c
+
+      // [462 17 - 462 33]
+      IL_0d12: ldloc.s      c
+      IL_0d14: ldc.i4       -1051523 // 0xffeff47d
+      IL_0d19: add          
+      IL_0d1a: stloc.s      c
+
+      // [463 17 - 463 47]
+      IL_0d1c: ldloc.s      c
+      IL_0d1e: ldloc.s      blockPtr
+      IL_0d20: ldc.i4.s     10 // 0x0a
+      IL_0d22: conv.i       
+      IL_0d23: ldc.i4.4     
+      IL_0d24: mul          
+      IL_0d25: add          
+      IL_0d26: ldind.u4     
+      IL_0d27: add          
+      IL_0d28: stloc.s      c
+
+      // [464 17 - 464 56]
+      IL_0d2a: ldloc.s      d
+      IL_0d2c: ldloc.s      c
+      IL_0d2e: ldc.i4.s     15 // 0x0f
+      IL_0d30: shl          
+      IL_0d31: ldloc.s      c
+      IL_0d33: ldc.i4.s     17 // 0x11
+      IL_0d35: shr.un       
+      IL_0d36: or           
+      IL_0d37: add          
+      IL_0d38: stloc.s      c
+
+      // [467 17 - 467 34]
+      IL_0d3a: ldloc.s      d
+      IL_0d3c: ldloc.s      c
+      IL_0d3e: ldloc.s      a
+      IL_0d40: not          
+      IL_0d41: or           
+      IL_0d42: xor          
+      IL_0d43: stloc.s      f
+
+      // [468 17 - 468 24]
+      IL_0d45: ldloc.s      b
+      IL_0d47: ldloc.s      f
+      IL_0d49: add          
+      IL_0d4a: stloc.s      b
+
+      // [469 17 - 469 33]
+      IL_0d4c: ldloc.s      b
+      IL_0d4e: ldc.i4       -2054922799 // 0x85845dd1
+      IL_0d53: add          
+      IL_0d54: stloc.s      b
+
+      // [470 17 - 470 47]
+      IL_0d56: ldloc.s      b
+      IL_0d58: ldloc.s      blockPtr
+      IL_0d5a: ldc.i4.4     
+      IL_0d5b: add          
+      IL_0d5c: ldind.u4     
+      IL_0d5d: add          
+      IL_0d5e: stloc.s      b
+
+      // [471 17 - 471 56]
+      IL_0d60: ldloc.s      c
+      IL_0d62: ldloc.s      b
+      IL_0d64: ldc.i4.s     21 // 0x15
+      IL_0d66: shl          
+      IL_0d67: ldloc.s      b
+      IL_0d69: ldc.i4.s     11 // 0x0b
+      IL_0d6b: shr.un       
+      IL_0d6c: or           
+      IL_0d6d: add          
+      IL_0d6e: stloc.s      b
+
+      // [474 17 - 474 34]
+      IL_0d70: ldloc.s      c
+      IL_0d72: ldloc.s      b
+      IL_0d74: ldloc.s      d
+      IL_0d76: not          
+      IL_0d77: or           
+      IL_0d78: xor          
+      IL_0d79: stloc.s      f
+
+      // [475 17 - 475 24]
+      IL_0d7b: ldloc.s      a
+      IL_0d7d: ldloc.s      f
+      IL_0d7f: add          
+      IL_0d80: stloc.s      a
+
+      // [476 17 - 476 33]
+      IL_0d82: ldloc.s      a
+      IL_0d84: ldc.i4       1873313359 // 0x6fa87e4f
+      IL_0d89: add          
+      IL_0d8a: stloc.s      a
+
+      // [477 17 - 477 47]
+      IL_0d8c: ldloc.s      a
+      IL_0d8e: ldloc.s      blockPtr
+      IL_0d90: ldc.i4.8     
+      IL_0d91: conv.i       
+      IL_0d92: ldc.i4.4     
+      IL_0d93: mul          
+      IL_0d94: add          
+      IL_0d95: ldind.u4     
+      IL_0d96: add          
+      IL_0d97: stloc.s      a
+
+      // [478 17 - 478 54]
+      IL_0d99: ldloc.s      b
+      IL_0d9b: ldloc.s      a
+      IL_0d9d: ldc.i4.6     
+      IL_0d9e: shl          
+      IL_0d9f: ldloc.s      a
+      IL_0da1: ldc.i4.s     26 // 0x1a
+      IL_0da3: shr.un       
+      IL_0da4: or           
+      IL_0da5: add          
+      IL_0da6: stloc.s      a
+
+      // [481 17 - 481 34]
+      IL_0da8: ldloc.s      b
+      IL_0daa: ldloc.s      a
+      IL_0dac: ldloc.s      c
+      IL_0dae: not          
+      IL_0daf: or           
+      IL_0db0: xor          
+      IL_0db1: stloc.s      f
+
+      // [482 17 - 482 24]
+      IL_0db3: ldloc.s      d
+      IL_0db5: ldloc.s      f
+      IL_0db7: add          
+      IL_0db8: stloc.s      d
+
+      // [483 17 - 483 33]
+      IL_0dba: ldloc.s      d
+      IL_0dbc: ldc.i4       -30611744 // 0xfe2ce6e0
+      IL_0dc1: add          
+      IL_0dc2: stloc.s      d
+
+      // [484 17 - 484 47]
+      IL_0dc4: ldloc.s      d
+      IL_0dc6: ldloc.s      blockPtr
+      IL_0dc8: ldc.i4.s     15 // 0x0f
+      IL_0dca: conv.i       
+      IL_0dcb: ldc.i4.4     
+      IL_0dcc: mul          
+      IL_0dcd: add          
+      IL_0dce: ldind.u4     
+      IL_0dcf: add          
+      IL_0dd0: stloc.s      d
+
+      // [485 17 - 485 56]
+      IL_0dd2: ldloc.s      a
+      IL_0dd4: ldloc.s      d
+      IL_0dd6: ldc.i4.s     10 // 0x0a
+      IL_0dd8: shl          
+      IL_0dd9: ldloc.s      d
+      IL_0ddb: ldc.i4.s     22 // 0x16
+      IL_0ddd: shr.un       
+      IL_0dde: or           
+      IL_0ddf: add          
+      IL_0de0: stloc.s      d
+
+      // [488 17 - 488 34]
+      IL_0de2: ldloc.s      a
+      IL_0de4: ldloc.s      d
+      IL_0de6: ldloc.s      b
+      IL_0de8: not          
+      IL_0de9: or           
+      IL_0dea: xor          
+      IL_0deb: stloc.s      f
+
+      // [489 17 - 489 24]
+      IL_0ded: ldloc.s      c
+      IL_0def: ldloc.s      f
+      IL_0df1: add          
+      IL_0df2: stloc.s      c
+
+      // [490 17 - 490 33]
+      IL_0df4: ldloc.s      c
+      IL_0df6: ldc.i4       -1560198380 // 0xa3014314
+      IL_0dfb: add          
+      IL_0dfc: stloc.s      c
+
+      // [491 17 - 491 47]
+      IL_0dfe: ldloc.s      c
+      IL_0e00: ldloc.s      blockPtr
+      IL_0e02: ldc.i4.6     
+      IL_0e03: conv.i       
+      IL_0e04: ldc.i4.4     
+      IL_0e05: mul          
+      IL_0e06: add          
+      IL_0e07: ldind.u4     
+      IL_0e08: add          
+      IL_0e09: stloc.s      c
+
+      // [492 17 - 492 56]
+      IL_0e0b: ldloc.s      d
+      IL_0e0d: ldloc.s      c
+      IL_0e0f: ldc.i4.s     15 // 0x0f
+      IL_0e11: shl          
+      IL_0e12: ldloc.s      c
+      IL_0e14: ldc.i4.s     17 // 0x11
+      IL_0e16: shr.un       
+      IL_0e17: or           
+      IL_0e18: add          
+      IL_0e19: stloc.s      c
+
+      // [495 17 - 495 34]
+      IL_0e1b: ldloc.s      d
+      IL_0e1d: ldloc.s      c
+      IL_0e1f: ldloc.s      a
+      IL_0e21: not          
+      IL_0e22: or           
+      IL_0e23: xor          
+      IL_0e24: stloc.s      f
+
+      // [496 17 - 496 24]
+      IL_0e26: ldloc.s      b
+      IL_0e28: ldloc.s      f
+      IL_0e2a: add          
+      IL_0e2b: stloc.s      b
+
+      // [497 17 - 497 33]
+      IL_0e2d: ldloc.s      b
+      IL_0e2f: ldc.i4       1309151649 // 0x4e0811a1
+      IL_0e34: add          
+      IL_0e35: stloc.s      b
+
+      // [498 17 - 498 47]
+      IL_0e37: ldloc.s      b
+      IL_0e39: ldloc.s      blockPtr
+      IL_0e3b: ldc.i4.s     13 // 0x0d
+      IL_0e3d: conv.i       
+      IL_0e3e: ldc.i4.4     
+      IL_0e3f: mul          
+      IL_0e40: add          
+      IL_0e41: ldind.u4     
+      IL_0e42: add          
+      IL_0e43: stloc.s      b
+
+      // [499 17 - 499 56]
+      IL_0e45: ldloc.s      c
+      IL_0e47: ldloc.s      b
+      IL_0e49: ldc.i4.s     21 // 0x15
+      IL_0e4b: shl          
+      IL_0e4c: ldloc.s      b
+      IL_0e4e: ldc.i4.s     11 // 0x0b
+      IL_0e50: shr.un       
+      IL_0e51: or           
+      IL_0e52: add          
+      IL_0e53: stloc.s      b
+
+      // [502 17 - 502 34]
+      IL_0e55: ldloc.s      c
+      IL_0e57: ldloc.s      b
+      IL_0e59: ldloc.s      d
+      IL_0e5b: not          
+      IL_0e5c: or           
+      IL_0e5d: xor          
+      IL_0e5e: stloc.s      f
+
+      // [503 17 - 503 24]
+      IL_0e60: ldloc.s      a
+      IL_0e62: ldloc.s      f
+      IL_0e64: add          
+      IL_0e65: stloc.s      a
+
+      // [504 17 - 504 33]
+      IL_0e67: ldloc.s      a
+      IL_0e69: ldc.i4       -145523070 // 0xf7537e82
+      IL_0e6e: add          
+      IL_0e6f: stloc.s      a
+
+      // [505 17 - 505 47]
+      IL_0e71: ldloc.s      a
+      IL_0e73: ldloc.s      blockPtr
+      IL_0e75: ldc.i4.4     
+      IL_0e76: conv.i       
+      IL_0e77: ldc.i4.4     
+      IL_0e78: mul          
+      IL_0e79: add          
+      IL_0e7a: ldind.u4     
+      IL_0e7b: add          
+      IL_0e7c: stloc.s      a
+
+      // [506 17 - 506 54]
+      IL_0e7e: ldloc.s      b
+      IL_0e80: ldloc.s      a
+      IL_0e82: ldc.i4.6     
+      IL_0e83: shl          
+      IL_0e84: ldloc.s      a
+      IL_0e86: ldc.i4.s     26 // 0x1a
+      IL_0e88: shr.un       
+      IL_0e89: or           
+      IL_0e8a: add          
+      IL_0e8b: stloc.s      a
+
+      // [509 17 - 509 34]
+      IL_0e8d: ldloc.s      b
+      IL_0e8f: ldloc.s      a
+      IL_0e91: ldloc.s      c
+      IL_0e93: not          
+      IL_0e94: or           
+      IL_0e95: xor          
+      IL_0e96: stloc.s      f
+
+      // [510 17 - 510 24]
+      IL_0e98: ldloc.s      d
+      IL_0e9a: ldloc.s      f
+      IL_0e9c: add          
+      IL_0e9d: stloc.s      d
+
+      // [511 17 - 511 33]
+      IL_0e9f: ldloc.s      d
+      IL_0ea1: ldc.i4       -1120210379 // 0xbd3af235
+      IL_0ea6: add          
+      IL_0ea7: stloc.s      d
+
+      // [512 17 - 512 47]
+      IL_0ea9: ldloc.s      d
+      IL_0eab: ldloc.s      blockPtr
+      IL_0ead: ldc.i4.s     11 // 0x0b
+      IL_0eaf: conv.i       
+      IL_0eb0: ldc.i4.4     
+      IL_0eb1: mul          
+      IL_0eb2: add          
+      IL_0eb3: ldind.u4     
+      IL_0eb4: add          
+      IL_0eb5: stloc.s      d
+
+      // [513 17 - 513 56]
+      IL_0eb7: ldloc.s      a
+      IL_0eb9: ldloc.s      d
+      IL_0ebb: ldc.i4.s     10 // 0x0a
+      IL_0ebd: shl          
+      IL_0ebe: ldloc.s      d
+      IL_0ec0: ldc.i4.s     22 // 0x16
+      IL_0ec2: shr.un       
+      IL_0ec3: or           
+      IL_0ec4: add          
+      IL_0ec5: stloc.s      d
+
+      // [516 17 - 516 34]
+      IL_0ec7: ldloc.s      a
+      IL_0ec9: ldloc.s      d
+      IL_0ecb: ldloc.s      b
+      IL_0ecd: not          
+      IL_0ece: or           
+      IL_0ecf: xor          
+      IL_0ed0: stloc.s      f
+
+      // [517 17 - 517 24]
+      IL_0ed2: ldloc.s      c
+      IL_0ed4: ldloc.s      f
+      IL_0ed6: add          
+      IL_0ed7: stloc.s      c
+
+      // [518 17 - 518 33]
+      IL_0ed9: ldloc.s      c
+      IL_0edb: ldc.i4       718787259 // 0x2ad7d2bb
+      IL_0ee0: add          
+      IL_0ee1: stloc.s      c
+
+      // [519 17 - 519 47]
+      IL_0ee3: ldloc.s      c
+      IL_0ee5: ldloc.s      blockPtr
+      IL_0ee7: ldc.i4.2     
+      IL_0ee8: conv.i       
+      IL_0ee9: ldc.i4.4     
+      IL_0eea: mul          
+      IL_0eeb: add          
+      IL_0eec: ldind.u4     
+      IL_0eed: add          
+      IL_0eee: stloc.s      c
+
+      // [520 17 - 520 56]
+      IL_0ef0: ldloc.s      d
+      IL_0ef2: ldloc.s      c
+      IL_0ef4: ldc.i4.s     15 // 0x0f
+      IL_0ef6: shl          
+      IL_0ef7: ldloc.s      c
+      IL_0ef9: ldc.i4.s     17 // 0x11
+      IL_0efb: shr.un       
+      IL_0efc: or           
+      IL_0efd: add          
+      IL_0efe: stloc.s      c
+
+      // [523 17 - 523 34]
+      IL_0f00: ldloc.s      d
+      IL_0f02: ldloc.s      c
+      IL_0f04: ldloc.s      a
+      IL_0f06: not          
+      IL_0f07: or           
+      IL_0f08: xor          
+      IL_0f09: stloc.s      f
+
+      // [524 17 - 524 24]
+      IL_0f0b: ldloc.s      b
+      IL_0f0d: ldloc.s      f
+      IL_0f0f: add          
+      IL_0f10: stloc.s      b
+
+      // [525 17 - 525 33]
+      IL_0f12: ldloc.s      b
+      IL_0f14: ldc.i4       -343485551 // 0xeb86d391
+      IL_0f19: add          
+      IL_0f1a: stloc.s      b
+
+      // [526 17 - 526 47]
+      IL_0f1c: ldloc.s      b
+      IL_0f1e: ldloc.s      blockPtr
+      IL_0f20: ldc.i4.s     9 // 0x09
+      IL_0f22: conv.i       
+      IL_0f23: ldc.i4.4     
+      IL_0f24: mul          
+      IL_0f25: add          
+      IL_0f26: ldind.u4     
+      IL_0f27: add          
+      IL_0f28: stloc.s      b
+
+      // [527 17 - 527 56]
+      IL_0f2a: ldloc.s      c
+      IL_0f2c: ldloc.s      b
+      IL_0f2e: ldc.i4.s     21 // 0x15
+      IL_0f30: shl          
+      IL_0f31: ldloc.s      b
+      IL_0f33: ldc.i4.s     11 // 0x0b
+      IL_0f35: shr.un       
+      IL_0f36: or           
+      IL_0f37: add          
+      IL_0f38: stloc.s      b
+
+      // [529 17 - 529 32]
+      IL_0f3a: ldarg.2      // digest
+      IL_0f3b: ldflda       unsigned int32 Md5DotNet.Md5Digest::A
+      IL_0f40: dup          
+      IL_0f41: ldind.u4     
+      IL_0f42: ldloc.s      a
+      IL_0f44: add          
+      IL_0f45: stind.i4     
+
+      // [530 17 - 530 32]
+      IL_0f46: ldarg.2      // digest
+      IL_0f47: ldflda       unsigned int32 Md5DotNet.Md5Digest::B
+      IL_0f4c: dup          
+      IL_0f4d: ldind.u4     
+      IL_0f4e: ldloc.s      b
+      IL_0f50: add          
+      IL_0f51: stind.i4     
+
+      // [531 17 - 531 32]
+      IL_0f52: ldarg.2      // digest
+      IL_0f53: ldflda       unsigned int32 Md5DotNet.Md5Digest::C
+      IL_0f58: dup          
+      IL_0f59: ldind.u4     
+      IL_0f5a: ldloc.s      c
+      IL_0f5c: add          
+      IL_0f5d: stind.i4     
+
+      // [532 17 - 532 32]
+      IL_0f5e: ldarg.2      // digest
+      IL_0f5f: ldflda       unsigned int32 Md5DotNet.Md5Digest::D
+      IL_0f64: dup          
+      IL_0f65: ldind.u4     
+      IL_0f66: ldloc.s      d
+      IL_0f68: add          
+      IL_0f69: stind.i4     
+
+      // [28 64 - 28 76]
+      IL_0f6a: ldloc.2      // blockIndex
+      IL_0f6b: ldc.i4.1     
+      IL_0f6c: add          
+      IL_0f6d: stloc.2      // blockIndex
+
+      // [28 38 - 28 62]
+      IL_0f6e: ldloc.2      // blockIndex
+      IL_0f6f: ldloc.0      // blocksCount
+      IL_0f70: blt          IL_0044
+    // end of loop
+
+    // [534 9 - 534 10]
+    IL_0f75: ret          
+
+  } // end of method Md5_8_NoLea::GetDigest
+} // end of class Md5DotNet.Md5_8_NoLea

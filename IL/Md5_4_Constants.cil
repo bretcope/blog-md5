@@ -1,0 +1,3100 @@
+// Type: Md5DotNet.Md5_4_Constants 
+// Assembly: Md5DotNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 92E8A231-9212-453A-AB87-DB38B4F5E3D4
+// Location: C:\code\blog\md5\Md5DotNet\Md5DotNet\bin\Release\Md5DotNet.exe
+// Sequence point data from C:\code\blog\md5\Md5DotNet\Md5DotNet\bin\Release\Md5DotNet.pdb
+
+.class private abstract sealed auto ansi beforefieldinit 
+  Md5DotNet.Md5_4_Constants
+    extends [mscorlib]System.Object
+{
+
+  .method public hidebysig static unsigned int8[] 
+    GetBytes(
+      unsigned int8[] input
+    ) cil managed 
+  {
+    .maxstack 3
+    .locals init (
+      [0] valuetype Md5DotNet.Md5Digest digest,
+      [1] unsigned int8& pinned inputPtr,
+      [2] unsigned int8[] V_2
+    )
+
+    // [10 20 - 10 42]
+    IL_0000: ldarg.0      // input
+    IL_0001: dup          
+    IL_0002: stloc.2      // V_2
+    IL_0003: brfalse.s    IL_000a
+    IL_0005: ldloc.2      // V_2
+    IL_0006: ldlen        
+    IL_0007: conv.i4      
+    IL_0008: brtrue.s     IL_000f
+    IL_000a: ldc.i4.0     
+    IL_000b: conv.u       
+    IL_000c: stloc.1      // inputPtr
+    IL_000d: br.s         IL_0017
+    IL_000f: ldloc.2      // V_2
+    IL_0010: ldc.i4.0     
+    IL_0011: ldelema      [mscorlib]System.Byte
+    IL_0016: stloc.1      // inputPtr
+
+    // [12 17 - 12 60]
+    IL_0017: ldloc.1      // inputPtr
+    IL_0018: conv.i       
+    IL_0019: ldarg.0      // input
+    IL_001a: ldlen        
+    IL_001b: conv.i4      
+    IL_001c: ldloca.s     digest
+    IL_001e: conv.u       
+    IL_001f: call         void Md5DotNet.Md5_4_Constants::GetDigest(unsigned int8*, int32, valuetype Md5DotNet.Md5Digest*)
+
+    IL_0024: ldc.i4.0     
+    IL_0025: conv.u       
+    IL_0026: stloc.1      // inputPtr
+
+    // [15 13 - 15 38]
+    IL_0027: ldloca.s     digest
+    IL_0029: call         instance unsigned int8[] Md5DotNet.Md5Digest::GetBytes()
+    IL_002e: ret          
+
+  } // end of method Md5_4_Constants::GetBytes
+
+  .method public hidebysig static void 
+    GetDigest(
+      unsigned int8* input, 
+      int32 length, 
+      valuetype Md5DotNet.Md5Digest* digest
+    ) cil managed 
+  {
+    .maxstack 6
+    .locals init (
+      [0] int32 blocksCount,
+      [1] valuetype Md5DotNet.Block paddingBlockData,
+      [2] int32 blockIndex,
+      [3] int32 offset,
+      [4] int32 blockEnd,
+      [5] unsigned int32* blockPtr,
+      [6] unsigned int32 a,
+      [7] unsigned int32 b,
+      [8] unsigned int32 c,
+      [9] unsigned int32 d,
+      [10] unsigned int32 f,
+      [11] int32 bytesRemaining,
+      [12] unsigned int8* paddingPtr
+    )
+
+    // [21 13 - 21 64]
+    IL_0000: ldarg.1      // length
+    IL_0001: ldc.i4.8     
+    IL_0002: add          
+    IL_0003: ldc.i4.s     64 // 0x40
+    IL_0005: div          
+    IL_0006: ldc.i4.1     
+    IL_0007: add          
+    IL_0008: stloc.0      // blocksCount
+
+    // [23 13 - 23 36]
+    IL_0009: ldarg.2      // digest
+    IL_000a: ldc.i4       1732584193 // 0x67452301
+    IL_000f: stfld        unsigned int32 Md5DotNet.Md5Digest::A
+
+    // [24 13 - 24 36]
+    IL_0014: ldarg.2      // digest
+    IL_0015: ldc.i4       -271733879 // 0xefcdab89
+    IL_001a: stfld        unsigned int32 Md5DotNet.Md5Digest::B
+
+    // [25 13 - 25 36]
+    IL_001f: ldarg.2      // digest
+    IL_0020: ldc.i4       -1732584194 // 0x98badcfe
+    IL_0025: stfld        unsigned int32 Md5DotNet.Md5Digest::C
+
+    // [26 13 - 26 36]
+    IL_002a: ldarg.2      // digest
+    IL_002b: ldc.i4       271733878 // 0x10325476
+    IL_0030: stfld        unsigned int32 Md5DotNet.Md5Digest::D
+
+    // [28 13 - 28 51]
+    IL_0035: ldloca.s     paddingBlockData
+    IL_0037: initobj      Md5DotNet.Block
+
+    // [30 18 - 30 36]
+    IL_003d: ldc.i4.0     
+    IL_003e: stloc.2      // blockIndex
+
+    IL_003f: br           IL_0f0e
+    // start of loop, entry point: IL_0f0e
+
+      // [32 17 - 32 57]
+      IL_0044: ldloc.2      // blockIndex
+      IL_0045: ldc.i4.s     64 // 0x40
+      IL_0047: mul          
+      IL_0048: stloc.3      // offset
+
+      // [33 17 - 33 55]
+      IL_0049: ldloc.3      // offset
+      IL_004a: ldc.i4.s     64 // 0x40
+      IL_004c: add          
+      IL_004d: stloc.s      blockEnd
+
+      // [37 17 - 37 39]
+      IL_004f: ldloc.s      blockEnd
+      IL_0051: ldarg.1      // length
+      IL_0052: ble.s        IL_00b8
+
+      // [39 21 - 39 42]
+      IL_0054: ldloc.3      // offset
+      IL_0055: ldarg.1      // length
+      IL_0056: blt.s        IL_0079
+
+      // [41 25 - 41 46]
+      IL_0058: ldloc.3      // offset
+      IL_0059: ldarg.1      // length
+      IL_005a: bne.un.s     IL_0067
+
+      // [44 29 - 44 62]
+      IL_005c: ldloca.s     paddingBlockData
+      IL_005e: conv.u       
+      IL_005f: ldc.i4       128 // 0x00000080
+      IL_0064: stind.i1     
+
+      // [45 25 - 45 26]
+      IL_0065: br.s         IL_006f
+
+      // [49 29 - 49 63]
+      IL_0067: ldloca.s     paddingBlockData
+      IL_0069: initobj      Md5DotNet.Block
+
+      // [52 25 - 52 68]
+      IL_006f: ldloca.s     paddingBlockData
+      IL_0071: ldarg.1      // length
+      IL_0072: call         instance void Md5DotNet.Block::SetOriginalLength(int32)
+
+      // [53 21 - 53 22]
+      IL_0077: br.s         IL_00b1
+
+      // [56 25 - 56 82]
+      IL_0079: ldc.i4.s     64 // 0x40
+      IL_007b: ldloc.s      blockEnd
+      IL_007d: ldarg.1      // length
+      IL_007e: sub          
+      IL_007f: sub          
+      IL_0080: stloc.s      bytesRemaining
+
+      // [57 25 - 57 67]
+      IL_0082: ldloca.s     paddingBlockData
+      IL_0084: conv.u       
+      IL_0085: stloc.s      paddingPtr
+
+      // [58 25 - 58 93]
+      IL_0087: ldarg.0      // input
+      IL_0088: ldloc.3      // offset
+      IL_0089: add          
+      IL_008a: conv.u       
+      IL_008b: ldloc.s      paddingPtr
+      IL_008d: ldloc.s      bytesRemaining
+      IL_008f: call         void Md5DotNet.Common::UnsafeMemoryCopy(unsigned int8*, unsigned int8*, int32)
+
+      // [61 25 - 61 59]
+      IL_0094: ldloc.s      paddingPtr
+      IL_0096: ldloc.s      bytesRemaining
+      IL_0098: add          
+      IL_0099: ldc.i4       128 // 0x00000080
+      IL_009e: stind.i1     
+
+      // [64 25 - 64 71]
+      IL_009f: ldc.i4.s     64 // 0x40
+      IL_00a1: ldloc.s      bytesRemaining
+      IL_00a3: ldc.i4.1     
+      IL_00a4: add          
+      IL_00a5: sub          
+      IL_00a6: ldc.i4.8     
+      IL_00a7: blt.s        IL_00b1
+
+      // [65 29 - 65 72]
+      IL_00a9: ldloca.s     paddingBlockData
+      IL_00ab: ldarg.1      // length
+      IL_00ac: call         instance void Md5DotNet.Block::SetOriginalLength(int32)
+
+      // [69 21 - 69 57]
+      IL_00b1: ldloca.s     paddingBlockData
+      IL_00b3: conv.u       
+      IL_00b4: stloc.s      blockPtr
+
+      // [70 17 - 70 18]
+      IL_00b6: br.s         IL_00be
+
+      // [73 21 - 73 54]
+      IL_00b8: ldarg.0      // input
+      IL_00b9: ldloc.3      // offset
+      IL_00ba: add          
+      IL_00bb: conv.u       
+      IL_00bc: stloc.s      blockPtr
+
+      // [76 17 - 76 35]
+      IL_00be: ldarg.2      // digest
+      IL_00bf: ldfld        unsigned int32 Md5DotNet.Md5Digest::A
+      IL_00c4: stloc.s      a
+
+      // [77 17 - 77 35]
+      IL_00c6: ldarg.2      // digest
+      IL_00c7: ldfld        unsigned int32 Md5DotNet.Md5Digest::B
+      IL_00cc: stloc.s      b
+
+      // [78 17 - 78 35]
+      IL_00ce: ldarg.2      // digest
+      IL_00cf: ldfld        unsigned int32 Md5DotNet.Md5Digest::C
+      IL_00d4: stloc.s      c
+
+      // [79 17 - 79 35]
+      IL_00d6: ldarg.2      // digest
+      IL_00d7: ldfld        unsigned int32 Md5DotNet.Md5Digest::D
+      IL_00dc: stloc.s      d
+
+      // [84 17 - 84 40]
+      IL_00de: ldloc.s      b
+      IL_00e0: ldloc.s      c
+      IL_00e2: and          
+      IL_00e3: ldloc.s      b
+      IL_00e5: not          
+      IL_00e6: ldloc.s      d
+      IL_00e8: and          
+      IL_00e9: or           
+      IL_00ea: stloc.s      f
+
+      // [85 17 - 85 27]
+      IL_00ec: ldloc.s      d
+
+      // [86 17 - 86 23]
+      IL_00ee: ldloc.s      c
+      IL_00f0: stloc.s      d
+
+      // [87 17 - 87 23]
+      IL_00f2: ldloc.s      b
+      IL_00f4: stloc.s      c
+
+      // [88 17 - 88 70]
+      IL_00f6: ldloc.s      b
+      IL_00f8: ldloc.s      a
+      IL_00fa: ldloc.s      f
+      IL_00fc: add          
+      IL_00fd: ldc.i4       -680876936 // 0xd76aa478
+      IL_0102: add          
+      IL_0103: ldloc.s      blockPtr
+      IL_0105: ldind.u4     
+      IL_0106: add          
+      IL_0107: ldc.i4.7     
+      IL_0108: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_010d: add          
+      IL_010e: stloc.s      b
+
+      // [89 17 - 89 27]
+      IL_0110: stloc.s      a
+
+      // [92 17 - 92 40]
+      IL_0112: ldloc.s      b
+      IL_0114: ldloc.s      c
+      IL_0116: and          
+      IL_0117: ldloc.s      b
+      IL_0119: not          
+      IL_011a: ldloc.s      d
+      IL_011c: and          
+      IL_011d: or           
+      IL_011e: stloc.s      f
+
+      // [93 17 - 93 27]
+      IL_0120: ldloc.s      d
+
+      // [94 17 - 94 23]
+      IL_0122: ldloc.s      c
+      IL_0124: stloc.s      d
+
+      // [95 17 - 95 23]
+      IL_0126: ldloc.s      b
+      IL_0128: stloc.s      c
+
+      // [96 17 - 96 71]
+      IL_012a: ldloc.s      b
+      IL_012c: ldloc.s      a
+      IL_012e: ldloc.s      f
+      IL_0130: add          
+      IL_0131: ldc.i4       -389564586 // 0xe8c7b756
+      IL_0136: add          
+      IL_0137: ldloc.s      blockPtr
+      IL_0139: ldc.i4.4     
+      IL_013a: add          
+      IL_013b: ldind.u4     
+      IL_013c: add          
+      IL_013d: ldc.i4.s     12 // 0x0c
+      IL_013f: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0144: add          
+      IL_0145: stloc.s      b
+
+      // [97 17 - 97 27]
+      IL_0147: stloc.s      a
+
+      // [100 17 - 100 40]
+      IL_0149: ldloc.s      b
+      IL_014b: ldloc.s      c
+      IL_014d: and          
+      IL_014e: ldloc.s      b
+      IL_0150: not          
+      IL_0151: ldloc.s      d
+      IL_0153: and          
+      IL_0154: or           
+      IL_0155: stloc.s      f
+
+      // [101 17 - 101 27]
+      IL_0157: ldloc.s      d
+
+      // [102 17 - 102 23]
+      IL_0159: ldloc.s      c
+      IL_015b: stloc.s      d
+
+      // [103 17 - 103 23]
+      IL_015d: ldloc.s      b
+      IL_015f: stloc.s      c
+
+      // [104 17 - 104 71]
+      IL_0161: ldloc.s      b
+      IL_0163: ldloc.s      a
+      IL_0165: ldloc.s      f
+      IL_0167: add          
+      IL_0168: ldc.i4       606105819 // 0x242070db
+      IL_016d: add          
+      IL_016e: ldloc.s      blockPtr
+      IL_0170: ldc.i4.2     
+      IL_0171: conv.i       
+      IL_0172: ldc.i4.4     
+      IL_0173: mul          
+      IL_0174: add          
+      IL_0175: ldind.u4     
+      IL_0176: add          
+      IL_0177: ldc.i4.s     17 // 0x11
+      IL_0179: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_017e: add          
+      IL_017f: stloc.s      b
+
+      // [105 17 - 105 27]
+      IL_0181: stloc.s      a
+
+      // [108 17 - 108 40]
+      IL_0183: ldloc.s      b
+      IL_0185: ldloc.s      c
+      IL_0187: and          
+      IL_0188: ldloc.s      b
+      IL_018a: not          
+      IL_018b: ldloc.s      d
+      IL_018d: and          
+      IL_018e: or           
+      IL_018f: stloc.s      f
+
+      // [109 17 - 109 27]
+      IL_0191: ldloc.s      d
+
+      // [110 17 - 110 23]
+      IL_0193: ldloc.s      c
+      IL_0195: stloc.s      d
+
+      // [111 17 - 111 23]
+      IL_0197: ldloc.s      b
+      IL_0199: stloc.s      c
+
+      // [112 17 - 112 71]
+      IL_019b: ldloc.s      b
+      IL_019d: ldloc.s      a
+      IL_019f: ldloc.s      f
+      IL_01a1: add          
+      IL_01a2: ldc.i4       -1044525330 // 0xc1bdceee
+      IL_01a7: add          
+      IL_01a8: ldloc.s      blockPtr
+      IL_01aa: ldc.i4.3     
+      IL_01ab: conv.i       
+      IL_01ac: ldc.i4.4     
+      IL_01ad: mul          
+      IL_01ae: add          
+      IL_01af: ldind.u4     
+      IL_01b0: add          
+      IL_01b1: ldc.i4.s     22 // 0x16
+      IL_01b3: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_01b8: add          
+      IL_01b9: stloc.s      b
+
+      // [113 17 - 113 27]
+      IL_01bb: stloc.s      a
+
+      // [116 17 - 116 40]
+      IL_01bd: ldloc.s      b
+      IL_01bf: ldloc.s      c
+      IL_01c1: and          
+      IL_01c2: ldloc.s      b
+      IL_01c4: not          
+      IL_01c5: ldloc.s      d
+      IL_01c7: and          
+      IL_01c8: or           
+      IL_01c9: stloc.s      f
+
+      // [117 17 - 117 27]
+      IL_01cb: ldloc.s      d
+
+      // [118 17 - 118 23]
+      IL_01cd: ldloc.s      c
+      IL_01cf: stloc.s      d
+
+      // [119 17 - 119 23]
+      IL_01d1: ldloc.s      b
+      IL_01d3: stloc.s      c
+
+      // [120 17 - 120 70]
+      IL_01d5: ldloc.s      b
+      IL_01d7: ldloc.s      a
+      IL_01d9: ldloc.s      f
+      IL_01db: add          
+      IL_01dc: ldc.i4       -176418897 // 0xf57c0faf
+      IL_01e1: add          
+      IL_01e2: ldloc.s      blockPtr
+      IL_01e4: ldc.i4.4     
+      IL_01e5: conv.i       
+      IL_01e6: ldc.i4.4     
+      IL_01e7: mul          
+      IL_01e8: add          
+      IL_01e9: ldind.u4     
+      IL_01ea: add          
+      IL_01eb: ldc.i4.7     
+      IL_01ec: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_01f1: add          
+      IL_01f2: stloc.s      b
+
+      // [121 17 - 121 27]
+      IL_01f4: stloc.s      a
+
+      // [124 17 - 124 40]
+      IL_01f6: ldloc.s      b
+      IL_01f8: ldloc.s      c
+      IL_01fa: and          
+      IL_01fb: ldloc.s      b
+      IL_01fd: not          
+      IL_01fe: ldloc.s      d
+      IL_0200: and          
+      IL_0201: or           
+      IL_0202: stloc.s      f
+
+      // [125 17 - 125 27]
+      IL_0204: ldloc.s      d
+
+      // [126 17 - 126 23]
+      IL_0206: ldloc.s      c
+      IL_0208: stloc.s      d
+
+      // [127 17 - 127 23]
+      IL_020a: ldloc.s      b
+      IL_020c: stloc.s      c
+
+      // [128 17 - 128 71]
+      IL_020e: ldloc.s      b
+      IL_0210: ldloc.s      a
+      IL_0212: ldloc.s      f
+      IL_0214: add          
+      IL_0215: ldc.i4       1200080426 // 0x4787c62a
+      IL_021a: add          
+      IL_021b: ldloc.s      blockPtr
+      IL_021d: ldc.i4.5     
+      IL_021e: conv.i       
+      IL_021f: ldc.i4.4     
+      IL_0220: mul          
+      IL_0221: add          
+      IL_0222: ldind.u4     
+      IL_0223: add          
+      IL_0224: ldc.i4.s     12 // 0x0c
+      IL_0226: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_022b: add          
+      IL_022c: stloc.s      b
+
+      // [129 17 - 129 27]
+      IL_022e: stloc.s      a
+
+      // [132 17 - 132 40]
+      IL_0230: ldloc.s      b
+      IL_0232: ldloc.s      c
+      IL_0234: and          
+      IL_0235: ldloc.s      b
+      IL_0237: not          
+      IL_0238: ldloc.s      d
+      IL_023a: and          
+      IL_023b: or           
+      IL_023c: stloc.s      f
+
+      // [133 17 - 133 27]
+      IL_023e: ldloc.s      d
+
+      // [134 17 - 134 23]
+      IL_0240: ldloc.s      c
+      IL_0242: stloc.s      d
+
+      // [135 17 - 135 23]
+      IL_0244: ldloc.s      b
+      IL_0246: stloc.s      c
+
+      // [136 17 - 136 71]
+      IL_0248: ldloc.s      b
+      IL_024a: ldloc.s      a
+      IL_024c: ldloc.s      f
+      IL_024e: add          
+      IL_024f: ldc.i4       -1473231341 // 0xa8304613
+      IL_0254: add          
+      IL_0255: ldloc.s      blockPtr
+      IL_0257: ldc.i4.6     
+      IL_0258: conv.i       
+      IL_0259: ldc.i4.4     
+      IL_025a: mul          
+      IL_025b: add          
+      IL_025c: ldind.u4     
+      IL_025d: add          
+      IL_025e: ldc.i4.s     17 // 0x11
+      IL_0260: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0265: add          
+      IL_0266: stloc.s      b
+
+      // [137 17 - 137 27]
+      IL_0268: stloc.s      a
+
+      // [140 17 - 140 40]
+      IL_026a: ldloc.s      b
+      IL_026c: ldloc.s      c
+      IL_026e: and          
+      IL_026f: ldloc.s      b
+      IL_0271: not          
+      IL_0272: ldloc.s      d
+      IL_0274: and          
+      IL_0275: or           
+      IL_0276: stloc.s      f
+
+      // [141 17 - 141 27]
+      IL_0278: ldloc.s      d
+
+      // [142 17 - 142 23]
+      IL_027a: ldloc.s      c
+      IL_027c: stloc.s      d
+
+      // [143 17 - 143 23]
+      IL_027e: ldloc.s      b
+      IL_0280: stloc.s      c
+
+      // [144 17 - 144 71]
+      IL_0282: ldloc.s      b
+      IL_0284: ldloc.s      a
+      IL_0286: ldloc.s      f
+      IL_0288: add          
+      IL_0289: ldc.i4       -45705983 // 0xfd469501
+      IL_028e: add          
+      IL_028f: ldloc.s      blockPtr
+      IL_0291: ldc.i4.7     
+      IL_0292: conv.i       
+      IL_0293: ldc.i4.4     
+      IL_0294: mul          
+      IL_0295: add          
+      IL_0296: ldind.u4     
+      IL_0297: add          
+      IL_0298: ldc.i4.s     22 // 0x16
+      IL_029a: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_029f: add          
+      IL_02a0: stloc.s      b
+
+      // [145 17 - 145 27]
+      IL_02a2: stloc.s      a
+
+      // [148 17 - 148 40]
+      IL_02a4: ldloc.s      b
+      IL_02a6: ldloc.s      c
+      IL_02a8: and          
+      IL_02a9: ldloc.s      b
+      IL_02ab: not          
+      IL_02ac: ldloc.s      d
+      IL_02ae: and          
+      IL_02af: or           
+      IL_02b0: stloc.s      f
+
+      // [149 17 - 149 27]
+      IL_02b2: ldloc.s      d
+
+      // [150 17 - 150 23]
+      IL_02b4: ldloc.s      c
+      IL_02b6: stloc.s      d
+
+      // [151 17 - 151 23]
+      IL_02b8: ldloc.s      b
+      IL_02ba: stloc.s      c
+
+      // [152 17 - 152 70]
+      IL_02bc: ldloc.s      b
+      IL_02be: ldloc.s      a
+      IL_02c0: ldloc.s      f
+      IL_02c2: add          
+      IL_02c3: ldc.i4       1770035416 // 0x698098d8
+      IL_02c8: add          
+      IL_02c9: ldloc.s      blockPtr
+      IL_02cb: ldc.i4.8     
+      IL_02cc: conv.i       
+      IL_02cd: ldc.i4.4     
+      IL_02ce: mul          
+      IL_02cf: add          
+      IL_02d0: ldind.u4     
+      IL_02d1: add          
+      IL_02d2: ldc.i4.7     
+      IL_02d3: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_02d8: add          
+      IL_02d9: stloc.s      b
+
+      // [153 17 - 153 27]
+      IL_02db: stloc.s      a
+
+      // [156 17 - 156 40]
+      IL_02dd: ldloc.s      b
+      IL_02df: ldloc.s      c
+      IL_02e1: and          
+      IL_02e2: ldloc.s      b
+      IL_02e4: not          
+      IL_02e5: ldloc.s      d
+      IL_02e7: and          
+      IL_02e8: or           
+      IL_02e9: stloc.s      f
+
+      // [157 17 - 157 27]
+      IL_02eb: ldloc.s      d
+
+      // [158 17 - 158 23]
+      IL_02ed: ldloc.s      c
+      IL_02ef: stloc.s      d
+
+      // [159 17 - 159 23]
+      IL_02f1: ldloc.s      b
+      IL_02f3: stloc.s      c
+
+      // [160 17 - 160 71]
+      IL_02f5: ldloc.s      b
+      IL_02f7: ldloc.s      a
+      IL_02f9: ldloc.s      f
+      IL_02fb: add          
+      IL_02fc: ldc.i4       -1958414417 // 0x8b44f7af
+      IL_0301: add          
+      IL_0302: ldloc.s      blockPtr
+      IL_0304: ldc.i4.s     9 // 0x09
+      IL_0306: conv.i       
+      IL_0307: ldc.i4.4     
+      IL_0308: mul          
+      IL_0309: add          
+      IL_030a: ldind.u4     
+      IL_030b: add          
+      IL_030c: ldc.i4.s     12 // 0x0c
+      IL_030e: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0313: add          
+      IL_0314: stloc.s      b
+
+      // [161 17 - 161 27]
+      IL_0316: stloc.s      a
+
+      // [164 17 - 164 40]
+      IL_0318: ldloc.s      b
+      IL_031a: ldloc.s      c
+      IL_031c: and          
+      IL_031d: ldloc.s      b
+      IL_031f: not          
+      IL_0320: ldloc.s      d
+      IL_0322: and          
+      IL_0323: or           
+      IL_0324: stloc.s      f
+
+      // [165 17 - 165 27]
+      IL_0326: ldloc.s      d
+
+      // [166 17 - 166 23]
+      IL_0328: ldloc.s      c
+      IL_032a: stloc.s      d
+
+      // [167 17 - 167 23]
+      IL_032c: ldloc.s      b
+      IL_032e: stloc.s      c
+
+      // [168 17 - 168 72]
+      IL_0330: ldloc.s      b
+      IL_0332: ldloc.s      a
+      IL_0334: ldloc.s      f
+      IL_0336: add          
+      IL_0337: ldc.i4       -42063 // 0xffff5bb1
+      IL_033c: add          
+      IL_033d: ldloc.s      blockPtr
+      IL_033f: ldc.i4.s     10 // 0x0a
+      IL_0341: conv.i       
+      IL_0342: ldc.i4.4     
+      IL_0343: mul          
+      IL_0344: add          
+      IL_0345: ldind.u4     
+      IL_0346: add          
+      IL_0347: ldc.i4.s     17 // 0x11
+      IL_0349: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_034e: add          
+      IL_034f: stloc.s      b
+
+      // [169 17 - 169 27]
+      IL_0351: stloc.s      a
+
+      // [172 17 - 172 40]
+      IL_0353: ldloc.s      b
+      IL_0355: ldloc.s      c
+      IL_0357: and          
+      IL_0358: ldloc.s      b
+      IL_035a: not          
+      IL_035b: ldloc.s      d
+      IL_035d: and          
+      IL_035e: or           
+      IL_035f: stloc.s      f
+
+      // [173 17 - 173 27]
+      IL_0361: ldloc.s      d
+
+      // [174 17 - 174 23]
+      IL_0363: ldloc.s      c
+      IL_0365: stloc.s      d
+
+      // [175 17 - 175 23]
+      IL_0367: ldloc.s      b
+      IL_0369: stloc.s      c
+
+      // [176 17 - 176 72]
+      IL_036b: ldloc.s      b
+      IL_036d: ldloc.s      a
+      IL_036f: ldloc.s      f
+      IL_0371: add          
+      IL_0372: ldc.i4       -1990404162 // 0x895cd7be
+      IL_0377: add          
+      IL_0378: ldloc.s      blockPtr
+      IL_037a: ldc.i4.s     11 // 0x0b
+      IL_037c: conv.i       
+      IL_037d: ldc.i4.4     
+      IL_037e: mul          
+      IL_037f: add          
+      IL_0380: ldind.u4     
+      IL_0381: add          
+      IL_0382: ldc.i4.s     22 // 0x16
+      IL_0384: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0389: add          
+      IL_038a: stloc.s      b
+
+      // [177 17 - 177 27]
+      IL_038c: stloc.s      a
+
+      // [180 17 - 180 40]
+      IL_038e: ldloc.s      b
+      IL_0390: ldloc.s      c
+      IL_0392: and          
+      IL_0393: ldloc.s      b
+      IL_0395: not          
+      IL_0396: ldloc.s      d
+      IL_0398: and          
+      IL_0399: or           
+      IL_039a: stloc.s      f
+
+      // [181 17 - 181 27]
+      IL_039c: ldloc.s      d
+
+      // [182 17 - 182 23]
+      IL_039e: ldloc.s      c
+      IL_03a0: stloc.s      d
+
+      // [183 17 - 183 23]
+      IL_03a2: ldloc.s      b
+      IL_03a4: stloc.s      c
+
+      // [184 17 - 184 71]
+      IL_03a6: ldloc.s      b
+      IL_03a8: ldloc.s      a
+      IL_03aa: ldloc.s      f
+      IL_03ac: add          
+      IL_03ad: ldc.i4       1804603682 // 0x6b901122
+      IL_03b2: add          
+      IL_03b3: ldloc.s      blockPtr
+      IL_03b5: ldc.i4.s     12 // 0x0c
+      IL_03b7: conv.i       
+      IL_03b8: ldc.i4.4     
+      IL_03b9: mul          
+      IL_03ba: add          
+      IL_03bb: ldind.u4     
+      IL_03bc: add          
+      IL_03bd: ldc.i4.7     
+      IL_03be: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_03c3: add          
+      IL_03c4: stloc.s      b
+
+      // [185 17 - 185 27]
+      IL_03c6: stloc.s      a
+
+      // [188 17 - 188 40]
+      IL_03c8: ldloc.s      b
+      IL_03ca: ldloc.s      c
+      IL_03cc: and          
+      IL_03cd: ldloc.s      b
+      IL_03cf: not          
+      IL_03d0: ldloc.s      d
+      IL_03d2: and          
+      IL_03d3: or           
+      IL_03d4: stloc.s      f
+
+      // [189 17 - 189 27]
+      IL_03d6: ldloc.s      d
+
+      // [190 17 - 190 23]
+      IL_03d8: ldloc.s      c
+      IL_03da: stloc.s      d
+
+      // [191 17 - 191 23]
+      IL_03dc: ldloc.s      b
+      IL_03de: stloc.s      c
+
+      // [192 17 - 192 72]
+      IL_03e0: ldloc.s      b
+      IL_03e2: ldloc.s      a
+      IL_03e4: ldloc.s      f
+      IL_03e6: add          
+      IL_03e7: ldc.i4       -40341101 // 0xfd987193
+      IL_03ec: add          
+      IL_03ed: ldloc.s      blockPtr
+      IL_03ef: ldc.i4.s     13 // 0x0d
+      IL_03f1: conv.i       
+      IL_03f2: ldc.i4.4     
+      IL_03f3: mul          
+      IL_03f4: add          
+      IL_03f5: ldind.u4     
+      IL_03f6: add          
+      IL_03f7: ldc.i4.s     12 // 0x0c
+      IL_03f9: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_03fe: add          
+      IL_03ff: stloc.s      b
+
+      // [193 17 - 193 27]
+      IL_0401: stloc.s      a
+
+      // [196 17 - 196 40]
+      IL_0403: ldloc.s      b
+      IL_0405: ldloc.s      c
+      IL_0407: and          
+      IL_0408: ldloc.s      b
+      IL_040a: not          
+      IL_040b: ldloc.s      d
+      IL_040d: and          
+      IL_040e: or           
+      IL_040f: stloc.s      f
+
+      // [197 17 - 197 27]
+      IL_0411: ldloc.s      d
+
+      // [198 17 - 198 23]
+      IL_0413: ldloc.s      c
+      IL_0415: stloc.s      d
+
+      // [199 17 - 199 23]
+      IL_0417: ldloc.s      b
+      IL_0419: stloc.s      c
+
+      // [200 17 - 200 72]
+      IL_041b: ldloc.s      b
+      IL_041d: ldloc.s      a
+      IL_041f: ldloc.s      f
+      IL_0421: add          
+      IL_0422: ldc.i4       -1502002290 // 0xa679438e
+      IL_0427: add          
+      IL_0428: ldloc.s      blockPtr
+      IL_042a: ldc.i4.s     14 // 0x0e
+      IL_042c: conv.i       
+      IL_042d: ldc.i4.4     
+      IL_042e: mul          
+      IL_042f: add          
+      IL_0430: ldind.u4     
+      IL_0431: add          
+      IL_0432: ldc.i4.s     17 // 0x11
+      IL_0434: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0439: add          
+      IL_043a: stloc.s      b
+
+      // [201 17 - 201 27]
+      IL_043c: stloc.s      a
+
+      // [204 17 - 204 40]
+      IL_043e: ldloc.s      b
+      IL_0440: ldloc.s      c
+      IL_0442: and          
+      IL_0443: ldloc.s      b
+      IL_0445: not          
+      IL_0446: ldloc.s      d
+      IL_0448: and          
+      IL_0449: or           
+      IL_044a: stloc.s      f
+
+      // [205 17 - 205 27]
+      IL_044c: ldloc.s      d
+
+      // [206 17 - 206 23]
+      IL_044e: ldloc.s      c
+      IL_0450: stloc.s      d
+
+      // [207 17 - 207 23]
+      IL_0452: ldloc.s      b
+      IL_0454: stloc.s      c
+
+      // [208 17 - 208 72]
+      IL_0456: ldloc.s      b
+      IL_0458: ldloc.s      a
+      IL_045a: ldloc.s      f
+      IL_045c: add          
+      IL_045d: ldc.i4       1236535329 // 0x49b40821
+      IL_0462: add          
+      IL_0463: ldloc.s      blockPtr
+      IL_0465: ldc.i4.s     15 // 0x0f
+      IL_0467: conv.i       
+      IL_0468: ldc.i4.4     
+      IL_0469: mul          
+      IL_046a: add          
+      IL_046b: ldind.u4     
+      IL_046c: add          
+      IL_046d: ldc.i4.s     22 // 0x16
+      IL_046f: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0474: add          
+      IL_0475: stloc.s      b
+
+      // [209 17 - 209 27]
+      IL_0477: stloc.s      a
+
+      // [213 17 - 213 40]
+      IL_0479: ldloc.s      d
+      IL_047b: ldloc.s      b
+      IL_047d: and          
+      IL_047e: ldloc.s      d
+      IL_0480: not          
+      IL_0481: ldloc.s      c
+      IL_0483: and          
+      IL_0484: or           
+      IL_0485: stloc.s      f
+
+      // [214 17 - 214 27]
+      IL_0487: ldloc.s      d
+
+      // [215 17 - 215 23]
+      IL_0489: ldloc.s      c
+      IL_048b: stloc.s      d
+
+      // [216 17 - 216 23]
+      IL_048d: ldloc.s      b
+      IL_048f: stloc.s      c
+
+      // [217 17 - 217 86]
+      IL_0491: ldloc.s      b
+      IL_0493: ldloc.s      a
+      IL_0495: ldloc.s      f
+      IL_0497: add          
+      IL_0498: ldc.i4       -165796510 // 0xf61e2562
+      IL_049d: add          
+      IL_049e: ldloc.s      blockPtr
+      IL_04a0: ldc.i4.4     
+      IL_04a1: add          
+      IL_04a2: ldind.u4     
+      IL_04a3: add          
+      IL_04a4: ldc.i4.5     
+      IL_04a5: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_04aa: add          
+      IL_04ab: stloc.s      b
+
+      // [218 17 - 218 27]
+      IL_04ad: stloc.s      a
+
+      // [221 17 - 221 40]
+      IL_04af: ldloc.s      d
+      IL_04b1: ldloc.s      b
+      IL_04b3: and          
+      IL_04b4: ldloc.s      d
+      IL_04b6: not          
+      IL_04b7: ldloc.s      c
+      IL_04b9: and          
+      IL_04ba: or           
+      IL_04bb: stloc.s      f
+
+      // [222 17 - 222 27]
+      IL_04bd: ldloc.s      d
+
+      // [223 17 - 223 23]
+      IL_04bf: ldloc.s      c
+      IL_04c1: stloc.s      d
+
+      // [224 17 - 224 23]
+      IL_04c3: ldloc.s      b
+      IL_04c5: stloc.s      c
+
+      // [225 17 - 225 86]
+      IL_04c7: ldloc.s      b
+      IL_04c9: ldloc.s      a
+      IL_04cb: ldloc.s      f
+      IL_04cd: add          
+      IL_04ce: ldc.i4       -1069501632 // 0xc040b340
+      IL_04d3: add          
+      IL_04d4: ldloc.s      blockPtr
+      IL_04d6: ldc.i4.6     
+      IL_04d7: conv.i       
+      IL_04d8: ldc.i4.4     
+      IL_04d9: mul          
+      IL_04da: add          
+      IL_04db: ldind.u4     
+      IL_04dc: add          
+      IL_04dd: ldc.i4.s     9 // 0x09
+      IL_04df: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_04e4: add          
+      IL_04e5: stloc.s      b
+
+      // [226 17 - 226 27]
+      IL_04e7: stloc.s      a
+
+      // [229 17 - 229 40]
+      IL_04e9: ldloc.s      d
+      IL_04eb: ldloc.s      b
+      IL_04ed: and          
+      IL_04ee: ldloc.s      d
+      IL_04f0: not          
+      IL_04f1: ldloc.s      c
+      IL_04f3: and          
+      IL_04f4: or           
+      IL_04f5: stloc.s      f
+
+      // [230 17 - 230 27]
+      IL_04f7: ldloc.s      d
+
+      // [231 17 - 231 23]
+      IL_04f9: ldloc.s      c
+      IL_04fb: stloc.s      d
+
+      // [232 17 - 232 23]
+      IL_04fd: ldloc.s      b
+      IL_04ff: stloc.s      c
+
+      // [233 17 - 233 87]
+      IL_0501: ldloc.s      b
+      IL_0503: ldloc.s      a
+      IL_0505: ldloc.s      f
+      IL_0507: add          
+      IL_0508: ldc.i4       643717713 // 0x265e5a51
+      IL_050d: add          
+      IL_050e: ldloc.s      blockPtr
+      IL_0510: ldc.i4.s     11 // 0x0b
+      IL_0512: conv.i       
+      IL_0513: ldc.i4.4     
+      IL_0514: mul          
+      IL_0515: add          
+      IL_0516: ldind.u4     
+      IL_0517: add          
+      IL_0518: ldc.i4.s     14 // 0x0e
+      IL_051a: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_051f: add          
+      IL_0520: stloc.s      b
+
+      // [234 17 - 234 27]
+      IL_0522: stloc.s      a
+
+      // [237 17 - 237 40]
+      IL_0524: ldloc.s      d
+      IL_0526: ldloc.s      b
+      IL_0528: and          
+      IL_0529: ldloc.s      d
+      IL_052b: not          
+      IL_052c: ldloc.s      c
+      IL_052e: and          
+      IL_052f: or           
+      IL_0530: stloc.s      f
+
+      // [238 17 - 238 27]
+      IL_0532: ldloc.s      d
+
+      // [239 17 - 239 23]
+      IL_0534: ldloc.s      c
+      IL_0536: stloc.s      d
+
+      // [240 17 - 240 23]
+      IL_0538: ldloc.s      b
+      IL_053a: stloc.s      c
+
+      // [241 17 - 241 87]
+      IL_053c: ldloc.s      b
+      IL_053e: ldloc.s      a
+      IL_0540: ldloc.s      f
+      IL_0542: add          
+      IL_0543: ldc.i4       -373897302 // 0xe9b6c7aa
+      IL_0548: add          
+      IL_0549: ldloc.s      blockPtr
+      IL_054b: ldind.u4     
+      IL_054c: add          
+      IL_054d: ldc.i4.s     20 // 0x14
+      IL_054f: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0554: add          
+      IL_0555: stloc.s      b
+
+      // [242 17 - 242 27]
+      IL_0557: stloc.s      a
+
+      // [245 17 - 245 40]
+      IL_0559: ldloc.s      d
+      IL_055b: ldloc.s      b
+      IL_055d: and          
+      IL_055e: ldloc.s      d
+      IL_0560: not          
+      IL_0561: ldloc.s      c
+      IL_0563: and          
+      IL_0564: or           
+      IL_0565: stloc.s      f
+
+      // [246 17 - 246 27]
+      IL_0567: ldloc.s      d
+
+      // [247 17 - 247 23]
+      IL_0569: ldloc.s      c
+      IL_056b: stloc.s      d
+
+      // [248 17 - 248 23]
+      IL_056d: ldloc.s      b
+      IL_056f: stloc.s      c
+
+      // [249 17 - 249 86]
+      IL_0571: ldloc.s      b
+      IL_0573: ldloc.s      a
+      IL_0575: ldloc.s      f
+      IL_0577: add          
+      IL_0578: ldc.i4       -701558691 // 0xd62f105d
+      IL_057d: add          
+      IL_057e: ldloc.s      blockPtr
+      IL_0580: ldc.i4.5     
+      IL_0581: conv.i       
+      IL_0582: ldc.i4.4     
+      IL_0583: mul          
+      IL_0584: add          
+      IL_0585: ldind.u4     
+      IL_0586: add          
+      IL_0587: ldc.i4.5     
+      IL_0588: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_058d: add          
+      IL_058e: stloc.s      b
+
+      // [250 17 - 250 27]
+      IL_0590: stloc.s      a
+
+      // [253 17 - 253 40]
+      IL_0592: ldloc.s      d
+      IL_0594: ldloc.s      b
+      IL_0596: and          
+      IL_0597: ldloc.s      d
+      IL_0599: not          
+      IL_059a: ldloc.s      c
+      IL_059c: and          
+      IL_059d: or           
+      IL_059e: stloc.s      f
+
+      // [254 17 - 254 27]
+      IL_05a0: ldloc.s      d
+
+      // [255 17 - 255 23]
+      IL_05a2: ldloc.s      c
+      IL_05a4: stloc.s      d
+
+      // [256 17 - 256 23]
+      IL_05a6: ldloc.s      b
+      IL_05a8: stloc.s      c
+
+      // [257 17 - 257 85]
+      IL_05aa: ldloc.s      b
+      IL_05ac: ldloc.s      a
+      IL_05ae: ldloc.s      f
+      IL_05b0: add          
+      IL_05b1: ldc.i4       38016083 // 0x02441453
+      IL_05b6: add          
+      IL_05b7: ldloc.s      blockPtr
+      IL_05b9: ldc.i4.s     10 // 0x0a
+      IL_05bb: conv.i       
+      IL_05bc: ldc.i4.4     
+      IL_05bd: mul          
+      IL_05be: add          
+      IL_05bf: ldind.u4     
+      IL_05c0: add          
+      IL_05c1: ldc.i4.s     9 // 0x09
+      IL_05c3: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_05c8: add          
+      IL_05c9: stloc.s      b
+
+      // [258 17 - 258 27]
+      IL_05cb: stloc.s      a
+
+      // [261 17 - 261 40]
+      IL_05cd: ldloc.s      d
+      IL_05cf: ldloc.s      b
+      IL_05d1: and          
+      IL_05d2: ldloc.s      d
+      IL_05d4: not          
+      IL_05d5: ldloc.s      c
+      IL_05d7: and          
+      IL_05d8: or           
+      IL_05d9: stloc.s      f
+
+      // [262 17 - 262 27]
+      IL_05db: ldloc.s      d
+
+      // [263 17 - 263 23]
+      IL_05dd: ldloc.s      c
+      IL_05df: stloc.s      d
+
+      // [264 17 - 264 23]
+      IL_05e1: ldloc.s      b
+      IL_05e3: stloc.s      c
+
+      // [265 17 - 265 87]
+      IL_05e5: ldloc.s      b
+      IL_05e7: ldloc.s      a
+      IL_05e9: ldloc.s      f
+      IL_05eb: add          
+      IL_05ec: ldc.i4       -660478335 // 0xd8a1e681
+      IL_05f1: add          
+      IL_05f2: ldloc.s      blockPtr
+      IL_05f4: ldc.i4.s     15 // 0x0f
+      IL_05f6: conv.i       
+      IL_05f7: ldc.i4.4     
+      IL_05f8: mul          
+      IL_05f9: add          
+      IL_05fa: ldind.u4     
+      IL_05fb: add          
+      IL_05fc: ldc.i4.s     14 // 0x0e
+      IL_05fe: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0603: add          
+      IL_0604: stloc.s      b
+
+      // [266 17 - 266 27]
+      IL_0606: stloc.s      a
+
+      // [269 17 - 269 40]
+      IL_0608: ldloc.s      d
+      IL_060a: ldloc.s      b
+      IL_060c: and          
+      IL_060d: ldloc.s      d
+      IL_060f: not          
+      IL_0610: ldloc.s      c
+      IL_0612: and          
+      IL_0613: or           
+      IL_0614: stloc.s      f
+
+      // [270 17 - 270 27]
+      IL_0616: ldloc.s      d
+
+      // [271 17 - 271 23]
+      IL_0618: ldloc.s      c
+      IL_061a: stloc.s      d
+
+      // [272 17 - 272 23]
+      IL_061c: ldloc.s      b
+      IL_061e: stloc.s      c
+
+      // [273 17 - 273 87]
+      IL_0620: ldloc.s      b
+      IL_0622: ldloc.s      a
+      IL_0624: ldloc.s      f
+      IL_0626: add          
+      IL_0627: ldc.i4       -405537848 // 0xe7d3fbc8
+      IL_062c: add          
+      IL_062d: ldloc.s      blockPtr
+      IL_062f: ldc.i4.4     
+      IL_0630: conv.i       
+      IL_0631: ldc.i4.4     
+      IL_0632: mul          
+      IL_0633: add          
+      IL_0634: ldind.u4     
+      IL_0635: add          
+      IL_0636: ldc.i4.s     20 // 0x14
+      IL_0638: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_063d: add          
+      IL_063e: stloc.s      b
+
+      // [274 17 - 274 27]
+      IL_0640: stloc.s      a
+
+      // [277 17 - 277 40]
+      IL_0642: ldloc.s      d
+      IL_0644: ldloc.s      b
+      IL_0646: and          
+      IL_0647: ldloc.s      d
+      IL_0649: not          
+      IL_064a: ldloc.s      c
+      IL_064c: and          
+      IL_064d: or           
+      IL_064e: stloc.s      f
+
+      // [278 17 - 278 27]
+      IL_0650: ldloc.s      d
+
+      // [279 17 - 279 23]
+      IL_0652: ldloc.s      c
+      IL_0654: stloc.s      d
+
+      // [280 17 - 280 23]
+      IL_0656: ldloc.s      b
+      IL_0658: stloc.s      c
+
+      // [281 17 - 281 86]
+      IL_065a: ldloc.s      b
+      IL_065c: ldloc.s      a
+      IL_065e: ldloc.s      f
+      IL_0660: add          
+      IL_0661: ldc.i4       568446438 // 0x21e1cde6
+      IL_0666: add          
+      IL_0667: ldloc.s      blockPtr
+      IL_0669: ldc.i4.s     9 // 0x09
+      IL_066b: conv.i       
+      IL_066c: ldc.i4.4     
+      IL_066d: mul          
+      IL_066e: add          
+      IL_066f: ldind.u4     
+      IL_0670: add          
+      IL_0671: ldc.i4.5     
+      IL_0672: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0677: add          
+      IL_0678: stloc.s      b
+
+      // [282 17 - 282 27]
+      IL_067a: stloc.s      a
+
+      // [285 17 - 285 40]
+      IL_067c: ldloc.s      d
+      IL_067e: ldloc.s      b
+      IL_0680: and          
+      IL_0681: ldloc.s      d
+      IL_0683: not          
+      IL_0684: ldloc.s      c
+      IL_0686: and          
+      IL_0687: or           
+      IL_0688: stloc.s      f
+
+      // [286 17 - 286 27]
+      IL_068a: ldloc.s      d
+
+      // [287 17 - 287 23]
+      IL_068c: ldloc.s      c
+      IL_068e: stloc.s      d
+
+      // [288 17 - 288 23]
+      IL_0690: ldloc.s      b
+      IL_0692: stloc.s      c
+
+      // [289 17 - 289 86]
+      IL_0694: ldloc.s      b
+      IL_0696: ldloc.s      a
+      IL_0698: ldloc.s      f
+      IL_069a: add          
+      IL_069b: ldc.i4       -1019803690 // 0xc33707d6
+      IL_06a0: add          
+      IL_06a1: ldloc.s      blockPtr
+      IL_06a3: ldc.i4.s     14 // 0x0e
+      IL_06a5: conv.i       
+      IL_06a6: ldc.i4.4     
+      IL_06a7: mul          
+      IL_06a8: add          
+      IL_06a9: ldind.u4     
+      IL_06aa: add          
+      IL_06ab: ldc.i4.s     9 // 0x09
+      IL_06ad: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_06b2: add          
+      IL_06b3: stloc.s      b
+
+      // [290 17 - 290 27]
+      IL_06b5: stloc.s      a
+
+      // [293 17 - 293 40]
+      IL_06b7: ldloc.s      d
+      IL_06b9: ldloc.s      b
+      IL_06bb: and          
+      IL_06bc: ldloc.s      d
+      IL_06be: not          
+      IL_06bf: ldloc.s      c
+      IL_06c1: and          
+      IL_06c2: or           
+      IL_06c3: stloc.s      f
+
+      // [294 17 - 294 27]
+      IL_06c5: ldloc.s      d
+
+      // [295 17 - 295 23]
+      IL_06c7: ldloc.s      c
+      IL_06c9: stloc.s      d
+
+      // [296 17 - 296 23]
+      IL_06cb: ldloc.s      b
+      IL_06cd: stloc.s      c
+
+      // [297 17 - 297 87]
+      IL_06cf: ldloc.s      b
+      IL_06d1: ldloc.s      a
+      IL_06d3: ldloc.s      f
+      IL_06d5: add          
+      IL_06d6: ldc.i4       -187363961 // 0xf4d50d87
+      IL_06db: add          
+      IL_06dc: ldloc.s      blockPtr
+      IL_06de: ldc.i4.3     
+      IL_06df: conv.i       
+      IL_06e0: ldc.i4.4     
+      IL_06e1: mul          
+      IL_06e2: add          
+      IL_06e3: ldind.u4     
+      IL_06e4: add          
+      IL_06e5: ldc.i4.s     14 // 0x0e
+      IL_06e7: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_06ec: add          
+      IL_06ed: stloc.s      b
+
+      // [298 17 - 298 27]
+      IL_06ef: stloc.s      a
+
+      // [301 17 - 301 40]
+      IL_06f1: ldloc.s      d
+      IL_06f3: ldloc.s      b
+      IL_06f5: and          
+      IL_06f6: ldloc.s      d
+      IL_06f8: not          
+      IL_06f9: ldloc.s      c
+      IL_06fb: and          
+      IL_06fc: or           
+      IL_06fd: stloc.s      f
+
+      // [302 17 - 302 27]
+      IL_06ff: ldloc.s      d
+
+      // [303 17 - 303 23]
+      IL_0701: ldloc.s      c
+      IL_0703: stloc.s      d
+
+      // [304 17 - 304 23]
+      IL_0705: ldloc.s      b
+      IL_0707: stloc.s      c
+
+      // [305 17 - 305 87]
+      IL_0709: ldloc.s      b
+      IL_070b: ldloc.s      a
+      IL_070d: ldloc.s      f
+      IL_070f: add          
+      IL_0710: ldc.i4       1163531501 // 0x455a14ed
+      IL_0715: add          
+      IL_0716: ldloc.s      blockPtr
+      IL_0718: ldc.i4.8     
+      IL_0719: conv.i       
+      IL_071a: ldc.i4.4     
+      IL_071b: mul          
+      IL_071c: add          
+      IL_071d: ldind.u4     
+      IL_071e: add          
+      IL_071f: ldc.i4.s     20 // 0x14
+      IL_0721: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0726: add          
+      IL_0727: stloc.s      b
+
+      // [306 17 - 306 27]
+      IL_0729: stloc.s      a
+
+      // [309 17 - 309 40]
+      IL_072b: ldloc.s      d
+      IL_072d: ldloc.s      b
+      IL_072f: and          
+      IL_0730: ldloc.s      d
+      IL_0732: not          
+      IL_0733: ldloc.s      c
+      IL_0735: and          
+      IL_0736: or           
+      IL_0737: stloc.s      f
+
+      // [310 17 - 310 27]
+      IL_0739: ldloc.s      d
+
+      // [311 17 - 311 23]
+      IL_073b: ldloc.s      c
+      IL_073d: stloc.s      d
+
+      // [312 17 - 312 23]
+      IL_073f: ldloc.s      b
+      IL_0741: stloc.s      c
+
+      // [313 17 - 313 86]
+      IL_0743: ldloc.s      b
+      IL_0745: ldloc.s      a
+      IL_0747: ldloc.s      f
+      IL_0749: add          
+      IL_074a: ldc.i4       -1444681467 // 0xa9e3e905
+      IL_074f: add          
+      IL_0750: ldloc.s      blockPtr
+      IL_0752: ldc.i4.s     13 // 0x0d
+      IL_0754: conv.i       
+      IL_0755: ldc.i4.4     
+      IL_0756: mul          
+      IL_0757: add          
+      IL_0758: ldind.u4     
+      IL_0759: add          
+      IL_075a: ldc.i4.5     
+      IL_075b: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0760: add          
+      IL_0761: stloc.s      b
+
+      // [314 17 - 314 27]
+      IL_0763: stloc.s      a
+
+      // [317 17 - 317 40]
+      IL_0765: ldloc.s      d
+      IL_0767: ldloc.s      b
+      IL_0769: and          
+      IL_076a: ldloc.s      d
+      IL_076c: not          
+      IL_076d: ldloc.s      c
+      IL_076f: and          
+      IL_0770: or           
+      IL_0771: stloc.s      f
+
+      // [318 17 - 318 27]
+      IL_0773: ldloc.s      d
+
+      // [319 17 - 319 23]
+      IL_0775: ldloc.s      c
+      IL_0777: stloc.s      d
+
+      // [320 17 - 320 23]
+      IL_0779: ldloc.s      b
+      IL_077b: stloc.s      c
+
+      // [321 17 - 321 86]
+      IL_077d: ldloc.s      b
+      IL_077f: ldloc.s      a
+      IL_0781: ldloc.s      f
+      IL_0783: add          
+      IL_0784: ldc.i4       -51403784 // 0xfcefa3f8
+      IL_0789: add          
+      IL_078a: ldloc.s      blockPtr
+      IL_078c: ldc.i4.2     
+      IL_078d: conv.i       
+      IL_078e: ldc.i4.4     
+      IL_078f: mul          
+      IL_0790: add          
+      IL_0791: ldind.u4     
+      IL_0792: add          
+      IL_0793: ldc.i4.s     9 // 0x09
+      IL_0795: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_079a: add          
+      IL_079b: stloc.s      b
+
+      // [322 17 - 322 27]
+      IL_079d: stloc.s      a
+
+      // [325 17 - 325 40]
+      IL_079f: ldloc.s      d
+      IL_07a1: ldloc.s      b
+      IL_07a3: and          
+      IL_07a4: ldloc.s      d
+      IL_07a6: not          
+      IL_07a7: ldloc.s      c
+      IL_07a9: and          
+      IL_07aa: or           
+      IL_07ab: stloc.s      f
+
+      // [326 17 - 326 27]
+      IL_07ad: ldloc.s      d
+
+      // [327 17 - 327 23]
+      IL_07af: ldloc.s      c
+      IL_07b1: stloc.s      d
+
+      // [328 17 - 328 23]
+      IL_07b3: ldloc.s      b
+      IL_07b5: stloc.s      c
+
+      // [329 17 - 329 87]
+      IL_07b7: ldloc.s      b
+      IL_07b9: ldloc.s      a
+      IL_07bb: ldloc.s      f
+      IL_07bd: add          
+      IL_07be: ldc.i4       1735328473 // 0x676f02d9
+      IL_07c3: add          
+      IL_07c4: ldloc.s      blockPtr
+      IL_07c6: ldc.i4.7     
+      IL_07c7: conv.i       
+      IL_07c8: ldc.i4.4     
+      IL_07c9: mul          
+      IL_07ca: add          
+      IL_07cb: ldind.u4     
+      IL_07cc: add          
+      IL_07cd: ldc.i4.s     14 // 0x0e
+      IL_07cf: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_07d4: add          
+      IL_07d5: stloc.s      b
+
+      // [330 17 - 330 27]
+      IL_07d7: stloc.s      a
+
+      // [333 17 - 333 40]
+      IL_07d9: ldloc.s      d
+      IL_07db: ldloc.s      b
+      IL_07dd: and          
+      IL_07de: ldloc.s      d
+      IL_07e0: not          
+      IL_07e1: ldloc.s      c
+      IL_07e3: and          
+      IL_07e4: or           
+      IL_07e5: stloc.s      f
+
+      // [334 17 - 334 27]
+      IL_07e7: ldloc.s      d
+
+      // [335 17 - 335 23]
+      IL_07e9: ldloc.s      c
+      IL_07eb: stloc.s      d
+
+      // [336 17 - 336 23]
+      IL_07ed: ldloc.s      b
+      IL_07ef: stloc.s      c
+
+      // [337 17 - 337 87]
+      IL_07f1: ldloc.s      b
+      IL_07f3: ldloc.s      a
+      IL_07f5: ldloc.s      f
+      IL_07f7: add          
+      IL_07f8: ldc.i4       -1926607734 // 0x8d2a4c8a
+      IL_07fd: add          
+      IL_07fe: ldloc.s      blockPtr
+      IL_0800: ldc.i4.s     12 // 0x0c
+      IL_0802: conv.i       
+      IL_0803: ldc.i4.4     
+      IL_0804: mul          
+      IL_0805: add          
+      IL_0806: ldind.u4     
+      IL_0807: add          
+      IL_0808: ldc.i4.s     20 // 0x14
+      IL_080a: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_080f: add          
+      IL_0810: stloc.s      b
+
+      // [338 17 - 338 27]
+      IL_0812: stloc.s      a
+
+      // [342 17 - 342 31]
+      IL_0814: ldloc.s      b
+      IL_0816: ldloc.s      c
+      IL_0818: xor          
+      IL_0819: ldloc.s      d
+      IL_081b: xor          
+      IL_081c: stloc.s      f
+
+      // [343 17 - 343 27]
+      IL_081e: ldloc.s      d
+
+      // [344 17 - 344 23]
+      IL_0820: ldloc.s      c
+      IL_0822: stloc.s      d
+
+      // [345 17 - 345 23]
+      IL_0824: ldloc.s      b
+      IL_0826: stloc.s      c
+
+      // [346 17 - 346 86]
+      IL_0828: ldloc.s      b
+      IL_082a: ldloc.s      a
+      IL_082c: ldloc.s      f
+      IL_082e: add          
+      IL_082f: ldc.i4       -378558 // 0xfffa3942
+      IL_0834: add          
+      IL_0835: ldloc.s      blockPtr
+      IL_0837: ldc.i4.5     
+      IL_0838: conv.i       
+      IL_0839: ldc.i4.4     
+      IL_083a: mul          
+      IL_083b: add          
+      IL_083c: ldind.u4     
+      IL_083d: add          
+      IL_083e: ldc.i4.4     
+      IL_083f: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0844: add          
+      IL_0845: stloc.s      b
+
+      // [347 17 - 347 27]
+      IL_0847: stloc.s      a
+
+      // [350 17 - 350 31]
+      IL_0849: ldloc.s      b
+      IL_084b: ldloc.s      c
+      IL_084d: xor          
+      IL_084e: ldloc.s      d
+      IL_0850: xor          
+      IL_0851: stloc.s      f
+
+      // [351 17 - 351 27]
+      IL_0853: ldloc.s      d
+
+      // [352 17 - 352 23]
+      IL_0855: ldloc.s      c
+      IL_0857: stloc.s      d
+
+      // [353 17 - 353 23]
+      IL_0859: ldloc.s      b
+      IL_085b: stloc.s      c
+
+      // [354 17 - 354 87]
+      IL_085d: ldloc.s      b
+      IL_085f: ldloc.s      a
+      IL_0861: ldloc.s      f
+      IL_0863: add          
+      IL_0864: ldc.i4       -2022574463 // 0x8771f681
+      IL_0869: add          
+      IL_086a: ldloc.s      blockPtr
+      IL_086c: ldc.i4.8     
+      IL_086d: conv.i       
+      IL_086e: ldc.i4.4     
+      IL_086f: mul          
+      IL_0870: add          
+      IL_0871: ldind.u4     
+      IL_0872: add          
+      IL_0873: ldc.i4.s     11 // 0x0b
+      IL_0875: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_087a: add          
+      IL_087b: stloc.s      b
+
+      // [355 17 - 355 27]
+      IL_087d: stloc.s      a
+
+      // [358 17 - 358 31]
+      IL_087f: ldloc.s      b
+      IL_0881: ldloc.s      c
+      IL_0883: xor          
+      IL_0884: ldloc.s      d
+      IL_0886: xor          
+      IL_0887: stloc.s      f
+
+      // [359 17 - 359 27]
+      IL_0889: ldloc.s      d
+
+      // [360 17 - 360 23]
+      IL_088b: ldloc.s      c
+      IL_088d: stloc.s      d
+
+      // [361 17 - 361 23]
+      IL_088f: ldloc.s      b
+      IL_0891: stloc.s      c
+
+      // [362 17 - 362 87]
+      IL_0893: ldloc.s      b
+      IL_0895: ldloc.s      a
+      IL_0897: ldloc.s      f
+      IL_0899: add          
+      IL_089a: ldc.i4       1839030562 // 0x6d9d6122
+      IL_089f: add          
+      IL_08a0: ldloc.s      blockPtr
+      IL_08a2: ldc.i4.s     11 // 0x0b
+      IL_08a4: conv.i       
+      IL_08a5: ldc.i4.4     
+      IL_08a6: mul          
+      IL_08a7: add          
+      IL_08a8: ldind.u4     
+      IL_08a9: add          
+      IL_08aa: ldc.i4.s     16 // 0x10
+      IL_08ac: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_08b1: add          
+      IL_08b2: stloc.s      b
+
+      // [363 17 - 363 27]
+      IL_08b4: stloc.s      a
+
+      // [366 17 - 366 31]
+      IL_08b6: ldloc.s      b
+      IL_08b8: ldloc.s      c
+      IL_08ba: xor          
+      IL_08bb: ldloc.s      d
+      IL_08bd: xor          
+      IL_08be: stloc.s      f
+
+      // [367 17 - 367 27]
+      IL_08c0: ldloc.s      d
+
+      // [368 17 - 368 23]
+      IL_08c2: ldloc.s      c
+      IL_08c4: stloc.s      d
+
+      // [369 17 - 369 23]
+      IL_08c6: ldloc.s      b
+      IL_08c8: stloc.s      c
+
+      // [370 17 - 370 87]
+      IL_08ca: ldloc.s      b
+      IL_08cc: ldloc.s      a
+      IL_08ce: ldloc.s      f
+      IL_08d0: add          
+      IL_08d1: ldc.i4       -35309556 // 0xfde5380c
+      IL_08d6: add          
+      IL_08d7: ldloc.s      blockPtr
+      IL_08d9: ldc.i4.s     14 // 0x0e
+      IL_08db: conv.i       
+      IL_08dc: ldc.i4.4     
+      IL_08dd: mul          
+      IL_08de: add          
+      IL_08df: ldind.u4     
+      IL_08e0: add          
+      IL_08e1: ldc.i4.s     23 // 0x17
+      IL_08e3: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_08e8: add          
+      IL_08e9: stloc.s      b
+
+      // [371 17 - 371 27]
+      IL_08eb: stloc.s      a
+
+      // [374 17 - 374 31]
+      IL_08ed: ldloc.s      b
+      IL_08ef: ldloc.s      c
+      IL_08f1: xor          
+      IL_08f2: ldloc.s      d
+      IL_08f4: xor          
+      IL_08f5: stloc.s      f
+
+      // [375 17 - 375 27]
+      IL_08f7: ldloc.s      d
+
+      // [376 17 - 376 23]
+      IL_08f9: ldloc.s      c
+      IL_08fb: stloc.s      d
+
+      // [377 17 - 377 23]
+      IL_08fd: ldloc.s      b
+      IL_08ff: stloc.s      c
+
+      // [378 17 - 378 86]
+      IL_0901: ldloc.s      b
+      IL_0903: ldloc.s      a
+      IL_0905: ldloc.s      f
+      IL_0907: add          
+      IL_0908: ldc.i4       -1530992060 // 0xa4beea44
+      IL_090d: add          
+      IL_090e: ldloc.s      blockPtr
+      IL_0910: ldc.i4.4     
+      IL_0911: add          
+      IL_0912: ldind.u4     
+      IL_0913: add          
+      IL_0914: ldc.i4.4     
+      IL_0915: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_091a: add          
+      IL_091b: stloc.s      b
+
+      // [379 17 - 379 27]
+      IL_091d: stloc.s      a
+
+      // [382 17 - 382 31]
+      IL_091f: ldloc.s      b
+      IL_0921: ldloc.s      c
+      IL_0923: xor          
+      IL_0924: ldloc.s      d
+      IL_0926: xor          
+      IL_0927: stloc.s      f
+
+      // [383 17 - 383 27]
+      IL_0929: ldloc.s      d
+
+      // [384 17 - 384 23]
+      IL_092b: ldloc.s      c
+      IL_092d: stloc.s      d
+
+      // [385 17 - 385 23]
+      IL_092f: ldloc.s      b
+      IL_0931: stloc.s      c
+
+      // [386 17 - 386 87]
+      IL_0933: ldloc.s      b
+      IL_0935: ldloc.s      a
+      IL_0937: ldloc.s      f
+      IL_0939: add          
+      IL_093a: ldc.i4       1272893353 // 0x4bdecfa9
+      IL_093f: add          
+      IL_0940: ldloc.s      blockPtr
+      IL_0942: ldc.i4.4     
+      IL_0943: conv.i       
+      IL_0944: ldc.i4.4     
+      IL_0945: mul          
+      IL_0946: add          
+      IL_0947: ldind.u4     
+      IL_0948: add          
+      IL_0949: ldc.i4.s     11 // 0x0b
+      IL_094b: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0950: add          
+      IL_0951: stloc.s      b
+
+      // [387 17 - 387 27]
+      IL_0953: stloc.s      a
+
+      // [390 17 - 390 31]
+      IL_0955: ldloc.s      b
+      IL_0957: ldloc.s      c
+      IL_0959: xor          
+      IL_095a: ldloc.s      d
+      IL_095c: xor          
+      IL_095d: stloc.s      f
+
+      // [391 17 - 391 27]
+      IL_095f: ldloc.s      d
+
+      // [392 17 - 392 23]
+      IL_0961: ldloc.s      c
+      IL_0963: stloc.s      d
+
+      // [393 17 - 393 23]
+      IL_0965: ldloc.s      b
+      IL_0967: stloc.s      c
+
+      // [394 17 - 394 87]
+      IL_0969: ldloc.s      b
+      IL_096b: ldloc.s      a
+      IL_096d: ldloc.s      f
+      IL_096f: add          
+      IL_0970: ldc.i4       -155497632 // 0xf6bb4b60
+      IL_0975: add          
+      IL_0976: ldloc.s      blockPtr
+      IL_0978: ldc.i4.7     
+      IL_0979: conv.i       
+      IL_097a: ldc.i4.4     
+      IL_097b: mul          
+      IL_097c: add          
+      IL_097d: ldind.u4     
+      IL_097e: add          
+      IL_097f: ldc.i4.s     16 // 0x10
+      IL_0981: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0986: add          
+      IL_0987: stloc.s      b
+
+      // [395 17 - 395 27]
+      IL_0989: stloc.s      a
+
+      // [398 17 - 398 31]
+      IL_098b: ldloc.s      b
+      IL_098d: ldloc.s      c
+      IL_098f: xor          
+      IL_0990: ldloc.s      d
+      IL_0992: xor          
+      IL_0993: stloc.s      f
+
+      // [399 17 - 399 27]
+      IL_0995: ldloc.s      d
+
+      // [400 17 - 400 23]
+      IL_0997: ldloc.s      c
+      IL_0999: stloc.s      d
+
+      // [401 17 - 401 23]
+      IL_099b: ldloc.s      b
+      IL_099d: stloc.s      c
+
+      // [402 17 - 402 87]
+      IL_099f: ldloc.s      b
+      IL_09a1: ldloc.s      a
+      IL_09a3: ldloc.s      f
+      IL_09a5: add          
+      IL_09a6: ldc.i4       -1094730640 // 0xbebfbc70
+      IL_09ab: add          
+      IL_09ac: ldloc.s      blockPtr
+      IL_09ae: ldc.i4.s     10 // 0x0a
+      IL_09b0: conv.i       
+      IL_09b1: ldc.i4.4     
+      IL_09b2: mul          
+      IL_09b3: add          
+      IL_09b4: ldind.u4     
+      IL_09b5: add          
+      IL_09b6: ldc.i4.s     23 // 0x17
+      IL_09b8: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_09bd: add          
+      IL_09be: stloc.s      b
+
+      // [403 17 - 403 27]
+      IL_09c0: stloc.s      a
+
+      // [406 17 - 406 31]
+      IL_09c2: ldloc.s      b
+      IL_09c4: ldloc.s      c
+      IL_09c6: xor          
+      IL_09c7: ldloc.s      d
+      IL_09c9: xor          
+      IL_09ca: stloc.s      f
+
+      // [407 17 - 407 27]
+      IL_09cc: ldloc.s      d
+
+      // [408 17 - 408 23]
+      IL_09ce: ldloc.s      c
+      IL_09d0: stloc.s      d
+
+      // [409 17 - 409 23]
+      IL_09d2: ldloc.s      b
+      IL_09d4: stloc.s      c
+
+      // [410 17 - 410 86]
+      IL_09d6: ldloc.s      b
+      IL_09d8: ldloc.s      a
+      IL_09da: ldloc.s      f
+      IL_09dc: add          
+      IL_09dd: ldc.i4       681279174 // 0x289b7ec6
+      IL_09e2: add          
+      IL_09e3: ldloc.s      blockPtr
+      IL_09e5: ldc.i4.s     13 // 0x0d
+      IL_09e7: conv.i       
+      IL_09e8: ldc.i4.4     
+      IL_09e9: mul          
+      IL_09ea: add          
+      IL_09eb: ldind.u4     
+      IL_09ec: add          
+      IL_09ed: ldc.i4.4     
+      IL_09ee: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_09f3: add          
+      IL_09f4: stloc.s      b
+
+      // [411 17 - 411 27]
+      IL_09f6: stloc.s      a
+
+      // [414 17 - 414 31]
+      IL_09f8: ldloc.s      b
+      IL_09fa: ldloc.s      c
+      IL_09fc: xor          
+      IL_09fd: ldloc.s      d
+      IL_09ff: xor          
+      IL_0a00: stloc.s      f
+
+      // [415 17 - 415 27]
+      IL_0a02: ldloc.s      d
+
+      // [416 17 - 416 23]
+      IL_0a04: ldloc.s      c
+      IL_0a06: stloc.s      d
+
+      // [417 17 - 417 23]
+      IL_0a08: ldloc.s      b
+      IL_0a0a: stloc.s      c
+
+      // [418 17 - 418 87]
+      IL_0a0c: ldloc.s      b
+      IL_0a0e: ldloc.s      a
+      IL_0a10: ldloc.s      f
+      IL_0a12: add          
+      IL_0a13: ldc.i4       -358537222 // 0xeaa127fa
+      IL_0a18: add          
+      IL_0a19: ldloc.s      blockPtr
+      IL_0a1b: ldind.u4     
+      IL_0a1c: add          
+      IL_0a1d: ldc.i4.s     11 // 0x0b
+      IL_0a1f: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0a24: add          
+      IL_0a25: stloc.s      b
+
+      // [419 17 - 419 27]
+      IL_0a27: stloc.s      a
+
+      // [422 17 - 422 31]
+      IL_0a29: ldloc.s      b
+      IL_0a2b: ldloc.s      c
+      IL_0a2d: xor          
+      IL_0a2e: ldloc.s      d
+      IL_0a30: xor          
+      IL_0a31: stloc.s      f
+
+      // [423 17 - 423 27]
+      IL_0a33: ldloc.s      d
+
+      // [424 17 - 424 23]
+      IL_0a35: ldloc.s      c
+      IL_0a37: stloc.s      d
+
+      // [425 17 - 425 23]
+      IL_0a39: ldloc.s      b
+      IL_0a3b: stloc.s      c
+
+      // [426 17 - 426 87]
+      IL_0a3d: ldloc.s      b
+      IL_0a3f: ldloc.s      a
+      IL_0a41: ldloc.s      f
+      IL_0a43: add          
+      IL_0a44: ldc.i4       -722521979 // 0xd4ef3085
+      IL_0a49: add          
+      IL_0a4a: ldloc.s      blockPtr
+      IL_0a4c: ldc.i4.3     
+      IL_0a4d: conv.i       
+      IL_0a4e: ldc.i4.4     
+      IL_0a4f: mul          
+      IL_0a50: add          
+      IL_0a51: ldind.u4     
+      IL_0a52: add          
+      IL_0a53: ldc.i4.s     16 // 0x10
+      IL_0a55: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0a5a: add          
+      IL_0a5b: stloc.s      b
+
+      // [427 17 - 427 27]
+      IL_0a5d: stloc.s      a
+
+      // [430 17 - 430 31]
+      IL_0a5f: ldloc.s      b
+      IL_0a61: ldloc.s      c
+      IL_0a63: xor          
+      IL_0a64: ldloc.s      d
+      IL_0a66: xor          
+      IL_0a67: stloc.s      f
+
+      // [431 17 - 431 27]
+      IL_0a69: ldloc.s      d
+
+      // [432 17 - 432 23]
+      IL_0a6b: ldloc.s      c
+      IL_0a6d: stloc.s      d
+
+      // [433 17 - 433 23]
+      IL_0a6f: ldloc.s      b
+      IL_0a71: stloc.s      c
+
+      // [434 17 - 434 86]
+      IL_0a73: ldloc.s      b
+      IL_0a75: ldloc.s      a
+      IL_0a77: ldloc.s      f
+      IL_0a79: add          
+      IL_0a7a: ldc.i4       76029189 // 0x04881d05
+      IL_0a7f: add          
+      IL_0a80: ldloc.s      blockPtr
+      IL_0a82: ldc.i4.6     
+      IL_0a83: conv.i       
+      IL_0a84: ldc.i4.4     
+      IL_0a85: mul          
+      IL_0a86: add          
+      IL_0a87: ldind.u4     
+      IL_0a88: add          
+      IL_0a89: ldc.i4.s     23 // 0x17
+      IL_0a8b: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0a90: add          
+      IL_0a91: stloc.s      b
+
+      // [435 17 - 435 27]
+      IL_0a93: stloc.s      a
+
+      // [438 17 - 438 31]
+      IL_0a95: ldloc.s      b
+      IL_0a97: ldloc.s      c
+      IL_0a99: xor          
+      IL_0a9a: ldloc.s      d
+      IL_0a9c: xor          
+      IL_0a9d: stloc.s      f
+
+      // [439 17 - 439 27]
+      IL_0a9f: ldloc.s      d
+
+      // [440 17 - 440 23]
+      IL_0aa1: ldloc.s      c
+      IL_0aa3: stloc.s      d
+
+      // [441 17 - 441 23]
+      IL_0aa5: ldloc.s      b
+      IL_0aa7: stloc.s      c
+
+      // [442 17 - 442 86]
+      IL_0aa9: ldloc.s      b
+      IL_0aab: ldloc.s      a
+      IL_0aad: ldloc.s      f
+      IL_0aaf: add          
+      IL_0ab0: ldc.i4       -640364487 // 0xd9d4d039
+      IL_0ab5: add          
+      IL_0ab6: ldloc.s      blockPtr
+      IL_0ab8: ldc.i4.s     9 // 0x09
+      IL_0aba: conv.i       
+      IL_0abb: ldc.i4.4     
+      IL_0abc: mul          
+      IL_0abd: add          
+      IL_0abe: ldind.u4     
+      IL_0abf: add          
+      IL_0ac0: ldc.i4.4     
+      IL_0ac1: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0ac6: add          
+      IL_0ac7: stloc.s      b
+
+      // [443 17 - 443 27]
+      IL_0ac9: stloc.s      a
+
+      // [446 17 - 446 31]
+      IL_0acb: ldloc.s      b
+      IL_0acd: ldloc.s      c
+      IL_0acf: xor          
+      IL_0ad0: ldloc.s      d
+      IL_0ad2: xor          
+      IL_0ad3: stloc.s      f
+
+      // [447 17 - 447 27]
+      IL_0ad5: ldloc.s      d
+
+      // [448 17 - 448 23]
+      IL_0ad7: ldloc.s      c
+      IL_0ad9: stloc.s      d
+
+      // [449 17 - 449 23]
+      IL_0adb: ldloc.s      b
+      IL_0add: stloc.s      c
+
+      // [450 17 - 450 87]
+      IL_0adf: ldloc.s      b
+      IL_0ae1: ldloc.s      a
+      IL_0ae3: ldloc.s      f
+      IL_0ae5: add          
+      IL_0ae6: ldc.i4       -421815835 // 0xe6db99e5
+      IL_0aeb: add          
+      IL_0aec: ldloc.s      blockPtr
+      IL_0aee: ldc.i4.s     12 // 0x0c
+      IL_0af0: conv.i       
+      IL_0af1: ldc.i4.4     
+      IL_0af2: mul          
+      IL_0af3: add          
+      IL_0af4: ldind.u4     
+      IL_0af5: add          
+      IL_0af6: ldc.i4.s     11 // 0x0b
+      IL_0af8: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0afd: add          
+      IL_0afe: stloc.s      b
+
+      // [451 17 - 451 27]
+      IL_0b00: stloc.s      a
+
+      // [454 17 - 454 31]
+      IL_0b02: ldloc.s      b
+      IL_0b04: ldloc.s      c
+      IL_0b06: xor          
+      IL_0b07: ldloc.s      d
+      IL_0b09: xor          
+      IL_0b0a: stloc.s      f
+
+      // [455 17 - 455 27]
+      IL_0b0c: ldloc.s      d
+
+      // [456 17 - 456 23]
+      IL_0b0e: ldloc.s      c
+      IL_0b10: stloc.s      d
+
+      // [457 17 - 457 23]
+      IL_0b12: ldloc.s      b
+      IL_0b14: stloc.s      c
+
+      // [458 17 - 458 87]
+      IL_0b16: ldloc.s      b
+      IL_0b18: ldloc.s      a
+      IL_0b1a: ldloc.s      f
+      IL_0b1c: add          
+      IL_0b1d: ldc.i4       530742520 // 0x1fa27cf8
+      IL_0b22: add          
+      IL_0b23: ldloc.s      blockPtr
+      IL_0b25: ldc.i4.s     15 // 0x0f
+      IL_0b27: conv.i       
+      IL_0b28: ldc.i4.4     
+      IL_0b29: mul          
+      IL_0b2a: add          
+      IL_0b2b: ldind.u4     
+      IL_0b2c: add          
+      IL_0b2d: ldc.i4.s     16 // 0x10
+      IL_0b2f: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0b34: add          
+      IL_0b35: stloc.s      b
+
+      // [459 17 - 459 27]
+      IL_0b37: stloc.s      a
+
+      // [462 17 - 462 31]
+      IL_0b39: ldloc.s      b
+      IL_0b3b: ldloc.s      c
+      IL_0b3d: xor          
+      IL_0b3e: ldloc.s      d
+      IL_0b40: xor          
+      IL_0b41: stloc.s      f
+
+      // [463 17 - 463 27]
+      IL_0b43: ldloc.s      d
+
+      // [464 17 - 464 23]
+      IL_0b45: ldloc.s      c
+      IL_0b47: stloc.s      d
+
+      // [465 17 - 465 23]
+      IL_0b49: ldloc.s      b
+      IL_0b4b: stloc.s      c
+
+      // [466 17 - 466 87]
+      IL_0b4d: ldloc.s      b
+      IL_0b4f: ldloc.s      a
+      IL_0b51: ldloc.s      f
+      IL_0b53: add          
+      IL_0b54: ldc.i4       -995338651 // 0xc4ac5665
+      IL_0b59: add          
+      IL_0b5a: ldloc.s      blockPtr
+      IL_0b5c: ldc.i4.2     
+      IL_0b5d: conv.i       
+      IL_0b5e: ldc.i4.4     
+      IL_0b5f: mul          
+      IL_0b60: add          
+      IL_0b61: ldind.u4     
+      IL_0b62: add          
+      IL_0b63: ldc.i4.s     23 // 0x17
+      IL_0b65: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0b6a: add          
+      IL_0b6b: stloc.s      b
+
+      // [467 17 - 467 27]
+      IL_0b6d: stloc.s      a
+
+      // [471 17 - 471 34]
+      IL_0b6f: ldloc.s      c
+      IL_0b71: ldloc.s      b
+      IL_0b73: ldloc.s      d
+      IL_0b75: not          
+      IL_0b76: or           
+      IL_0b77: xor          
+      IL_0b78: stloc.s      f
+
+      // [472 17 - 472 27]
+      IL_0b7a: ldloc.s      d
+
+      // [473 17 - 473 23]
+      IL_0b7c: ldloc.s      c
+      IL_0b7e: stloc.s      d
+
+      // [474 17 - 474 23]
+      IL_0b80: ldloc.s      b
+      IL_0b82: stloc.s      c
+
+      // [475 17 - 475 82]
+      IL_0b84: ldloc.s      b
+      IL_0b86: ldloc.s      a
+      IL_0b88: ldloc.s      f
+      IL_0b8a: add          
+      IL_0b8b: ldc.i4       -198630844 // 0xf4292244
+      IL_0b90: add          
+      IL_0b91: ldloc.s      blockPtr
+      IL_0b93: ldind.u4     
+      IL_0b94: add          
+      IL_0b95: ldc.i4.6     
+      IL_0b96: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0b9b: add          
+      IL_0b9c: stloc.s      b
+
+      // [476 17 - 476 27]
+      IL_0b9e: stloc.s      a
+
+      // [479 17 - 479 34]
+      IL_0ba0: ldloc.s      c
+      IL_0ba2: ldloc.s      b
+      IL_0ba4: ldloc.s      d
+      IL_0ba6: not          
+      IL_0ba7: or           
+      IL_0ba8: xor          
+      IL_0ba9: stloc.s      f
+
+      // [480 17 - 480 27]
+      IL_0bab: ldloc.s      d
+
+      // [481 17 - 481 23]
+      IL_0bad: ldloc.s      c
+      IL_0baf: stloc.s      d
+
+      // [482 17 - 482 23]
+      IL_0bb1: ldloc.s      b
+      IL_0bb3: stloc.s      c
+
+      // [483 17 - 483 83]
+      IL_0bb5: ldloc.s      b
+      IL_0bb7: ldloc.s      a
+      IL_0bb9: ldloc.s      f
+      IL_0bbb: add          
+      IL_0bbc: ldc.i4       1126891415 // 0x432aff97
+      IL_0bc1: add          
+      IL_0bc2: ldloc.s      blockPtr
+      IL_0bc4: ldc.i4.7     
+      IL_0bc5: conv.i       
+      IL_0bc6: ldc.i4.4     
+      IL_0bc7: mul          
+      IL_0bc8: add          
+      IL_0bc9: ldind.u4     
+      IL_0bca: add          
+      IL_0bcb: ldc.i4.s     10 // 0x0a
+      IL_0bcd: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0bd2: add          
+      IL_0bd3: stloc.s      b
+
+      // [484 17 - 484 27]
+      IL_0bd5: stloc.s      a
+
+      // [487 17 - 487 34]
+      IL_0bd7: ldloc.s      c
+      IL_0bd9: ldloc.s      b
+      IL_0bdb: ldloc.s      d
+      IL_0bdd: not          
+      IL_0bde: or           
+      IL_0bdf: xor          
+      IL_0be0: stloc.s      f
+
+      // [488 17 - 488 27]
+      IL_0be2: ldloc.s      d
+
+      // [489 17 - 489 23]
+      IL_0be4: ldloc.s      c
+      IL_0be6: stloc.s      d
+
+      // [490 17 - 490 23]
+      IL_0be8: ldloc.s      b
+      IL_0bea: stloc.s      c
+
+      // [491 17 - 491 83]
+      IL_0bec: ldloc.s      b
+      IL_0bee: ldloc.s      a
+      IL_0bf0: ldloc.s      f
+      IL_0bf2: add          
+      IL_0bf3: ldc.i4       -1416354905 // 0xab9423a7
+      IL_0bf8: add          
+      IL_0bf9: ldloc.s      blockPtr
+      IL_0bfb: ldc.i4.s     14 // 0x0e
+      IL_0bfd: conv.i       
+      IL_0bfe: ldc.i4.4     
+      IL_0bff: mul          
+      IL_0c00: add          
+      IL_0c01: ldind.u4     
+      IL_0c02: add          
+      IL_0c03: ldc.i4.s     15 // 0x0f
+      IL_0c05: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0c0a: add          
+      IL_0c0b: stloc.s      b
+
+      // [492 17 - 492 27]
+      IL_0c0d: stloc.s      a
+
+      // [495 17 - 495 34]
+      IL_0c0f: ldloc.s      c
+      IL_0c11: ldloc.s      b
+      IL_0c13: ldloc.s      d
+      IL_0c15: not          
+      IL_0c16: or           
+      IL_0c17: xor          
+      IL_0c18: stloc.s      f
+
+      // [496 17 - 496 27]
+      IL_0c1a: ldloc.s      d
+
+      // [497 17 - 497 23]
+      IL_0c1c: ldloc.s      c
+      IL_0c1e: stloc.s      d
+
+      // [498 17 - 498 23]
+      IL_0c20: ldloc.s      b
+      IL_0c22: stloc.s      c
+
+      // [499 17 - 499 83]
+      IL_0c24: ldloc.s      b
+      IL_0c26: ldloc.s      a
+      IL_0c28: ldloc.s      f
+      IL_0c2a: add          
+      IL_0c2b: ldc.i4       -57434055 // 0xfc93a039
+      IL_0c30: add          
+      IL_0c31: ldloc.s      blockPtr
+      IL_0c33: ldc.i4.5     
+      IL_0c34: conv.i       
+      IL_0c35: ldc.i4.4     
+      IL_0c36: mul          
+      IL_0c37: add          
+      IL_0c38: ldind.u4     
+      IL_0c39: add          
+      IL_0c3a: ldc.i4.s     21 // 0x15
+      IL_0c3c: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0c41: add          
+      IL_0c42: stloc.s      b
+
+      // [500 17 - 500 27]
+      IL_0c44: stloc.s      a
+
+      // [503 17 - 503 34]
+      IL_0c46: ldloc.s      c
+      IL_0c48: ldloc.s      b
+      IL_0c4a: ldloc.s      d
+      IL_0c4c: not          
+      IL_0c4d: or           
+      IL_0c4e: xor          
+      IL_0c4f: stloc.s      f
+
+      // [504 17 - 504 27]
+      IL_0c51: ldloc.s      d
+
+      // [505 17 - 505 23]
+      IL_0c53: ldloc.s      c
+      IL_0c55: stloc.s      d
+
+      // [506 17 - 506 23]
+      IL_0c57: ldloc.s      b
+      IL_0c59: stloc.s      c
+
+      // [507 17 - 507 82]
+      IL_0c5b: ldloc.s      b
+      IL_0c5d: ldloc.s      a
+      IL_0c5f: ldloc.s      f
+      IL_0c61: add          
+      IL_0c62: ldc.i4       1700485571 // 0x655b59c3
+      IL_0c67: add          
+      IL_0c68: ldloc.s      blockPtr
+      IL_0c6a: ldc.i4.s     12 // 0x0c
+      IL_0c6c: conv.i       
+      IL_0c6d: ldc.i4.4     
+      IL_0c6e: mul          
+      IL_0c6f: add          
+      IL_0c70: ldind.u4     
+      IL_0c71: add          
+      IL_0c72: ldc.i4.6     
+      IL_0c73: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0c78: add          
+      IL_0c79: stloc.s      b
+
+      // [508 17 - 508 27]
+      IL_0c7b: stloc.s      a
+
+      // [511 17 - 511 34]
+      IL_0c7d: ldloc.s      c
+      IL_0c7f: ldloc.s      b
+      IL_0c81: ldloc.s      d
+      IL_0c83: not          
+      IL_0c84: or           
+      IL_0c85: xor          
+      IL_0c86: stloc.s      f
+
+      // [512 17 - 512 27]
+      IL_0c88: ldloc.s      d
+
+      // [513 17 - 513 23]
+      IL_0c8a: ldloc.s      c
+      IL_0c8c: stloc.s      d
+
+      // [514 17 - 514 23]
+      IL_0c8e: ldloc.s      b
+      IL_0c90: stloc.s      c
+
+      // [515 17 - 515 83]
+      IL_0c92: ldloc.s      b
+      IL_0c94: ldloc.s      a
+      IL_0c96: ldloc.s      f
+      IL_0c98: add          
+      IL_0c99: ldc.i4       -1894986606 // 0x8f0ccc92
+      IL_0c9e: add          
+      IL_0c9f: ldloc.s      blockPtr
+      IL_0ca1: ldc.i4.3     
+      IL_0ca2: conv.i       
+      IL_0ca3: ldc.i4.4     
+      IL_0ca4: mul          
+      IL_0ca5: add          
+      IL_0ca6: ldind.u4     
+      IL_0ca7: add          
+      IL_0ca8: ldc.i4.s     10 // 0x0a
+      IL_0caa: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0caf: add          
+      IL_0cb0: stloc.s      b
+
+      // [516 17 - 516 27]
+      IL_0cb2: stloc.s      a
+
+      // [519 17 - 519 34]
+      IL_0cb4: ldloc.s      c
+      IL_0cb6: ldloc.s      b
+      IL_0cb8: ldloc.s      d
+      IL_0cba: not          
+      IL_0cbb: or           
+      IL_0cbc: xor          
+      IL_0cbd: stloc.s      f
+
+      // [520 17 - 520 27]
+      IL_0cbf: ldloc.s      d
+
+      // [521 17 - 521 23]
+      IL_0cc1: ldloc.s      c
+      IL_0cc3: stloc.s      d
+
+      // [522 17 - 522 23]
+      IL_0cc5: ldloc.s      b
+      IL_0cc7: stloc.s      c
+
+      // [523 17 - 523 83]
+      IL_0cc9: ldloc.s      b
+      IL_0ccb: ldloc.s      a
+      IL_0ccd: ldloc.s      f
+      IL_0ccf: add          
+      IL_0cd0: ldc.i4       -1051523 // 0xffeff47d
+      IL_0cd5: add          
+      IL_0cd6: ldloc.s      blockPtr
+      IL_0cd8: ldc.i4.s     10 // 0x0a
+      IL_0cda: conv.i       
+      IL_0cdb: ldc.i4.4     
+      IL_0cdc: mul          
+      IL_0cdd: add          
+      IL_0cde: ldind.u4     
+      IL_0cdf: add          
+      IL_0ce0: ldc.i4.s     15 // 0x0f
+      IL_0ce2: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0ce7: add          
+      IL_0ce8: stloc.s      b
+
+      // [524 17 - 524 27]
+      IL_0cea: stloc.s      a
+
+      // [527 17 - 527 34]
+      IL_0cec: ldloc.s      c
+      IL_0cee: ldloc.s      b
+      IL_0cf0: ldloc.s      d
+      IL_0cf2: not          
+      IL_0cf3: or           
+      IL_0cf4: xor          
+      IL_0cf5: stloc.s      f
+
+      // [528 17 - 528 27]
+      IL_0cf7: ldloc.s      d
+
+      // [529 17 - 529 23]
+      IL_0cf9: ldloc.s      c
+      IL_0cfb: stloc.s      d
+
+      // [530 17 - 530 23]
+      IL_0cfd: ldloc.s      b
+      IL_0cff: stloc.s      c
+
+      // [531 17 - 531 83]
+      IL_0d01: ldloc.s      b
+      IL_0d03: ldloc.s      a
+      IL_0d05: ldloc.s      f
+      IL_0d07: add          
+      IL_0d08: ldc.i4       -2054922799 // 0x85845dd1
+      IL_0d0d: add          
+      IL_0d0e: ldloc.s      blockPtr
+      IL_0d10: ldc.i4.4     
+      IL_0d11: add          
+      IL_0d12: ldind.u4     
+      IL_0d13: add          
+      IL_0d14: ldc.i4.s     21 // 0x15
+      IL_0d16: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0d1b: add          
+      IL_0d1c: stloc.s      b
+
+      // [532 17 - 532 27]
+      IL_0d1e: stloc.s      a
+
+      // [535 17 - 535 34]
+      IL_0d20: ldloc.s      c
+      IL_0d22: ldloc.s      b
+      IL_0d24: ldloc.s      d
+      IL_0d26: not          
+      IL_0d27: or           
+      IL_0d28: xor          
+      IL_0d29: stloc.s      f
+
+      // [536 17 - 536 27]
+      IL_0d2b: ldloc.s      d
+
+      // [537 17 - 537 23]
+      IL_0d2d: ldloc.s      c
+      IL_0d2f: stloc.s      d
+
+      // [538 17 - 538 23]
+      IL_0d31: ldloc.s      b
+      IL_0d33: stloc.s      c
+
+      // [539 17 - 539 82]
+      IL_0d35: ldloc.s      b
+      IL_0d37: ldloc.s      a
+      IL_0d39: ldloc.s      f
+      IL_0d3b: add          
+      IL_0d3c: ldc.i4       1873313359 // 0x6fa87e4f
+      IL_0d41: add          
+      IL_0d42: ldloc.s      blockPtr
+      IL_0d44: ldc.i4.8     
+      IL_0d45: conv.i       
+      IL_0d46: ldc.i4.4     
+      IL_0d47: mul          
+      IL_0d48: add          
+      IL_0d49: ldind.u4     
+      IL_0d4a: add          
+      IL_0d4b: ldc.i4.6     
+      IL_0d4c: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0d51: add          
+      IL_0d52: stloc.s      b
+
+      // [540 17 - 540 27]
+      IL_0d54: stloc.s      a
+
+      // [543 17 - 543 34]
+      IL_0d56: ldloc.s      c
+      IL_0d58: ldloc.s      b
+      IL_0d5a: ldloc.s      d
+      IL_0d5c: not          
+      IL_0d5d: or           
+      IL_0d5e: xor          
+      IL_0d5f: stloc.s      f
+
+      // [544 17 - 544 27]
+      IL_0d61: ldloc.s      d
+
+      // [545 17 - 545 23]
+      IL_0d63: ldloc.s      c
+      IL_0d65: stloc.s      d
+
+      // [546 17 - 546 23]
+      IL_0d67: ldloc.s      b
+      IL_0d69: stloc.s      c
+
+      // [547 17 - 547 83]
+      IL_0d6b: ldloc.s      b
+      IL_0d6d: ldloc.s      a
+      IL_0d6f: ldloc.s      f
+      IL_0d71: add          
+      IL_0d72: ldc.i4       -30611744 // 0xfe2ce6e0
+      IL_0d77: add          
+      IL_0d78: ldloc.s      blockPtr
+      IL_0d7a: ldc.i4.s     15 // 0x0f
+      IL_0d7c: conv.i       
+      IL_0d7d: ldc.i4.4     
+      IL_0d7e: mul          
+      IL_0d7f: add          
+      IL_0d80: ldind.u4     
+      IL_0d81: add          
+      IL_0d82: ldc.i4.s     10 // 0x0a
+      IL_0d84: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0d89: add          
+      IL_0d8a: stloc.s      b
+
+      // [548 17 - 548 27]
+      IL_0d8c: stloc.s      a
+
+      // [551 17 - 551 34]
+      IL_0d8e: ldloc.s      c
+      IL_0d90: ldloc.s      b
+      IL_0d92: ldloc.s      d
+      IL_0d94: not          
+      IL_0d95: or           
+      IL_0d96: xor          
+      IL_0d97: stloc.s      f
+
+      // [552 17 - 552 27]
+      IL_0d99: ldloc.s      d
+
+      // [553 17 - 553 23]
+      IL_0d9b: ldloc.s      c
+      IL_0d9d: stloc.s      d
+
+      // [554 17 - 554 23]
+      IL_0d9f: ldloc.s      b
+      IL_0da1: stloc.s      c
+
+      // [555 17 - 555 83]
+      IL_0da3: ldloc.s      b
+      IL_0da5: ldloc.s      a
+      IL_0da7: ldloc.s      f
+      IL_0da9: add          
+      IL_0daa: ldc.i4       -1560198380 // 0xa3014314
+      IL_0daf: add          
+      IL_0db0: ldloc.s      blockPtr
+      IL_0db2: ldc.i4.6     
+      IL_0db3: conv.i       
+      IL_0db4: ldc.i4.4     
+      IL_0db5: mul          
+      IL_0db6: add          
+      IL_0db7: ldind.u4     
+      IL_0db8: add          
+      IL_0db9: ldc.i4.s     15 // 0x0f
+      IL_0dbb: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0dc0: add          
+      IL_0dc1: stloc.s      b
+
+      // [556 17 - 556 27]
+      IL_0dc3: stloc.s      a
+
+      // [559 17 - 559 34]
+      IL_0dc5: ldloc.s      c
+      IL_0dc7: ldloc.s      b
+      IL_0dc9: ldloc.s      d
+      IL_0dcb: not          
+      IL_0dcc: or           
+      IL_0dcd: xor          
+      IL_0dce: stloc.s      f
+
+      // [560 17 - 560 27]
+      IL_0dd0: ldloc.s      d
+
+      // [561 17 - 561 23]
+      IL_0dd2: ldloc.s      c
+      IL_0dd4: stloc.s      d
+
+      // [562 17 - 562 23]
+      IL_0dd6: ldloc.s      b
+      IL_0dd8: stloc.s      c
+
+      // [563 17 - 563 83]
+      IL_0dda: ldloc.s      b
+      IL_0ddc: ldloc.s      a
+      IL_0dde: ldloc.s      f
+      IL_0de0: add          
+      IL_0de1: ldc.i4       1309151649 // 0x4e0811a1
+      IL_0de6: add          
+      IL_0de7: ldloc.s      blockPtr
+      IL_0de9: ldc.i4.s     13 // 0x0d
+      IL_0deb: conv.i       
+      IL_0dec: ldc.i4.4     
+      IL_0ded: mul          
+      IL_0dee: add          
+      IL_0def: ldind.u4     
+      IL_0df0: add          
+      IL_0df1: ldc.i4.s     21 // 0x15
+      IL_0df3: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0df8: add          
+      IL_0df9: stloc.s      b
+
+      // [564 17 - 564 27]
+      IL_0dfb: stloc.s      a
+
+      // [567 17 - 567 34]
+      IL_0dfd: ldloc.s      c
+      IL_0dff: ldloc.s      b
+      IL_0e01: ldloc.s      d
+      IL_0e03: not          
+      IL_0e04: or           
+      IL_0e05: xor          
+      IL_0e06: stloc.s      f
+
+      // [568 17 - 568 27]
+      IL_0e08: ldloc.s      d
+
+      // [569 17 - 569 23]
+      IL_0e0a: ldloc.s      c
+      IL_0e0c: stloc.s      d
+
+      // [570 17 - 570 23]
+      IL_0e0e: ldloc.s      b
+      IL_0e10: stloc.s      c
+
+      // [571 17 - 571 82]
+      IL_0e12: ldloc.s      b
+      IL_0e14: ldloc.s      a
+      IL_0e16: ldloc.s      f
+      IL_0e18: add          
+      IL_0e19: ldc.i4       -145523070 // 0xf7537e82
+      IL_0e1e: add          
+      IL_0e1f: ldloc.s      blockPtr
+      IL_0e21: ldc.i4.4     
+      IL_0e22: conv.i       
+      IL_0e23: ldc.i4.4     
+      IL_0e24: mul          
+      IL_0e25: add          
+      IL_0e26: ldind.u4     
+      IL_0e27: add          
+      IL_0e28: ldc.i4.6     
+      IL_0e29: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0e2e: add          
+      IL_0e2f: stloc.s      b
+
+      // [572 17 - 572 27]
+      IL_0e31: stloc.s      a
+
+      // [575 17 - 575 34]
+      IL_0e33: ldloc.s      c
+      IL_0e35: ldloc.s      b
+      IL_0e37: ldloc.s      d
+      IL_0e39: not          
+      IL_0e3a: or           
+      IL_0e3b: xor          
+      IL_0e3c: stloc.s      f
+
+      // [576 17 - 576 27]
+      IL_0e3e: ldloc.s      d
+
+      // [577 17 - 577 23]
+      IL_0e40: ldloc.s      c
+      IL_0e42: stloc.s      d
+
+      // [578 17 - 578 23]
+      IL_0e44: ldloc.s      b
+      IL_0e46: stloc.s      c
+
+      // [579 17 - 579 83]
+      IL_0e48: ldloc.s      b
+      IL_0e4a: ldloc.s      a
+      IL_0e4c: ldloc.s      f
+      IL_0e4e: add          
+      IL_0e4f: ldc.i4       -1120210379 // 0xbd3af235
+      IL_0e54: add          
+      IL_0e55: ldloc.s      blockPtr
+      IL_0e57: ldc.i4.s     11 // 0x0b
+      IL_0e59: conv.i       
+      IL_0e5a: ldc.i4.4     
+      IL_0e5b: mul          
+      IL_0e5c: add          
+      IL_0e5d: ldind.u4     
+      IL_0e5e: add          
+      IL_0e5f: ldc.i4.s     10 // 0x0a
+      IL_0e61: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0e66: add          
+      IL_0e67: stloc.s      b
+
+      // [580 17 - 580 27]
+      IL_0e69: stloc.s      a
+
+      // [583 17 - 583 34]
+      IL_0e6b: ldloc.s      c
+      IL_0e6d: ldloc.s      b
+      IL_0e6f: ldloc.s      d
+      IL_0e71: not          
+      IL_0e72: or           
+      IL_0e73: xor          
+      IL_0e74: stloc.s      f
+
+      // [584 17 - 584 27]
+      IL_0e76: ldloc.s      d
+
+      // [585 17 - 585 23]
+      IL_0e78: ldloc.s      c
+      IL_0e7a: stloc.s      d
+
+      // [586 17 - 586 23]
+      IL_0e7c: ldloc.s      b
+      IL_0e7e: stloc.s      c
+
+      // [587 17 - 587 83]
+      IL_0e80: ldloc.s      b
+      IL_0e82: ldloc.s      a
+      IL_0e84: ldloc.s      f
+      IL_0e86: add          
+      IL_0e87: ldc.i4       718787259 // 0x2ad7d2bb
+      IL_0e8c: add          
+      IL_0e8d: ldloc.s      blockPtr
+      IL_0e8f: ldc.i4.2     
+      IL_0e90: conv.i       
+      IL_0e91: ldc.i4.4     
+      IL_0e92: mul          
+      IL_0e93: add          
+      IL_0e94: ldind.u4     
+      IL_0e95: add          
+      IL_0e96: ldc.i4.s     15 // 0x0f
+      IL_0e98: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0e9d: add          
+      IL_0e9e: stloc.s      b
+
+      // [588 17 - 588 27]
+      IL_0ea0: stloc.s      a
+
+      // [591 17 - 591 34]
+      IL_0ea2: ldloc.s      c
+      IL_0ea4: ldloc.s      b
+      IL_0ea6: ldloc.s      d
+      IL_0ea8: not          
+      IL_0ea9: or           
+      IL_0eaa: xor          
+      IL_0eab: stloc.s      f
+
+      // [592 17 - 592 27]
+      IL_0ead: ldloc.s      d
+
+      // [593 17 - 593 23]
+      IL_0eaf: ldloc.s      c
+      IL_0eb1: stloc.s      d
+
+      // [594 17 - 594 23]
+      IL_0eb3: ldloc.s      b
+      IL_0eb5: stloc.s      c
+
+      // [595 17 - 595 83]
+      IL_0eb7: ldloc.s      b
+      IL_0eb9: ldloc.s      a
+      IL_0ebb: ldloc.s      f
+      IL_0ebd: add          
+      IL_0ebe: ldc.i4       -343485551 // 0xeb86d391
+      IL_0ec3: add          
+      IL_0ec4: ldloc.s      blockPtr
+      IL_0ec6: ldc.i4.s     9 // 0x09
+      IL_0ec8: conv.i       
+      IL_0ec9: ldc.i4.4     
+      IL_0eca: mul          
+      IL_0ecb: add          
+      IL_0ecc: ldind.u4     
+      IL_0ecd: add          
+      IL_0ece: ldc.i4.s     21 // 0x15
+      IL_0ed0: call         unsigned int32 Md5DotNet.Md5_4_Constants::LeftRotate(unsigned int32, int32)
+      IL_0ed5: add          
+      IL_0ed6: stloc.s      b
+
+      // [596 17 - 596 27]
+      IL_0ed8: stloc.s      a
+
+      // [598 17 - 598 32]
+      IL_0eda: ldarg.2      // digest
+      IL_0edb: ldflda       unsigned int32 Md5DotNet.Md5Digest::A
+      IL_0ee0: dup          
+      IL_0ee1: ldind.u4     
+      IL_0ee2: ldloc.s      a
+      IL_0ee4: add          
+      IL_0ee5: stind.i4     
+
+      // [599 17 - 599 32]
+      IL_0ee6: ldarg.2      // digest
+      IL_0ee7: ldflda       unsigned int32 Md5DotNet.Md5Digest::B
+      IL_0eec: dup          
+      IL_0eed: ldind.u4     
+      IL_0eee: ldloc.s      b
+      IL_0ef0: add          
+      IL_0ef1: stind.i4     
+
+      // [600 17 - 600 32]
+      IL_0ef2: ldarg.2      // digest
+      IL_0ef3: ldflda       unsigned int32 Md5DotNet.Md5Digest::C
+      IL_0ef8: dup          
+      IL_0ef9: ldind.u4     
+      IL_0efa: ldloc.s      c
+      IL_0efc: add          
+      IL_0efd: stind.i4     
+
+      // [601 17 - 601 32]
+      IL_0efe: ldarg.2      // digest
+      IL_0eff: ldflda       unsigned int32 Md5DotNet.Md5Digest::D
+      IL_0f04: dup          
+      IL_0f05: ldind.u4     
+      IL_0f06: ldloc.s      d
+      IL_0f08: add          
+      IL_0f09: stind.i4     
+
+      // [30 64 - 30 76]
+      IL_0f0a: ldloc.2      // blockIndex
+      IL_0f0b: ldc.i4.1     
+      IL_0f0c: add          
+      IL_0f0d: stloc.2      // blockIndex
+
+      // [30 38 - 30 62]
+      IL_0f0e: ldloc.2      // blockIndex
+      IL_0f0f: ldloc.0      // blocksCount
+      IL_0f10: blt          IL_0044
+    // end of loop
+
+    // [603 9 - 603 10]
+    IL_0f15: ret          
+
+  } // end of method Md5_4_Constants::GetDigest
+
+  .method private hidebysig static unsigned int32 
+    LeftRotate(
+      unsigned int32 'value', 
+      int32 rotation
+    ) cil managed 
+  {
+    .maxstack 8
+
+    // [608 13 - 608 69]
+    IL_0000: ldarg.0      // 'value'
+    IL_0001: ldarg.1      // rotation
+    IL_0002: ldc.i4.s     31 // 0x1f
+    IL_0004: and          
+    IL_0005: shl          
+    IL_0006: ldarg.0      // 'value'
+    IL_0007: ldc.i4.s     32 // 0x20
+    IL_0009: ldarg.1      // rotation
+    IL_000a: sub          
+    IL_000b: ldc.i4.s     31 // 0x1f
+    IL_000d: and          
+    IL_000e: shr.un       
+    IL_000f: or           
+    IL_0010: ret          
+
+  } // end of method Md5_4_Constants::LeftRotate
+} // end of class Md5DotNet.Md5_4_Constants
